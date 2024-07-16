@@ -1,0 +1,48 @@
+import Image from "next/image";
+import { BsPersonCircle } from "react-icons/bs";
+import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const BranchNav = () => {
+  return (
+    <div className="h-20 px-3 border-b-2 border-b-gray-500 bg-yellow-500 flex items-center justify-between shadow-2xl">
+      <div className="flex items-center justify-center gap-3">
+        <Image
+          height={60}
+          width={60}
+          alt="main-logo"
+          className=" drop-shadow-lg"
+          src={"/logo.png"}
+        />
+        <div className="max-w-sm  text-[1.2 rem] text-[#ad3c03f7] font-bold">
+          The Earn Way Youth Development Resource
+        </div>
+      </div>
+      <div className="md:pr-5">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <BsPersonCircle />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="-translate-x-5  ">
+            <DropdownMenuItem className="cursor-pointer">
+              Payments
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-red-500 cursor-pointer">
+              logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+};
+
+export default BranchNav;
