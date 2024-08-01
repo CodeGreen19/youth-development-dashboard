@@ -1,11 +1,20 @@
+import StudentFilteredBox from "@/components/branch/students/StudentFilteredBox";
+// import DataTableComponent from "@/components/branch/students/StudentTable";
+import dynamic from "next/dynamic";
+
+const DataTableComponent = dynamic(
+  () => import("@/components/branch/students/StudentTable"),
+  {
+    ssr: false,
+  }
+);
 import React from "react";
 
 const AllStudents = () => {
   return (
     <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, eum
-      possimus cum aliquam illum saepe accusamus labore atque vitae ratione illo
-      facere tempora nihil, facilis in, et quibusdam itaque qui.
+      <StudentFilteredBox />
+      <DataTableComponent />
     </div>
   );
 };

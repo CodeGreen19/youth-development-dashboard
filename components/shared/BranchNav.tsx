@@ -10,7 +10,7 @@ import {
 
 const BranchNav = () => {
   return (
-    <div className="h-20 px-3 border-b-2 border-b-gray-500 bg-yellow-500 flex items-center justify-between shadow-2xl">
+    <div className="h-20 px-3 border-b-2 border-b-gray-500 bg-yellow-500 flex items-center justify-between shadow-md ">
       <div className="flex items-center justify-center gap-3">
         <Image
           height={60}

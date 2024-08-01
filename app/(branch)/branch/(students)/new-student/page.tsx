@@ -1,13 +1,22 @@
+import AcadamicInfo from "@/components/branch/students/AcadamicInfo";
+import CourseInfo from "@/components/branch/students/CourseInfo";
+import PersonalInfo from "@/components/branch/students/PersonalInfo";
+import { Button } from "@/components/ui/button";
 import React from "react";
 
-const NewStudent = () => {
+const AddnewPage = () => {
   return (
     <div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, natus
-      soluta iste, animi porro quisquam aut eum, sit minus dolore neque deserunt
-      nemo voluptates eligendi commodi. Nobis reiciendis perspiciatis fugiat!
+      <PersonalInfo />
+      <CourseInfo />
+      <AcadamicInfo />
+      <div className="flex items-center justify-end my-5">
+        <Button className=" p-6 md:p-8 px-8 md:px-10 text-lg rounded-sm ">
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };
 
-export default NewStudent;
+export default AddnewPage;

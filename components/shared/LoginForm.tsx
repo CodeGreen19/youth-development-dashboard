@@ -10,8 +10,26 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export function LoginForm({ close }: { close: () => void }) {
+export function LoginForm({
+  close,
+  setSelelectedPage,
+}: {
+  close: () => void;
+  setSelelectedPage: Dispatch<
+    SetStateAction<"reset" | "login" | "forgot" | "otp">
+  >;
+}) {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const router = useRouter();
+
+  const HanleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push("/branch/dashboard/analytics");
+  };
   return (
     <Card className="mx-auto max-w-sm rounded-sm">
       <CardHeader>
@@ -21,10 +39,12 @@ export function LoginForm({ close }: { close: () => void }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
+        <form className="grid gap-4" onSubmit={HanleSubmit}>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               id="email"
               type="email"
               placeholder="m@example.com"
@@ -34,20 +54,29 @@ export function LoginForm({ close }: { close: () => void }) {
           <div className="grid gap-2">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
+              <h1
+                className="ml-auto inline-block text-sm cursor-pointer underline"
+                onClick={() => setSelelectedPage("forgot")}
+              >
                 Forgot your password?
-              </Link>
+              </h1>
             </div>
-            <Input id="password" type="password" required />
+            <Input
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              required
+            />
           </div>
           <Button type="submit" className="w-full py-6">
             Login
           </Button>
-        </div>
+        </form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link onClick={close} href="/branch-apply" className="underline">
-            Sign up
+            Apply Branch
           </Link>
         </div>
       </CardContent>

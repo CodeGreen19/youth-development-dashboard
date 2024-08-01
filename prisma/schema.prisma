@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model Branch {
+  id           String        @id @default(uuid())
+  password     String?
+  role         Role          @default(USER)
+  isVarified   Boolean       @default(false)
+  branchInfo   BranchInfo?
+  personalInfo PersonalInfo?
+  moreInfo     MoreInfo?
+  documents    Document[]
+  createdAt    DateTime      @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model BranchInfo {
+  id            String @id @default(uuid())
+  branchName    String
+  branchMobile  String
+  branchEmail   String
+  instituteAge  String
+  noOfComputers String
+  branchId      String @unique
+  branch        Branch @relation(fields: [branchId], references: [id])
+}
+
+model PersonalInfo {
+  id          String @id @default(uuid())
+  fullName    String
+  fathersName String
+  mothersName String
+  gender      String
+  bloodGroup  String
+  branchId    String @unique
+  branch      Branch @relation(fields: [branchId], references: [id])
+}
+
+model MoreInfo {
+  id               String  @id @default(uuid())
+  additionalMobile String?
+  division         String
+  district         String
+  upazila          String
+  address          String
+  postcode         String?
+  branchId         String  @unique
+  branch           Branch  @relation(fields: [branchId], references: [id])
+}
+
+model Document {
+  id             String @id @default(uuid())
+  ppSizePhoto    String
+  tradeLicense   String
+  nationalIDCard String
+  signature      String
+  branchId       String
+  branch         Branch @relation(fields: [branchId], references: [id])
+}

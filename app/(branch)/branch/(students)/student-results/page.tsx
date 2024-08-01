@@ -1,12 +1,7 @@
 import React from "react";
 
 const StudentResults = () => {
-  return (
-    <div>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-      perspiciatis in enim.
-    </div>
-  );
+  return <div>TODO: this will be done later.....</div>;
 };
 
 export default StudentResults;

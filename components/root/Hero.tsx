@@ -46,7 +46,7 @@ const Hero = () => {
     <div className="lg:h-[85vh] w-full  flex items-center lg:flex-row  flex-col lg:justify-between">
       <div className=" w-full  h-full relative md:w-3/5 bg-slate-50">
         <div className="absolute h-full  top-0 left-0 ">
-          <div className="h-full w-full z-20 absolute top-0 left-0 bg-[#000000b6] "></div>
+          <div className="h-full w-full z-20 absolute top-0 left-0 bg-[#00000098] "></div>
           <Image
             height={800}
             width={800}

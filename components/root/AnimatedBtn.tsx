@@ -1,8 +1,10 @@
 import { Button } from "../ui/button";
 import Lottie from "react-lottie";
 import animationData from "../../public/lottie/boom.json";
+import { useRouter } from "next/navigation";
 
 const AnimatedBtn = () => {
+  const router = useRouter();
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -14,7 +16,10 @@ const AnimatedBtn = () => {
   };
   return (
     <div className="relative">
-      <Button className="bg-yellow-500 hover:bg-yellow-600 shadow-xl text-black rounded-none z-10 p-6 relative">
+      <Button
+        onClick={() => router.push("/branch-apply")}
+        className="bg-yellow-500 hover:bg-yellow-600 shadow-xl text-black rounded-none z-10 p-6 relative"
+      >
         Apply for Branch
       </Button>
       <div className="absolute -top-14  left-6">

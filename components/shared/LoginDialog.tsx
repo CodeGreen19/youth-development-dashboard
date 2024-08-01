@@ -25,10 +25,16 @@ const LoginDialog = ({ children }: { children: ReactNode }) => {
         <DialogTrigger ref={dialogRef}>{children}</DialogTrigger>
         <DialogContent className="bg-transparent  p-0 max-w-sm border-none shadow-none">
           {selectedPage === "login" && (
-            // <LoginForm close={clickToClose} />
-            // <ForgotPassword />
+            <LoginForm
+              close={clickToClose}
+              setSelelectedPage={setSelelectedPage}
+            />
+          )}
+          {selectedPage === "forgot" && (
+            <ForgotPassword />
+
             // <OtpPage />
-            <ResetPassword />
+            // <ResetPassword />
           )}
         </DialogContent>
       </Dialog>

@@ -1,6 +1,6 @@
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdOutlinePersonPin } from "react-icons/md";
-import { FaCodeBranch } from "react-icons/fa6";
+import { FaAnglesLeft, FaCodeBranch } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
 
 export const SideBarInfoArr = [
@@ -13,7 +13,7 @@ export const SideBarInfoArr = [
     title: "Students",
     icon: <MdOutlinePersonPin />,
     items: [
-      { title: "New Students", link: "/branch/new-student" },
+      { title: "New Student", link: "/branch/new-student" },
       { title: "All Students", link: "/branch/all-students" },
       { title: "Unpaid Students", link: "/branch/unpaid-students" },
       { title: "Student Results", link: "/branch/student-results" },
@@ -34,6 +34,22 @@ export const SideBarInfoArr = [
       { title: "Payment History", link: "/branch/billings/payment-history" },
     ],
   },
+];
+export const AdminLinks = [
+  {
+    title: "Dashboard",
+    icon: <TbLayoutDashboardFilled />,
+    link: "/admin/analytics",
+  },
+  { title: "Branches", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Notices", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Add Notice", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Branches", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Branch Details", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Approved Branches", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Rejected Branches", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Revenue", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Charts", icon: <FaAnglesLeft />, link: "#" },
 ];
 
 export const AllCourses = [

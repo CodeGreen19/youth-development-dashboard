@@ -20,7 +20,7 @@ const Contact = () => {
     },
   ];
   return (
-    <div className="bg-[#512e15bc] relative z-0 p-4 lg:pt-[100px] overflow-hidden lg:pl-[200px] 2xl:min-h-[95vh] lg:min-h-screen">
+    <div className="md:bg-[#512e15bc] relative z-0 p-4 lg:pt-[100px] overflow-hidden lg:pl-[200px] 2xl:min-h-[95vh] lg:min-h-screen">
       <Svg hideUp="lg" svgFile="/line.svg" width={300} right={0} top={0} />
       <Svg hideUp="lg" svgFile="/line.svg" width={200} right={200} top={300} />
       <Svg hideUp="lg" svgFile="/line.svg" width={200} right={100} bottom={0} />

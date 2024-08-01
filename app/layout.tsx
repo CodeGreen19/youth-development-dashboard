@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inconsolata, Potta_One } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "react-hot-toast";
+import ReactQuery from "@/components/data/ReactQuery";
 
 const incons = Inconsolata({ subsets: ["latin"], variable: "--font-incons" });
 const potta = Potta_One({
@@ -11,7 +13,7 @@ const potta = Potta_One({
 });
 
 export const metadata: Metadata = {
-  title: "Youth Development Dashboard",
+  title: "The Earn Way Youth Development Dashboard",
   description: "to empower the the youth is the primary duity of our institute",
 };
 
@@ -29,7 +31,8 @@ export default function RootLayout({
           potta.variable
         )}
       >
-        {children}
+        <ReactQuery> {children}</ReactQuery>
+        <Toaster />
       </body>
     </html>
   );

@@ -21,7 +21,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <main className=" w-full">
       <BranchNav />
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-start">
         <div
           className={`md:hidden p-1 bg-white rounded-r-full absolute top-5 text-sm left-0 ${
             open ? "hidden" : ""
@@ -31,7 +31,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
           {open ? <FaAnglesLeft /> : <FaAnglesRight />}
         </div>
         <section
-          className={`bg-slate-100  md:p-3 border-r-2 overflow-hidden  border-r-gray-300  shadow-sm  absolute md:sticky top-0  left-0 h-screen transition-all ${
+          className={`bg-white z-40  md:p-3 border-r-2 overflow-hidden  border-r-gray-300  shadow-sm  fixed  md:sticky top-0 left-0 h-screen transition-all ${
             open ? "w-[280px] p-3" : "w-0 md:w-[40px]"
           }`}
         >
@@ -96,7 +96,9 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
             ))}
           </Accordion>
         </section>
-        <section className="bg-slate-50 p-1 md:p-3 w-full">{children}</section>
+        <section className="bg-slate-50 max-w-screen-2xl p-1 relative md:p-0 w-full ">
+          {children}
+        </section>
       </div>
     </main>
   );
