@@ -9,19 +9,41 @@ import {
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AdminNav from "./AdminNav";
 import { AdminLinks } from "../data";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useQuery } from "@tanstack/react-query";
+import { getUserAction } from "@/actions/auth";
+import BranchLoading from "../branch/BranchLoading";
+import AdminLoading from "./AdminLoading";
 
 const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [role, setRole] = useState<"USER" | "ADMIN">("USER");
+  const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
+  const { isPending } = useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      setLoading(true);
+      let data = await getUserAction();
+
+      if (!data?.branchInfo || data.branchInfo?.role === "USER") {
+        return router.push("/");
+      }
+      setRole(data.branchInfo.role);
+      setLoading(false);
+      return data;
+    },
+  });
 
   return (
     <main className=" w-full">
-      <AdminNav />
+      {isPending && <AdminLoading />}
+      {loading && <AdminLoading />}
+      <AdminNav role={role} />
       <div className="flex items-start justify-start">
         <div
           className={`md:hidden p-1 bg-white rounded-r-full absolute top-5 text-sm left-0 ${
@@ -43,7 +65,7 @@ const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {
           </div>
           <ul className="mt-5">
             {AdminLinks.map((item) => (
-              <Link href={item.link}>
+              <Link key={item.title} href={item.link}>
                 {" "}
                 <li className="flex my-3 items-center justify-start gap-3">
                   <span>{item.icon}</span>

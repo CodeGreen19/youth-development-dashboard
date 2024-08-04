@@ -1,5 +1,6 @@
 "use server";
 
+import { hashedPassword, jwtDecode } from "@/data/auth";
 import { uploadBranchFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
 import {
@@ -8,6 +9,7 @@ import {
   MoreInfo,
   PersonalInfo,
 } from "@/Schema/branchSchema";
+import { cookies } from "next/headers";
 
 export const CreateBranchAction = async (formData: FormData) => {
   try {
@@ -79,6 +81,9 @@ export const CreateBranchAction = async (formData: FormData) => {
   }
 };
 
+// .......................................for admin ..................................
+
+// get all branch
 export const getAllBranches = async () => {
   try {
     const branches = await prisma.branch.findMany({
@@ -94,10 +99,94 @@ export const getAllBranches = async () => {
     return { error: "internal server error" };
   }
 };
-export const DeleteBranch = async (id: string) => {
+
+// get single branch
+export const GetSingleBranchAction = async (id: string) => {
   try {
-    const branches = await prisma.branch.delete({ where: { id } });
-    return { branches };
+    const branch = await prisma.branch.findUnique({
+      where: { id },
+      include: {
+        personalInfo: true,
+        branchInfo: true,
+        documents: true,
+        moreInfo: true,
+      },
+    });
+    if (!branch) {
+      return { error: "no branch found" };
+    }
+    return { branch };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};
+
+// update varifing
+export const updateVarifyAction = async (id: string) => {
+  try {
+    let branch = await prisma.branch.findUnique({ where: { id } });
+    if (!branch) {
+      return { error: "branch not found" };
+    }
+    await prisma.branch.update({
+      where: { id },
+      data: {
+        isVarified: true,
+      },
+    });
+    return { message: "branch updated successfully" };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};
+
+// disable button
+export const disabledAction = async (id: string) => {
+  try {
+    let branch = await prisma.branch.findUnique({ where: { id } });
+    if (!branch) {
+      return { error: "branch not found" };
+    }
+    let decode = jwtDecode(cookies().get("branch_token")?.value!);
+    if (branch.id === decode.id) {
+      return { error: "you can't block himself" };
+    }
+    await prisma.branch.update({
+      where: { id },
+      data: {
+        disabled: branch.disabled ? false : true,
+      },
+    });
+    return { message: "permission updated" };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};
+
+// create branchpass
+export const createBranchPassAction = async ({
+  id,
+  password,
+}: {
+  id: string;
+  password: string;
+}) => {
+  try {
+    let branch = await prisma.branch.findUnique({ where: { id } });
+    if (!branch) {
+      return { error: "branch not found" };
+    }
+    if (password.length < 6) {
+      return { error: "password must be at least 6 char" };
+    }
+    let encryptPass = hashedPassword(password);
+    await prisma.branch.update({
+      where: { id },
+      data: {
+        password: encryptPass,
+      },
+    });
+    return { message: "new branch password created" };
   } catch (error) {
     return { error: "internal server error" };
   }

@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const PaymentHistory = () => {
+  const [data, setData] = useState<boolean>(false);
   return (
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe vitae,

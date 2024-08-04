@@ -12,7 +12,7 @@ const SuccessMessage = ({ clear }: { clear: () => void }) => {
         </p>
         <h3 className="text-sm my-3">
           প্রয়োজনে আমাদের কল করুন{" "}
-          <span className="font-incons">01880110842</span>
+          <span className="font-incons ml-3 font-bold">01880110842</span>
         </h3>
         <div className="flex items-center justify-end">
           <Button onClick={clear} className="font-bangla rounded-sm">

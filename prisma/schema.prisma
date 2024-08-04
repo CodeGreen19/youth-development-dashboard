@@ -13,10 +13,11 @@ model Branch {
   password     String?
   role         Role          @default(USER)
   isVarified   Boolean       @default(false)
+  disabled     Boolean       @default(false)
   branchInfo   BranchInfo?
   personalInfo PersonalInfo?
   moreInfo     MoreInfo?
-  documents    Document[]
+  documents    Document?
   createdAt    DateTime      @default(now())
 }
 
@@ -65,6 +66,6 @@ model Document {
   tradeLicense   String
   nationalIDCard String
   signature      String
-  branchId       String
+  branchId       String @unique
   branch         Branch @relation(fields: [branchId], references: [id])
 }

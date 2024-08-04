@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { BsPersonCircle } from "react-icons/bs";
 import React from "react";
@@ -7,8 +9,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { branchLogoutAction } from "@/actions/auth";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const BranchNav = () => {
+const BranchNav = ({ role }: { role: "USER" | "ADMIN" }) => {
+  const router = useRouter();
   return (
     <div className="h-20 px-3 border-b-2 border-b-gray-500 bg-yellow-500 flex items-center justify-between shadow-md ">
       <div className="flex items-center justify-center gap-3">
@@ -29,13 +35,26 @@ const BranchNav = () => {
             <BsPersonCircle />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="-translate-x-5  ">
+            {role === "ADMIN" && (
+              <Link href={"/admin/analytics"}>
+                <DropdownMenuItem className="cursor-pointer text-green-500">
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+            )}
             <DropdownMenuItem className="cursor-pointer">
               Payments
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-500 cursor-pointer">
+            <DropdownMenuItem
+              className="text-red-500 cursor-pointer"
+              onClick={() => {
+                branchLogoutAction();
+                router.push("/");
+              }}
+            >
               logout
             </DropdownMenuItem>
           </DropdownMenuContent>

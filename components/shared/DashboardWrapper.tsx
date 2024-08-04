@@ -10,17 +10,40 @@ import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { SideBarInfoArr } from "@/components/data/index";
 import { FaAngleRight } from "react-icons/fa6";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import BranchNav from "./BranchNav";
+import { getUserAction } from "@/actions/auth";
+import { useQuery } from "@tanstack/react-query";
+import BranchLoading from "../branch/BranchLoading";
+import PermissionBlock from "../admin/branches/PermissionBlock";
 
 const DashboardWrapper = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(true);
+  const [role, setRole] = useState<"USER" | "ADMIN">("USER");
   const pathname = usePathname();
-  console.log(pathname);
+  let [isBlock, setIsBlock] = useState<boolean>(false);
+  const { isPending } = useQuery({
+    queryKey: ["getUser"],
+    queryFn: async () => {
+      let data = await getUserAction();
+      console.log(data);
+
+      if (!data?.branchInfo) {
+        return router.push("/");
+      }
+      setIsBlock(!data.branchInfo.disabled);
+      setRole(data.branchInfo.role);
+      return data;
+    },
+  });
 
   return (
     <main className=" w-full">
-      <BranchNav />
+      {isPending && <BranchLoading />}
+      {isBlock && <PermissionBlock />}
+
+      <BranchNav role={role} />
       <div className="flex items-start justify-start">
         <div
           className={`md:hidden p-1 bg-white rounded-r-full absolute top-5 text-sm left-0 ${

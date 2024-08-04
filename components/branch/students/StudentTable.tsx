@@ -6,8 +6,6 @@ import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 
 import { FaEdit, FaIdBadge } from "react-icons/fa";
-import { BiSolidDownload } from "react-icons/bi";
-import StudentFilteredBox from "./StudentFilteredBox";
 
 type Student = {
   id: number;

@@ -1,13 +1,30 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "../ui/button";
 import LoginDialog from "./LoginDialog";
 import Image from "next/image";
 import SocialIcons from "./SocialIcons";
 
 import SheetContext from "./SheetContext";
+import { isAuthenticated } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 const RootNavbar = () => {
+  const router = useRouter();
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClick = async () => {
+    let auth = await isAuthenticated();
+    if (buttonRef.current) {
+      if (auth) {
+        router.push("/branch/dashboard/analytics");
+      } else {
+        buttonRef.current.click();
+      }
+    }
+  };
   return (
     <div className="md:h-24  h-16 shadow-md bg-white overflow-visible z-50 w-full ">
       <div className="md:container px-2 flex items-center justify-between">
@@ -26,9 +43,18 @@ const RootNavbar = () => {
           <SocialIcons />
         </div>
         <div className="flex items-center justify-center gap-2">
+          <Button
+            className=" rounded-none bg-yellow-500 hover:bg-yellow-600 py-6 px-6 text-black"
+            onClick={() => handleClick()}
+          >
+            Branch login
+          </Button>
           <LoginDialog>
-            <div className="p-3 rounded-none bg-yellow-500 text-black">
-              Branch login
+            <div
+              ref={buttonRef}
+              className="p-3 hidden rounded-none bg-yellow-500 text-black"
+            >
+              dummy button
             </div>
           </LoginDialog>
 

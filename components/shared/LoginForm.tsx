@@ -1,3 +1,5 @@
+" use client";
+
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { branchLoginAction } from "@/actions/auth";
+import { customToast } from "./ToastContainer";
 
 export function LoginForm({
   close,
@@ -25,10 +30,22 @@ export function LoginForm({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: branchLoginAction,
+    onSuccess: ({ error, message }) => {
+      if (error) {
+        return customToast("error", error);
+      }
+      if (message) {
+        customToast("success", message);
+        router.push("/branch/dashboard/analytics");
+      }
+    },
+  });
 
   const HanleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/branch/dashboard/analytics");
+    mutate({ email, password });
   };
   return (
     <Card className="mx-auto max-w-sm rounded-sm">
@@ -69,8 +86,8 @@ export function LoginForm({
               required
             />
           </div>
-          <Button type="submit" className="w-full py-6">
-            Login
+          <Button disabled={isPending} type="submit" className="w-full py-6">
+            {!isPending ? "Login" : "Login..."}
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
