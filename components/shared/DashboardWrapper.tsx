@@ -27,7 +27,6 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
     queryKey: ["getUser"],
     queryFn: async () => {
       let data = await getUserAction();
-      console.log(data);
 
       if (!data?.branchInfo) {
         return router.push("/");

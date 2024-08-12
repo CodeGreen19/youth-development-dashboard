@@ -191,3 +191,5 @@ export const createBranchPassAction = async ({
     return { error: "internal server error" };
   }
 };
+
+// get single branch

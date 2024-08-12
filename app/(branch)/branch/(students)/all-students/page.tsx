@@ -1,8 +1,13 @@
+"use client";
+
+import { getAllStudentsOfBranch } from "@/actions/branchOwner";
 import StudentFilteredBox from "@/components/branch/students/StudentFilteredBox";
-// import DataTableComponent from "@/components/branch/students/StudentTable";
+
+import { customToast } from "@/components/shared/ToastContainer";
+import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 
-const DataTableComponent = dynamic(
+const PaidStudentTable = dynamic(
   () => import("@/components/branch/students/StudentTable"),
   {
     ssr: false,
@@ -11,10 +16,26 @@ const DataTableComponent = dynamic(
 import React from "react";
 
 const AllStudents = () => {
+  let { data, isPending, isError } = useQuery({
+    queryKey: ["allStudentsOfBranch"],
+    queryFn: async () => {
+      let data = await getAllStudentsOfBranch();
+      if (data.error) return customToast("error", data.error);
+      return data;
+    },
+  });
+  if (isPending) {
+    return <div>loading...</div>;
+  }
+  if (isError) {
+    return <div className="text-red-500">error occurs</div>;
+  }
+  console.log(data?.allStudents);
+
   return (
     <div>
       <StudentFilteredBox />
-      <DataTableComponent />
+      {data?.allStudents && <PaidStudentTable info={data?.allStudents} />}
     </div>
   );
 };

@@ -4069,6 +4069,7 @@ export const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 export const courseDurationInfo = [
   {
     course_duration: "3 months",
+    addYear: 0,
     month_range: [
       { from: "january ", to: "march " },
       { from: "april ", to: "june " },
@@ -4078,6 +4079,7 @@ export const courseDurationInfo = [
   },
   {
     course_duration: "6 months",
+    addYear: 0,
     month_range: [
       { from: "january ", to: "june " },
       { from: "july ", to: "december " },
@@ -4085,18 +4087,22 @@ export const courseDurationInfo = [
   },
   {
     course_duration: "1 year",
+    addYear: 0,
     month_range: [{ from: "january ", to: "december " }],
   },
   {
     course_duration: "2 year",
+    addYear: 1,
     month_range: [{ from: "january ", to: "december " }],
   },
   {
     course_duration: "3 year",
+    addYear: 2,
     month_range: [{ from: "january", to: "december" }],
   },
   {
     course_duration: "4 year",
+    addYear: 3,
     month_range: [{ from: "january", to: "december" }],
   },
 ];

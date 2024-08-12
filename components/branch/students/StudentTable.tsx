@@ -2,79 +2,36 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BranchStudentType } from "@/types/students";
+import Image from "next/image";
 import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 
-import { FaEdit, FaIdBadge } from "react-icons/fa";
+import { FaDownload, FaEdit, FaIdBadge } from "react-icons/fa";
 
 type Student = {
-  id: number;
+  id: string;
   name: string;
-  roll: string;
-  registration: string;
+  genRoll: string | undefined;
+  genReg: string | undefined;
   mobile: string;
   trade: string;
   session: string;
+  isPaid: boolean;
   result: string;
-  picture: string;
+  picture: string | undefined;
 };
-
-const data: Student[] = [
-  {
-    id: 1,
-    name: "Md. Israfil Hossin",
-    roll: "2416956",
-    registration: "1451695053",
-    mobile: "01908760736",
-    trade: "Computer Office Application",
-    session: "July 2023 - December 2023",
-    result: "A+",
-    picture: "https://via.placeholder.com/50", // Placeholder image
-  },
-  {
-    id: 2,
-    name: "Md. Yasin Alom",
-    roll: "2416877",
-    registration: "1451687192",
-    mobile: "01909727837",
-    trade: "Computer Office Application",
-    session: "July 2023 - December 2023",
-    result: "A+",
-    picture: "https://via.placeholder.com/50",
-  },
-  {
-    id: 3,
-    name: "Mst. Sumaya Khatun",
-    roll: "2416872",
-    registration: "1451686681",
-    mobile: "01971497939",
-    trade: "Computer Office Application",
-    session: "July 2023 - December 2023",
-    result: "A+",
-    picture: "https://via.placeholder.com/50",
-  },
-  {
-    id: 4,
-    name: "Md. Rokonuzzaman",
-    roll: "2416762",
-    registration: "1451675857",
-    mobile: "01326446183",
-    trade: "Computer Office Application",
-    session: "July 2023 - December 2023",
-    result: "A+",
-    picture: "https://via.placeholder.com/50",
-  },
-  // Add more dummy data as needed...
-];
 
 const columns: TableColumn<Student>[] = [
   {
     name: "Picture",
     cell: (row) => (
-      <img
-        src={row.picture}
+      <Image
+        height={100}
+        width={100}
+        src={row.picture!}
         alt={row.name}
-        className="w-12 my-1 h-12 rounded-sm"
+        className="w-10 my-2 h-10 rounded-sm"
       />
     ),
     sortable: false,
@@ -86,14 +43,15 @@ const columns: TableColumn<Student>[] = [
   },
   {
     name: "Roll",
-    selector: (row) => row.roll,
+    selector: (row) => row.genRoll!,
     sortable: true,
   },
   {
-    name: "Registration",
-    selector: (row) => row.registration,
+    name: "Registration No",
+    selector: (row) => row.genReg!,
     sortable: true,
   },
+
   {
     name: "Mobile",
     selector: (row) => row.mobile,
@@ -118,8 +76,8 @@ const columns: TableColumn<Student>[] = [
     name: "Actions",
     cell: (row) => (
       <div className="flex space-x-2">
-        <button className="bg-purple-500 text-white p-2 rounded">
-          <FaEdit />
+        <button className="bg-green-500 text-white p-2 rounded">
+          <FaDownload />
         </button>
         <button className="bg-blue-500 text-white p-2 rounded">
           <FaIdBadge />
@@ -129,8 +87,31 @@ const columns: TableColumn<Student>[] = [
   },
 ];
 
-const DataTableComponent: React.FC = () => {
+const consizeData = (data: BranchStudentType[]): Student[] => {
+  let students: Student[] = data.map((item) => {
+    return {
+      id: item.id,
+      mobile: item.mobile,
+      name: item.name,
+      picture: item.docs?.profileUrl,
+      registration: item.docs?.registrationCardUrl,
+      result: item.passedResult,
+      session: item.courseRange,
+      trade: item.courseTrade,
+      genReg: item.genReg!,
+      genRoll: item.genRoll!,
+      isPaid: item.isPaid,
+    };
+  });
+
+  let filteredStudent = students.filter((item, i) => item.isPaid === true);
+  students = filteredStudent;
+  return students;
+};
+
+const PaidStudentTable = ({ info }: { info: BranchStudentType[] | null }) => {
   const [filterText, setFilterText] = useState("");
+  let data = info === null ? [] : consizeData(info);
 
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -179,4 +160,4 @@ const DataTableComponent: React.FC = () => {
   );
 };
 
-export default DataTableComponent;
+export default PaidStudentTable;

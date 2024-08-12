@@ -1,9 +1,7 @@
 "use client";
+import { isImage } from "@/components/data/helpers";
 import { GetBranchInfoType } from "@/types";
-
-const isImage = (url: string) => {
-  return /\.(jpg|jpeg|png|gif)$/.test(url);
-};
+import Image from "next/image";
 
 const DetailBranch = ({ branchInfo }: { branchInfo: GetBranchInfoType }) => {
   let { branchInfo: branch, documents, moreInfo, personalInfo } = branchInfo;
@@ -41,10 +39,10 @@ const DetailBranch = ({ branchInfo }: { branchInfo: GetBranchInfoType }) => {
             <strong>Full Name:</strong> {personalInfo?.fullName}
           </p>
           <p>
-            <strong>Father's Name:</strong> {personalInfo?.fathersName}
+            <strong>Father&apos;s Name:</strong> {personalInfo?.fathersName}
           </p>
           <p>
-            <strong>Mother's Name:</strong> {personalInfo?.mothersName}
+            <strong>Mother&apos;s Name:</strong> {personalInfo?.mothersName}
           </p>
           <p>
             <strong>Gender:</strong> {personalInfo?.gender}
@@ -86,13 +84,17 @@ const DetailBranch = ({ branchInfo }: { branchInfo: GetBranchInfoType }) => {
                 {value && (
                   <div>
                     {isImage(value) ? (
-                      <img
+                      <Image
+                        height={100}
+                        width={100}
                         src={value}
                         alt={key}
                         className="w-32 h-32 object-cover mb-2"
                       />
                     ) : (
-                      <img
+                      <Image
+                        height={100}
+                        width={100}
                         src="/pdf.jpg"
                         alt="PDF Document"
                         className="w-32 h-32 object-cover mb-2"

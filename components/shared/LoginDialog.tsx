@@ -31,10 +31,13 @@ const LoginDialog = ({ children }: { children: ReactNode }) => {
             />
           )}
           {selectedPage === "forgot" && (
-            <ForgotPassword />
-
-            // <OtpPage />
-            // <ResetPassword />
+            <ForgotPassword setSelelectedPage={setSelelectedPage} />
+          )}
+          {selectedPage === "otp" && (
+            <OtpPage setSelelectedPage={setSelelectedPage} />
+          )}
+          {selectedPage === "reset" && (
+            <ResetPassword setSelelectedPage={setSelelectedPage} />
           )}
         </DialogContent>
       </Dialog>

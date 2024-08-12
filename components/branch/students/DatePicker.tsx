@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import useStudentStore from "@/hooks/useStudentStore";
+import React, { useEffect, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 
 type DateValue = {
@@ -9,14 +10,21 @@ type DateValue = {
 };
 
 const SingleDatePicker: React.FC = () => {
+  const { setStudentInfo, studentInfo } = useStudentStore();
   const [value, setValue] = useState<Date | null | string>("Date of Birth");
 
   const handleValueChange = (newValue: any) => {
-    console.log("newValue:", newValue);
     if (newValue.startDate) {
-      setValue(new Date(newValue.startDate));
+      let data = new Date(newValue.startDate);
+      setValue(data);
+      setStudentInfo({ dateOfBirth: newValue.startDate });
     }
   };
+  useEffect(() => {
+    if (studentInfo.dateOfBirth !== "") {
+      setValue(studentInfo.dateOfBirth);
+    }
+  }, [studentInfo.dateOfBirth]);
 
   return (
     <div className="w-full py-1 rounded bg-slate-50">

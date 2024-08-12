@@ -27,14 +27,13 @@ const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {
   const { isPending } = useQuery({
     queryKey: ["getUser"],
     queryFn: async () => {
-      setLoading(true);
       let data = await getUserAction();
 
       if (!data?.branchInfo || data.branchInfo?.role === "USER") {
         return router.push("/");
       }
       setRole(data.branchInfo.role);
-      setLoading(false);
+
       return data;
     },
   });
@@ -42,7 +41,7 @@ const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <main className=" w-full">
       {isPending && <AdminLoading />}
-      {loading && <AdminLoading />}
+      {/* {loading && <AdminLoading />} */}
       <AdminNav role={role} />
       <div className="flex items-start justify-start">
         <div

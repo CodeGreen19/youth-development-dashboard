@@ -28,8 +28,6 @@ const Branches = () => {
     return <div>loading....</div>;
   }
 
-  console.log(data);
-
   const tableDataFn = (): BranchesTableType[] => {
     let info: BranchesTableType[] = [];
     if (data) {

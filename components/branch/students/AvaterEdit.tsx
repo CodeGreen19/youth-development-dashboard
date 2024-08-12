@@ -1,22 +1,30 @@
 "use client";
 
+import useStudentStore from "@/hooks/useStudentStore";
 import Image from "next/image";
 import React, { useState } from "react";
 import Avatar from "react-avatar-edit";
 
-const AvaterEdit = () => {
-  const [preview, setPreview] = useState(null);
+const AvatarEdit = () => {
+  const { profileUrl, setPorfileUrl } = useStudentStore();
 
   const onClose = () => {
-    setPreview(null);
+    setPorfileUrl(null);
   };
 
-  const onCrop = (view: any) => {
-    setPreview(view);
+  const onCrop = (preview: any) => {
+    fetch(preview)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], "cropped-image.png", {
+          type: "image/png",
+        });
+        setPorfileUrl(file);
+      });
   };
 
-  const onBeforeFileLoad = (elem: any) => {
-    if (elem.target.files[0].size > 716800) {
+  const onBeforeFileLoad = (elem: React.ChangeEvent<HTMLInputElement>) => {
+    if (elem.target.files && elem.target.files[0].size > 716800) {
       alert("File is too big!");
       elem.target.value = "";
     }
@@ -39,14 +47,14 @@ const AvaterEdit = () => {
           labelStyle={{ fontSize: "0.9rem", fontWeight: "bold" }}
         />
       </div>
-      {preview && (
+      {profileUrl && (
         <div className="">
-          <h1 className="font-bold text-sm my-3">corped image</h1>
+          <h1 className="font-bold text-sm my-3">Cropped Image</h1>
           <Image
-            src={preview}
-            className="border rounded-md border-gray-800 "
-            height={250}
-            width={250}
+            src={URL.createObjectURL(profileUrl)}
+            className="border rounded-md border-gray-800"
+            height={150}
+            width={150}
             alt="Preview"
           />
         </div>
@@ -55,4 +63,4 @@ const AvaterEdit = () => {
   );
 };
 
-export default AvaterEdit;
+export default AvatarEdit;

@@ -56,7 +56,7 @@ const Hero = () => {
           />
         </div>
         <div className="z-30 relative mt-20 ml-3 md:ml-8 text-white">
-          <h1 className="uppercase text-2xl  font-patta leading-[50px] text-[2.5rem] font-bold">
+          <h1 className="uppercase text-2xl  !font-patta leading-[50px] text-[2.5rem] font-bold">
             The earn way youth development resourece
           </h1>
           <p className="text-[1.1rem] md:text-[1.5rem] mt-11 my-6 font-bangla leading-8 md:leading-10   mb-5 md:mb-20 ">

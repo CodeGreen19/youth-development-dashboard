@@ -65,3 +65,29 @@ export type Document = {
   signature: string;
   branchId: string;
 };
+
+///fees type
+
+export type CourseFeesType = {
+  name: string;
+  threeMonths: string;
+  sixMonths: string;
+  oneYear: string;
+  twoYears: string;
+  threeYears: string;
+  fourYears: string;
+};
+
+export type Student = {
+  id: string;
+  name: string;
+  genRoll: string | undefined;
+  genReg: string | undefined;
+  mobile: string;
+  trade: string;
+  session: string;
+  isPaid: boolean;
+  result: string;
+  fees: string | boolean;
+  picture: string | undefined;
+};

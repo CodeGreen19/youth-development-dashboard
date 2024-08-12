@@ -16,6 +16,12 @@ interface FormState {
   setMoreInfo: (info: Partial<MoreInfo>) => void;
   setDocuments: (info: Partial<Documents>) => void;
   resetForm: () => void;
+  branchId: string;
+  setBranchId: (id: string) => void;
+  forgotEamil: string;
+  setForgotEamil: (text: string) => void;
+  forgotId: string;
+  setForgotId: (id: string) => void;
 }
 
 const branchInfo = {
@@ -66,6 +72,14 @@ const useBranchStore = create<FormState>((set) => ({
       moreInfo,
       documents,
     })),
+  branchId: "",
+  setBranchId: (id: string) => set({ branchId: id }),
+
+  forgotEamil: "",
+  setForgotEamil: (text: string) => set({ forgotEamil: text }),
+
+  forgotId: "",
+  setForgotId: (id: string) => set({ forgotId: id }),
 }));
 
 export default useBranchStore;

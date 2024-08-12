@@ -2,6 +2,10 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdOutlinePersonPin } from "react-icons/md";
 import { FaAnglesLeft, FaCodeBranch } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
+import { IoGitBranchOutline } from "react-icons/io5";
+import { LuScrollText } from "react-icons/lu";
+import { FaRegImages } from "react-icons/fa6";
+import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 
 export const SideBarInfoArr = [
   {
@@ -14,9 +18,9 @@ export const SideBarInfoArr = [
     icon: <MdOutlinePersonPin />,
     items: [
       { title: "New Student", link: "/branch/new-student" },
-      { title: "All Students", link: "/branch/all-students" },
+      { title: "Paid Students", link: "/branch/all-students" },
       { title: "Unpaid Students", link: "/branch/unpaid-students" },
-      { title: "Student Results", link: "/branch/student-results" },
+      { title: "Results", link: "/branch/student-results" },
     ],
   },
   {
@@ -41,13 +45,17 @@ export const AdminLinks = [
     icon: <TbLayoutDashboardFilled />,
     link: "/admin/analytics",
   },
-  { title: "Branches", icon: <FaAnglesLeft />, link: "/admin/branches" },
-  { title: "Notices", icon: <FaAnglesLeft />, link: "#" },
-  { title: "Add Notice", icon: <FaAnglesLeft />, link: "#" },
-  { title: "Branch Details", icon: <FaAnglesLeft />, link: "#" },
+  { title: "Branches", icon: <IoGitBranchOutline />, link: "/admin/branches" },
+  { title: "Notices", icon: <LuScrollText />, link: "/admin/notices" },
+  { title: "Gallery Images", icon: <FaRegImages />, link: "/admin/gallery" },
   { title: "Approved Branches", icon: <FaAnglesLeft />, link: "#" },
   { title: "Rejected Branches", icon: <FaAnglesLeft />, link: "#" },
   { title: "Revenue", icon: <FaAnglesLeft />, link: "#" },
+  {
+    title: "Course Fees",
+    icon: <LiaMoneyBillWaveSolid />,
+    link: "/admin/course-fees",
+  },
   { title: "Charts", icon: <FaAnglesLeft />, link: "#" },
 ];
 
