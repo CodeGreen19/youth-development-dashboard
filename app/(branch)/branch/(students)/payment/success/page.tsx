@@ -26,7 +26,6 @@ const PaymentSuccessPage = () => {
       });
       router.push("/branch/payment/success");
       if (data.error) return customToast("error", data.error);
-      if (!data.success) router.push("/branch/dashboard/analytics");
       return data;
     },
   });

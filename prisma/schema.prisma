@@ -131,7 +131,7 @@ model Payment {
   amount         String
   phoneNo        String
   status         String   @default("success")
-  branchId       String   @unique
+  branchId       String
   branch         Branch   @relation(fields: [branchId], references: [id])
   createdAt      DateTime @default(now())
 }

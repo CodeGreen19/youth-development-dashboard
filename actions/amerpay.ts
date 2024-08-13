@@ -89,6 +89,8 @@ export const AcceptPayment = async ({
       return { error: "some error occurs" };
     }
   } catch (error) {
+    console.log(error);
+
     return { error: "internal server error" };
   }
 };
@@ -105,6 +107,8 @@ export const CancelPayment = async (trans_id: string) => {
     });
     return { success: true };
   } catch (error) {
+    console.log(error);
+
     return { error: "internal server error" };
   }
 };

@@ -8,21 +8,14 @@ import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 
 import { FaDownload, FaEdit, FaIdBadge } from "react-icons/fa";
+import RegistrationCard from "./_docs/RegistartionCard";
+import {
+  consizeDataPaid,
+  StudentPaidType,
+} from "@/components/data/tableHelper";
+import DownloadListForExcel from "./_docs/DownloadListForExcel";
 
-type Student = {
-  id: string;
-  name: string;
-  genRoll: string | undefined;
-  genReg: string | undefined;
-  mobile: string;
-  trade: string;
-  session: string;
-  isPaid: boolean;
-  result: string;
-  picture: string | undefined;
-};
-
-const columns: TableColumn<Student>[] = [
+const columns: TableColumn<StudentPaidType>[] = [
   {
     name: "Picture",
     cell: (row) => (
@@ -69,16 +62,23 @@ const columns: TableColumn<Student>[] = [
   },
   {
     name: "Result",
-    selector: (row) => row.result,
+    cell: (row) =>
+      row.result === "" ? (
+        <div className="text-red-600">not provided</div>
+      ) : (
+        row.result
+      ),
     sortable: true,
   },
   {
     name: "Actions",
     cell: (row) => (
       <div className="flex space-x-2">
-        <button className="bg-green-500 text-white p-2 rounded">
-          <FaDownload />
-        </button>
+        <RegistrationCard info={row.studentInfo} id={row.id}>
+          <div className="bg-green-500 text-white p-2 rounded">
+            <FaDownload />
+          </div>
+        </RegistrationCard>
         <button className="bg-blue-500 text-white p-2 rounded">
           <FaIdBadge />
         </button>
@@ -87,31 +87,9 @@ const columns: TableColumn<Student>[] = [
   },
 ];
 
-const consizeData = (data: BranchStudentType[]): Student[] => {
-  let students: Student[] = data.map((item) => {
-    return {
-      id: item.id,
-      mobile: item.mobile,
-      name: item.name,
-      picture: item.docs?.profileUrl,
-      registration: item.docs?.registrationCardUrl,
-      result: item.passedResult,
-      session: item.courseRange,
-      trade: item.courseTrade,
-      genReg: item.genReg!,
-      genRoll: item.genRoll!,
-      isPaid: item.isPaid,
-    };
-  });
-
-  let filteredStudent = students.filter((item, i) => item.isPaid === true);
-  students = filteredStudent;
-  return students;
-};
-
 const PaidStudentTable = ({ info }: { info: BranchStudentType[] | null }) => {
   const [filterText, setFilterText] = useState("");
-  let data = info === null ? [] : consizeData(info);
+  let data = info === null ? [] : consizeDataPaid(info);
 
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -125,8 +103,11 @@ const PaidStudentTable = ({ info }: { info: BranchStudentType[] | null }) => {
       <DataTable
         title={
           <div className="w-full flex items-center justify-between">
-            <div>
-              <span>Students Lists</span> <Button>Excel</Button>
+            <div className="flex items-center justify-center gap-3">
+              <span>Students Lists</span>{" "}
+              <DownloadListForExcel studentInfo={data}>
+                <Button>Excel</Button>
+              </DownloadListForExcel>
             </div>{" "}
             <div className="flex items-center my-2 justify-end gap-2">
               <Input

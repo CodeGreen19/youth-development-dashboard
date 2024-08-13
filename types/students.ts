@@ -26,6 +26,7 @@ export type BranchStudentType = {
   religion: string;
   genRoll: string | null;
   genReg: string | null;
+  genResult: string | null;
   email: string | null;
   branchId: string;
   docs: DocsType | null;

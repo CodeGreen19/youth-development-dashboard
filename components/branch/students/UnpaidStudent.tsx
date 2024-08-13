@@ -71,7 +71,7 @@ const columns: TableColumn<Student>[] = [
     name: "Fees",
     cell: (row) => (
       <div>
-        {typeof row.fees === "boolean" ? (
+        {typeof row.fees === "boolean" || row.fees === "" ? (
           <div className="p-2 rounded text-white bg-amber-500">
             Contact with admin
           </div>
