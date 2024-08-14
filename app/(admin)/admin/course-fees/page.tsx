@@ -45,8 +45,6 @@ const CourseFeesPage = () => {
   });
 
   const handleSubmit = () => {
-    console.log(fees);
-
     if (fees.name === "") {
       customToast("error", "please select a course");
     } else {
@@ -71,8 +69,6 @@ const CourseFeesPage = () => {
   }
 
   const hanldeChangle = (value: string) => {
-    console.log(value);
-
     setFees({ ...fees, name: value });
     if (data !== undefined && data.feesData) {
       let filteredData = data?.feesData.filter((item) => item.name === value);

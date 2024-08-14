@@ -37,7 +37,6 @@ const AddnewPage = () => {
     formData.append("profileUrl", (profileUrl as File) || null);
 
     mutate(formData);
-    console.log(studentInfo);
   };
   useEffect(() => {
     resetForm();

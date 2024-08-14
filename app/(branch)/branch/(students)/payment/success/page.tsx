@@ -15,8 +15,6 @@ const PaymentSuccessPage = () => {
   const amount = params.get("amount");
   const trans_id = params.get("transId");
 
-  console.log(amount, trans_id);
-
   let { isPending } = useQuery({
     queryKey: [],
     queryFn: async () => {

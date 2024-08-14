@@ -11,7 +11,6 @@ import { Progress } from "@/components/ui/progress";
 
 const BranchEarning = () => {
   let data = new String("this is the new string")[12];
-  console.log(data);
 
   return (
     <div>

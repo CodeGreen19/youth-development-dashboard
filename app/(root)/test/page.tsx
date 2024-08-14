@@ -8,10 +8,7 @@ const page = () => {
   const handleClick = async () => {
     try {
       let info = await testAction();
-      console.log(info);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <div>

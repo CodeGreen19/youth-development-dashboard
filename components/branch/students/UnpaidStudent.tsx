@@ -27,9 +27,7 @@ const hanleClickFunc = async (info: PaymentType) => {
     if (data.data?.payment_url) {
       window.open(data.data.payment_url, "_self");
     }
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 const columns: TableColumn<Student>[] = [
@@ -126,7 +124,6 @@ const UnPaidStudentTable = ({
   const [filterText, setFilterText] = useState("");
   let data =
     info === null ? [] : consizeData({ data: info, feesInfo: feesData });
-  console.log(data);
 
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 

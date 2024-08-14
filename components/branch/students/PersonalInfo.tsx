@@ -30,8 +30,6 @@ const PersonalInfo = () => {
     setStudentInfo({ [e.target.name]: e.target.value });
   };
 
-  console.log("exist", existImgUrl);
-
   return (
     <section className="bg-white p-4 rounded-sm mb-3">
       <h1 className="branch_heading">Personal Information</h1>

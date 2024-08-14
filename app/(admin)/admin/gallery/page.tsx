@@ -60,8 +60,6 @@ const GalleryImage = () => {
     mutate(formData);
   };
 
-  console.log(data);
-
   if (isPending) {
     return <div>loading...</div>;
   }

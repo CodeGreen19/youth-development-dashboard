@@ -158,8 +158,6 @@ export const updateStudentAction = async ({
     });
     return { message: "student updated successfully" };
   } catch (error) {
-    console.log(error);
-
     return { error: "internal server error" };
   }
 };
@@ -187,8 +185,6 @@ export const DeleteSingleStudentById = async ({
   imgUrl: string;
 }) => {
   try {
-    console.log(id, imgUrl);
-
     await prisma.studentDocs.delete({
       where: { studentId: id },
     });
@@ -202,8 +198,6 @@ export const DeleteSingleStudentById = async ({
     }
     return { message: "student has been deleted" };
   } catch (error) {
-    console.log(error);
-
     return { error: "internal server error" };
   }
 };
