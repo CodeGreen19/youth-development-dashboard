@@ -4,12 +4,20 @@ import { AcceptPayment } from "@/actions/amerpay";
 import LottieComp from "@/components/shared/LottieComp";
 import { customToast } from "@/components/shared/ToastContainer";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { Suspense } from "react";
 import succeessAnime from "@/public/lottie/success.json";
 import Link from "next/link";
 
 const PaymentSuccessPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentSuccessContent />
+    </Suspense>
+  );
+};
+
+const PaymentSuccessContent = () => {
   const router = useRouter();
   const params = useSearchParams();
   const amount = params.get("amount");
@@ -27,8 +35,9 @@ const PaymentSuccessPage = () => {
       return data;
     },
   });
+
   return (
-    <div className=" flex items-center justify-center flex-col w-full h-screen bg-white fixed top-0 left-0 z-50">
+    <div className="flex items-center justify-center flex-col w-full h-screen bg-white fixed top-0 left-0 z-50">
       {isPending ? (
         <div>Processing...</div>
       ) : (
