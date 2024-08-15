@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 type CourseCardType = {
   code: string;
@@ -9,7 +10,16 @@ type CourseCardType = {
 };
 const CourseCard = ({ code, name, url, index }: CourseCardType) => {
   return (
-    <div className="w-full overflow-hidden relative transition-all hover:rounded-tr-[50px] hover:bg-yellow-500 duration-1000 flex items-start justify-center  my-2 md:w-[49%] lg:w-[24%] flex-none flex-wrap aspect-[6/7] border border-[#a5a5a549]">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.6, y: 10 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      whileInView={{
+        scale: 1,
+        opacity: 1,
+        y: 0,
+      }}
+      className="w-full  overflow-hidden relative transition-all hover:rounded-tr-[50px] hover:bg-yellow-500 duration-500 flex items-start justify-center  my-2 md:w-[49%] lg:w-[24%] flex-none flex-wrap aspect-[6/7] border border-[#a5a5a549]"
+    >
       <Image
         src={url}
         height={500}
@@ -17,6 +27,7 @@ const CourseCard = ({ code, name, url, index }: CourseCardType) => {
         className="h-[75%] w-full object-cover"
         alt="course_card_Img"
       />
+
       <div className="h-[25%] pt-2 w-full absolute bottom-0 left-0">
         <span>code: {code}</span>
         <h1 className="text-lg font-bold">{name}</h1>{" "}
@@ -24,20 +35,8 @@ const CourseCard = ({ code, name, url, index }: CourseCardType) => {
       <div className="absolute top-0 p-3 py-1 left-4 bg-blue-700 shadow-xl border text-white rounded-b-[20px] flex items-center justify-center">
         {index + 1}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default CourseCard;
-
-let data = [
-  { code: "01CA", name: "Computer Office Application", imgUrl: "" },
-  { code: "05DS", name: "Diploma in Computer Science", imgUrl: "" },
-  { code: "29ICT", name: "Diploma in ICT", imgUrl: "" },
-  {
-    code: "01CA",
-    name: "Diploma in Multilingual Secretarial Science",
-    imgUrl: "",
-  },
-  { code: "01CA", name: "Computer Office Application", imgUrl: "" },
-];

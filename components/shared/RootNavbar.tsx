@@ -29,7 +29,7 @@ const RootNavbar = () => {
     <div className="md:h-24  h-16 shadow-md bg-white overflow-visible z-50 w-full ">
       <div className="md:container px-2 flex items-center justify-between">
         <Link href={"/"}>
-          <div className="p-4 z-40 relative  flex items-center justify-center">
+          <div className="p-4 z-40 relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
             <Image
               src={"/logo.png"}
               className="drop-shadow-md md:w-20 w-12 -translate-y-2"

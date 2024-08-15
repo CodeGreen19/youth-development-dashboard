@@ -57,7 +57,7 @@ const config = {
       },
       fontFamily: {
         incons: ["var(--font-incons)", ...fontFamily.sans],
-        patta: ["var(--font-patta)", ...fontFamily.sans],
+        salsa: ["var(--font-salsa)", ...fontFamily.sans],
         bangla: ["banglaFont", ...fontFamily.sans],
       },
       borderRadius: {

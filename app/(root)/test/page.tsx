@@ -1,22 +1,16 @@
 "use client";
 
-import { testAction } from "@/actions/test";
-import { Button } from "@/components/ui/button";
 import React from "react";
+import { motion } from "framer-motion";
 
 const page = () => {
-  const handleClick = async () => {
-    try {
-      let info = await testAction();
-    } catch (error) {}
-  };
   return (
-    <div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-      voluptatibus qui at, odit tempora optio est nisi ab quas alias dolorum
-      tempore pariatur, quos obcaecati. Perspiciatis cupiditate fugit corrupti
-      facere. <Button onClick={handleClick}> click to get data</Button>
-    </div>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ y: 0, opacity: 1 }}>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit dicta
+      ipsum doloremque esse vitae. Dolores, similique neque quidem sapiente,
+      nesciunt minima expedita harum ab, fuga consequatur reprehenderit ex eos
+      dolore!
+    </motion.div>
   );
 };
 

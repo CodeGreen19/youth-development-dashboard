@@ -24,7 +24,7 @@ const MoreInfoForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-none shadow-md">
+    <div className="bg-slate-50 p-6 rounded-none shadow-md">
       <h2 className="text-2xl font-bold mb-4">More Information</h2>
       <div className="space-y-4">
         <input

@@ -17,7 +17,6 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
   const navData = [
     { text: "Apply Branch", link: "/branch-apply" },
     { text: "All Courses", link: "/all-courses" },
-    { text: "All Notices", link: "/notices" },
     { text: "Image Gallary", link: "/gallery" },
     { text: "Contact", link: "/contact" },
   ];

@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { FaClock, FaCodeBranch } from "react-icons/fa6";
-
+import { motion } from "framer-motion";
 const HowItsWork = () => {
   const programms = [
     {
@@ -37,7 +39,12 @@ const HowItsWork = () => {
         </h1>
         <div className="mt-8 flex gap-3 w-full flex-col md:flex-row items-start justify-around">
           {programms.map((item, i) => (
-            <div className="w-full p-3 md:p-0 md:w-[24%]" key={item.des}>
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              className="w-full p-3 md:p-0 md:w-[24%]"
+              key={item.des}
+            >
               <div className="items-center flex justify-center">
                 <div className="p-3 rounded-full bg-[#ffff0016] text-[1.5rem] text-yellow-500">
                   {item.icon}
@@ -47,7 +54,7 @@ const HowItsWork = () => {
                 step {i + 1}: {item.step}
               </h1>
               <p className="text-sm leading-6">{item.des}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

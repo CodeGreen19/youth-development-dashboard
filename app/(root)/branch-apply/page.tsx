@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import SuccessMessage from "@/components/root/branch-apply/SuccessMessage";
 import { useRouter } from "next/navigation";
 import useBranchStore from "@/hooks/useBranchStore";
+import { motion } from "framer-motion";
 
 const BranchApply: React.FC = () => {
   const router = useRouter();
@@ -56,16 +57,36 @@ const BranchApply: React.FC = () => {
       {showSuccess && <SuccessMessage clear={clearAllField} />}
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <BranchInfoForm />
-          <PersonalInfoForm />
-          <MoreInfoForm />
-          <DocumentsForm />
+          <motion.div
+            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: -100, opacity: 0 }}
+          >
+            <BranchInfoForm />
+          </motion.div>
+          <motion.div
+            whileInView={{ x: 0, opacity: 1 }}
+            initial={{ x: 100, opacity: 0 }}
+          >
+            <PersonalInfoForm />
+          </motion.div>
+          <motion.div
+            whileInView={{ x: 0, opacity: 1 }}
+            initial={{ x: -100, opacity: 0 }}
+          >
+            <MoreInfoForm />
+          </motion.div>
+          <motion.div
+            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: 100, opacity: 0 }}
+          >
+            <DocumentsForm />
+          </motion.div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex rounded-sm justify-end">
           <Button
             onClick={handleSubmit}
             disabled={isPending}
-            className="px-10 text-xl py-8 transition-all bg-yellow-500 rounded-none border border-gray-400 text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+            className="px-10  shadow-2xl text-xl py-8 transition-all bg-yellow-500 rounded-none border border-gray-400 text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
           >
             {isPending ? "Submitting" : "Submit"}
           </Button>

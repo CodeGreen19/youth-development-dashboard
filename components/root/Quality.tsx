@@ -1,7 +1,8 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { AppearMotionDiv } from "./FramerMotion";
-
+import { motion } from "framer-motion";
 const Quality = () => {
   const programms = [
     {
@@ -40,18 +41,20 @@ const Quality = () => {
         .
       </div>
 
-      {programms.map((item) => (
-        <AppearMotionDiv
+      {programms.map((item, i) => (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.1, delay: i * 0.3 }}
           key={item.icon}
-          delay={item.deley}
-          className=" w-[95%] md:w-2/3 lg:w-[24%] border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700 bg-white transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-lg shadow-[#f0f0f0] "
+          className=" w-[95%] md:w-2/3 lg:w-[24%] bg-slate-50 border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700  transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-lg shadow-[#f0f0f0] "
         >
           <div className="flex  items-center justify-center">
             <Image src={item.icon} height={60} width={60} alt="img" />
           </div>
           <h1 className="text-lg font-bold">{item.heading}</h1>
           <p>{item.text}</p>
-        </AppearMotionDiv>
+        </motion.div>
       ))}
     </div>
   );

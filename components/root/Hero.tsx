@@ -9,30 +9,39 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import AnimatedBtn from "./AnimatedBtn";
+import { TypewriterEffect } from "../framerUi/TypeWritter";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
 
-  const slider_imageData = [
+  const slider_imageData = ["/11.jpg", "/16.jpg", "/13.jpg"];
+
+  const words = [
     {
-      id: "#1",
-      text: "এতদ্বারা সকল পরিচালক মহোদয়কে অবগতির জন্য জানানো যাচ্ছে যে,  আইটি নেটওয়ার্ক এর (জানুয়ারি - জুন ২০২৪ এবং এপ্রিল - জুন ২০২৪) ইং সেশনে ০৩ মাস এবং ০৬ মাস মেয়াদী কম্পিউটার কোর্সের..........",
-      date: "12 may 2024",
+      text: "The",
     },
     {
-      id: "#1",
-      text: "এতদ্বারা সকল পরিচালক মহোদয়কে অবগতির জন্য জানানো যাচ্ছে যে,  নেটওয়ার্ক এর (জানুয়ারি - জুন ২০২৪ এবং এপ্রিল - জুন ২০২৪) ইং সেশনে ০৩ মাস এবং ০৬ মাস মেয়াদী কম্পিউটার কোর্সের..........",
-      date: "12 may 2024",
+      text: "Earn",
     },
     {
-      id: "#1",
-      text: "এতদ্বারা সকল পরিচালক মহোদয়কে অবগতির জন্য জানানো যাচ্ছে যে,  এর (জানুয়ারি - জুন ২০২৪ এবং এপ্রিল - জুন ২০২৪) ইং সেশনে ০৩ মাস এবং ০৬ মাস মেয়াদী কম্পিউটার কোর্সের..........",
-      date: "12 may 2024",
+      text: "Way",
+    },
+
+    {
+      text: "Youth",
+      className: "text-blue-500 dark:text-blue-500",
+    },
+    {
+      text: "Development",
+      className: "text-blue-500 dark:text-blue-500",
+    },
+    {
+      text: "Resource.",
+      className: "text-blue-500 dark:text-blue-500",
     },
   ];
-
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth > 768);
@@ -56,26 +65,31 @@ const Hero = () => {
           />
         </div>
         <div className="z-30 relative mt-20 ml-3 md:ml-8 text-white">
-          <h1 className="uppercase text-2xl font-sans leading-[50px] text-[2.5rem] font-bold">
-            The earn way youth development resourece
+          <h1 className="uppercase font-salsa min-h-[150px] text-2xl leading-[50px] text-[2.5rem] font-bold">
+            <TypewriterEffect words={words} />
           </h1>
-          <p className="text-[1.1rem] md:text-[1.5rem] mt-11 my-6 font-bangla leading-8 md:leading-10   mb-5 md:mb-20 ">
+          <motion.p
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-[1.1rem] md:text-[1.5rem] mt-11 my-6 font-bangla leading-8 md:leading-10   mb-5 md:mb-20 "
+          >
             আমরা কম্পিউটার প্রশিক্ষণ কেন্দ্রের ব্রাঞ্চ খোলার লাইসেন্স ও অনুমতি
             প্রদান করছি, একটি ব্রাঞ্চের উদ্যোক্তা হতে এখনই আবেদন করুন
-          </p>
-          <div className="mb-5">
+          </motion.p>
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="mb-5"
+          >
             <AnimatedBtn />
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="lg:h-full h-[400px]  md:h-[700px]  px-2 w-full lg:w-2/5 flex items-center justify-center bg-yellow-500 ">
         <div className="w-full h-full py-4">
-          <div className="my-2 flex items-center justify-between">
-            <h1 className="">Important Notices</h1>
-            <Button className="rounded-none text-sm">View All</Button>
-          </div>
           <Swiper
-            className=" w-full h-[65%] md:h-[70%] content-center"
+            className=" w-full h-[65%] md:h-[80%] content-center"
             direction={isLargeScreen ? "vertical" : "horizontal"}
             modules={[Autoplay]}
             spaceBetween={5}
@@ -85,14 +99,14 @@ const Hero = () => {
             loop={true}
           >
             {slider_imageData.map((item, i) => (
-              <SwiperSlide key={i} className="bg-white ">
-                <div className="text-md m-4 font-bangla">
-                  <h1 className="my-1 text-amber-600">Date : 12 may 2024</h1>
-                  <p>{item.text}</p>
-                  <Button className="font-incons text-[12px] md:text-sm rounded-none">
-                    Read More
-                  </Button>
-                </div>
+              <SwiperSlide key={i} className="border-4 border-yellow-500">
+                <Image
+                  src={item}
+                  className="w-full"
+                  height={1000}
+                  width={1000}
+                  alt="main_logo"
+                />
               </SwiperSlide>
             ))}
           </Swiper>

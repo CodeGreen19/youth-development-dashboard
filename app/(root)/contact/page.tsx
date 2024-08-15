@@ -1,3 +1,5 @@
+"use client";
+
 import Contact from "@/components/root/Contact";
 import React from "react";
 
