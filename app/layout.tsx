@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Inconsolata, Potta_One } from "next/font/google";
+import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "react-hot-toast";
 import ReactQuery from "@/components/data/ReactQuery";
 
 const incons = Inconsolata({ subsets: ["latin"], variable: "--font-incons" });
-const potta = Potta_One({
-  subsets: ["latin"],
-  variable: "--font-patta",
-  weight: ["400"],
-});
 
 export const metadata: Metadata = {
   title: "The Earn Way Youth Development Dashboard",
@@ -27,8 +22,7 @@ export default function RootLayout({
       <body
         className={cn(
           "font-incons text-lg min-h-screen antialiased",
-          incons.variable,
-          potta.variable
+          incons.variable
         )}
       >
         <ReactQuery> {children}</ReactQuery>
