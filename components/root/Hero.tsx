@@ -65,8 +65,11 @@ const Hero = () => {
           />
         </div>
         <div className="z-30 relative mt-20 ml-3 md:ml-8 text-white">
-          <h1 className="uppercase font-salsa min-h-[150px] text-2xl leading-[50px] text-[2.5rem] font-bold">
-            <TypewriterEffect words={words} />
+          <h1 className="uppercase font-salsa md:min-h-[150px] text-sm min-h-28 leading-[50px] text-[2.5rem] font-bold">
+            <TypewriterEffect
+              words={words}
+              className="text-3xl md:text-[2rem]"
+            />
           </h1>
           <motion.p
             initial={{ x: 100, opacity: 0 }}
@@ -80,7 +83,7 @@ const Hero = () => {
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="mb-5"
+            className="mb-10"
           >
             <AnimatedBtn />
           </motion.div>

@@ -26,13 +26,13 @@ const RootNavbar = () => {
     }
   };
   return (
-    <div className="md:h-24  h-16 shadow-md bg-white overflow-visible z-50 w-full ">
+    <div className="md:h-24  h-20 shadow-md bg-white overflow-visible z-50 w-full ">
       <div className="md:container px-2 flex items-center justify-between">
         <Link href={"/"}>
           <div className="p-4 z-40 relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
             <Image
               src={"/logo.png"}
-              className="drop-shadow-md md:w-20 w-12 -translate-y-2"
+              className="drop-shadow-md md:w-20 w-16 -translate-y-2"
               height={100}
               width={100}
               alt="main_logo"
@@ -44,7 +44,7 @@ const RootNavbar = () => {
         </div>
         <div className="flex items-center justify-center gap-2">
           <Button
-            className=" rounded-none bg-yellow-500 hover:bg-yellow-600 py-6 px-6 text-black"
+            className=" rounded-none bg-yellow-500 hover:bg-yellow-600 py-5 md:py-6 px-6 text-black"
             onClick={() => handleClick()}
           >
             Branch login
@@ -52,14 +52,14 @@ const RootNavbar = () => {
           <LoginDialog>
             <div
               ref={buttonRef}
-              className="p-3 hidden rounded-none bg-yellow-500 text-black"
+              className="md:p-3 p-2  hidden rounded-none bg-yellow-500 text-black"
             >
               dummy button
             </div>
           </LoginDialog>
 
           <SheetContext>
-            <div className="text-white-500 text-white py-[14px] px-4 text-sm bg-black">
+            <div className="text-white-500 text-white py-[10px] md:py-[14px] px-4 text-sm bg-black">
               menu
             </div>
           </SheetContext>

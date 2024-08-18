@@ -60,7 +60,7 @@ export function OtpPage({
             pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
             onChange={(value) => setOtp(Number(value))}
           >
-            <InputOTPGroup>
+            <InputOTPGroup className="flex items-center w-full justify-between">
               <InputOTPSlot className="p-7 font-bold text-3xl" index={0} />
               <InputOTPSlot className="p-7 font-bold text-3xl" index={1} />
               <InputOTPSlot className="p-7 font-bold text-3xl" index={2} />

@@ -12,7 +12,7 @@ const LoginDialog = ({ children }: { children: ReactNode }) => {
   const dialogRef: RefObject<HTMLButtonElement> = useRef(null);
   const [selectedPage, setSelelectedPage] = useState<
     "login" | "forgot" | "otp" | "reset"
-  >("login");
+  >("otp");
 
   const clickToClose = () => {
     if (dialogRef.current) {

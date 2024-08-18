@@ -5,12 +5,14 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
+import SocialIcons from "./SocialIcons";
 
 const SheetContext = ({ children }: { children: ReactNode }) => {
   const sheetRef: RefObject<HTMLButtonElement> = useRef(null);
@@ -47,6 +49,9 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
               </Link>
             ))}
           </ul>
+          <SheetFooter className="flex w-full mt-6 items-start justify-start">
+            <SocialIcons className="flex-col" />
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>

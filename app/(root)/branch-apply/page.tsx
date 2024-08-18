@@ -53,10 +53,10 @@ const BranchApply: React.FC = () => {
     setShowSuccess(false);
   };
   return (
-    <div className="container z-30 py-10">
+    <div className="md:container z-30 py-10">
       {showSuccess && <SuccessMessage clear={clearAllField} />}
       <div className="space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8">
           <motion.div
             whileInView={{ y: 0, opacity: 1 }}
             initial={{ y: -100, opacity: 0 }}
@@ -86,7 +86,7 @@ const BranchApply: React.FC = () => {
           <Button
             onClick={handleSubmit}
             disabled={isPending}
-            className="px-10  shadow-2xl text-xl py-8 transition-all bg-yellow-500 rounded-none border border-gray-400 text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+            className="px-10 mx-3 md:mx-0 shadow-2xl text-xl py-6 md:py-8 transition-all bg-yellow-500 rounded-none border border-gray-400 text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
           >
             {isPending ? "Submitting" : "Submit"}
           </Button>

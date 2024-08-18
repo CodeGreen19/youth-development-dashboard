@@ -10,7 +10,13 @@ import {
 } from "react-icons/fa6";
 import { SiTiktok } from "react-icons/si";
 
-const SocialIcons = ({ footer }: { footer?: boolean }) => {
+const SocialIcons = ({
+  footer,
+  className,
+}: {
+  footer?: boolean;
+  className?: string;
+}) => {
   const socialLinks = [
     {
       href: "https://facebook.com",
@@ -29,7 +35,7 @@ const SocialIcons = ({ footer }: { footer?: boolean }) => {
   ];
 
   return (
-    <ul className="flex items-center justify-center gap-2">
+    <ul className={`flex items-center justify-center gap-2 ${className}`}>
       {socialLinks.map((item) => (
         <Link href={item.href} key={item.ariaLabel}>
           <li

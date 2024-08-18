@@ -32,7 +32,7 @@ const Quality = () => {
   ];
 
   return (
-    <div className="py-4 relative  pb-20 lg:pb-0 flex flex-col items-center justify-between gap-2 lg:flex-row  lg:min-h-screen">
+    <div className="py-4 overflow-hidden relative  pb-20 lg:pb-0 flex flex-col items-center justify-between gap-2 lg:flex-row  lg:min-h-screen">
       <div className=" lg:absolute top-3 lg:top-10 text-[1.1rem] md:text-[1.4rem] lg:text-[1.8rem] text-center md:px-16 leading-5 lg:leading-10 text-amber-600 my-4">
         Since 2021, we have been partnering with education leaders to increase
         <span className="mx-3 border-b-2 border-b-yellow-500">
@@ -43,9 +43,8 @@ const Quality = () => {
 
       {programms.map((item, i) => (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.1, delay: i * 0.3 }}
+          initial={{ opacity: 0, scale: 0.4 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           key={item.icon}
           className=" w-[95%] md:w-2/3 lg:w-[24%] bg-slate-50 border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700  transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-lg shadow-[#f0f0f0] "
         >

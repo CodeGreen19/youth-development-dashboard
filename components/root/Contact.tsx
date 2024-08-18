@@ -51,7 +51,7 @@ const Contact = () => {
         initial={{ x: 150, opacity: 0 }}
         whileInView={{ x: 0, opacity: 1 }}
         transition={{ duration: 1.8 }}
-        className="bg-white px-5 shadow-lg flex items-center justify-start flex-col lg:absolute top-[200px] lg:left-[500px] h-[450px] lg:w-[500px]"
+        className="bg-white px-5 shadow-lg flex items-center justify-start flex-col lg:absolute top-[200px] lg:left-[500px] h-[500px] md:h-[450px] lg:w-[500px]"
       >
         <h1 className="text-2xl font-bold p-6 bg-amber-500">Contact Us</h1>
         <motion.p className="text-sm my-3">

@@ -13,7 +13,7 @@ const ImageGallery = () => {
 
   return (
     <div className="md:min-h-screen  pt-10 md:container">
-      <h1 className="underline text-amber-500 text-3xl my-5 text-center">
+      <h1 className="underline text-2xl text-amber-500 md:text-3xl md:my-5 text-center">
         Image Gallery
       </h1>
       <div className="flex p-4 lg:p-0 py-5 mb-16 items-start justify-start gap-4 flex-wrap">

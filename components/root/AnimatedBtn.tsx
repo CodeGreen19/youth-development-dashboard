@@ -18,12 +18,12 @@ const AnimatedBtn = () => {
     <div className="relative">
       <Button
         onClick={() => router.push("/branch-apply")}
-        className="bg-yellow-500 hover:bg-yellow-600 shadow-xl text-black rounded-none z-10 p-6 relative"
+        className="bg-yellow-500 hover:bg-yellow-600 shadow-xl text-black rounded-none z-10 p-5 md:p-6 relative"
       >
         Apply for Branch
       </Button>
       <div className="absolute -top-14  left-6">
-        <Lottie speed={0.6} options={defaultOptions} height={150} />;
+        <Lottie speed={0.5} options={defaultOptions} height={140} />;
       </div>
     </div>
   );

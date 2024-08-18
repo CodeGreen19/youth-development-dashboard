@@ -11,11 +11,10 @@ type CourseCardType = {
 const CourseCard = ({ code, name, url, index }: CourseCardType) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.6, y: 10 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      initial={{ scale: 0.8, y: 10 }}
+      transition={{ duration: 0.4 }}
       whileInView={{
         scale: 1,
-        opacity: 1,
         y: 0,
       }}
       className="w-full  overflow-hidden relative transition-all hover:rounded-tr-[50px] hover:bg-yellow-500 duration-500 flex items-start justify-center  my-2 md:w-[49%] lg:w-[24%] flex-none flex-wrap aspect-[6/7] border border-[#a5a5a549]"
