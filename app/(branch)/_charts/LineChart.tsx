@@ -21,7 +21,6 @@ const LineCharts = ({ data }: { data: LineChartArrType[] }) => {
     male: item.male,
     female: item.female,
   }));
-  console.log(newData);
 
   return (
     <div className="p-2 rounded shadow-md overflow-x-scroll scrollbar_hidden">

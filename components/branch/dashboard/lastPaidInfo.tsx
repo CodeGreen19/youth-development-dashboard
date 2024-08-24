@@ -46,8 +46,8 @@ const LastPaidInfo = ({ data }: { data: LastFiveStudentType[] }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item) => (
-                <TableRow>
+              {data.map((item, i) => (
+                <TableRow key={i}>
                   <TableCell>
                     <div className="font-medium"> name : {item.name}</div>
                     <div className="hidden text-sm text-muted-foreground md:inline">

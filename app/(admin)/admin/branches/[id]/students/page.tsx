@@ -96,6 +96,7 @@ const FilteredStudents = ({ id }: { id: string }) => {
           <ul>
             {courseRangeName.map((item, i) => (
               <li
+                key={i}
                 onClick={() => setSelectCourse(item)}
                 className={`my-1 flex hover:bg-sky-100 border rounded-md p-2 items-center justify-between  ${
                   item === selectCourse && "border-blue-500 bg-sky-100"

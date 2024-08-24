@@ -45,10 +45,10 @@ const StudentsActions = ({ id }: { id: string }) => {
       <ul className="bg-white shadow-md p-4">
         {courseNameArr.map((item, i) => (
           <li
+            key={i}
             className={`p-4 py-2 rounded-md cursor-pointer my-1 hover:bg-sky-200 bg-sky-100 shadow-sm ${
               item === selectedCourse && "border-2 border-blue-500"
             }`}
-            key={item}
             onClick={() => {
               setSelectedCourse(item);
             }}
@@ -66,8 +66,11 @@ const StudentsActions = ({ id }: { id: string }) => {
         ))}
       </ul>
       <ul className="bg-white shadow-md p-4">
-        {courseDurationInfo.map((item) => (
-          <li className="flex transition-all hover:bg-slate-200 items-center my-1 bg-slate-100 rounded-md p-1 px-3 justify-between gap-3">
+        {courseDurationInfo.map((item, i) => (
+          <li
+            key={i}
+            className="flex transition-all hover:bg-slate-200 items-center my-1 bg-slate-100 rounded-md p-1 px-3 justify-between gap-3"
+          >
             <span>
               {item.course_duration}{" "}
               <span className="font-mono">
