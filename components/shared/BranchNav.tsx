@@ -32,7 +32,7 @@ const BranchNav = ({ role }: { role: "USER" | "ADMIN" }) => {
       <div className="md:pr-5">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <BsPersonCircle />
+            <BsPersonCircle className="text-lg " />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="-translate-x-5  ">
             {role === "ADMIN" && (
@@ -42,12 +42,16 @@ const BranchNav = ({ role }: { role: "USER" | "ADMIN" }) => {
                 </DropdownMenuItem>
               </Link>
             )}
-            <DropdownMenuItem className="cursor-pointer">
-              Payments
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              Profile
-            </DropdownMenuItem>
+            <Link href={"/branch/billings/payment-history"}>
+              <DropdownMenuItem className="cursor-pointer">
+                Payments
+              </DropdownMenuItem>
+            </Link>
+            <Link href={"/branch/my-branch/profile"}>
+              <DropdownMenuItem className="cursor-pointer">
+                Profile
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               className="text-red-500 cursor-pointer"
               onClick={() => {

@@ -8,23 +8,22 @@ import {
 } from "@/components/ui/card";
 import React from "react";
 import { Progress } from "@/components/ui/progress";
+import { BranchMaleFemaleType } from "@/types/payment";
 
-const BranchEarning = () => {
-  let data = new String("this is the new string")[12];
+const BranchEarning = ({ data }: { data: BranchMaleFemaleType }) => {
+  const { count, gender, total, text } = data;
 
   return (
     <div>
       <Card x-chunk="dashboard-05-chunk-1" className="bg-transparent">
         <CardHeader className="pb-2">
-          <CardDescription>This Week</CardDescription>
-          <CardTitle className="text-4xl">$1,329</CardTitle>
+          <CardDescription>{gender}</CardDescription>
+          <CardTitle className="text-4xl">{count}</CardTitle>
         </CardHeader>
         <CardContent className="">
-          <div className="text-xs text-muted-foreground">
-            +25% from last week
-          </div>
+          <div className="text-xs text-muted-foreground">out of {total}</div>
         </CardContent>
-        <CardFooter>some text her..</CardFooter>
+        <CardFooter>{text}</CardFooter>
       </Card>
     </div>
   );

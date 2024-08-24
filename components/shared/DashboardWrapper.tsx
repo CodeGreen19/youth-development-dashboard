@@ -6,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { SideBarInfoArr } from "@/components/data/index";
 import { FaAngleRight } from "react-icons/fa6";
 import Link from "next/link";
@@ -16,23 +15,31 @@ import { getUserAction } from "@/actions/auth";
 import { useQuery } from "@tanstack/react-query";
 import BranchLoading from "../branch/BranchLoading";
 import PermissionBlock from "../admin/branches/PermissionBlock";
+import OneTimePaymentAmount from "../admin/branches/OneTimePayment";
+import { BsLayoutTextSidebar } from "react-icons/bs";
 
 const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(true);
   const [role, setRole] = useState<"USER" | "ADMIN">("USER");
   const pathname = usePathname();
-  let [isBlock, setIsBlock] = useState<boolean>(false);
-  const { isPending } = useQuery({
+  let [disable, setDisable] = useState<boolean>(false);
+  let [isOneTimePaid, setIsOneTimePaid] = useState<boolean>(true);
+  let [oneTimeAmount, setOneTimeAmount] = useState<string>("0");
+  let [needToPay, setNeedToPay] = useState<boolean>(true);
+  const { data: branchData, isPending } = useQuery({
     queryKey: ["getUser"],
     queryFn: async () => {
       let data = await getUserAction();
-
       if (!data?.branchInfo) {
         return router.push("/");
       }
-      setIsBlock(!data.branchInfo.disabled);
+
+      setDisable(data.branchInfo.disabled === true ? false : true);
       setRole(data.branchInfo.role);
+      setIsOneTimePaid(data.branchInfo.isOneTimePaid);
+      setNeedToPay(data.branchInfo.haveToPay);
+      setOneTimeAmount(data.oneTimePayAmount);
       return data;
     },
   });
@@ -40,17 +47,26 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <main className=" w-full">
       {isPending && <BranchLoading />}
-      {isBlock && <PermissionBlock />}
+      {disable && <PermissionBlock />}
+      {!isPending && !disable && needToPay && !isOneTimePaid && (
+        <OneTimePaymentAmount
+          amount={oneTimeAmount}
+          email={branchData?.branchInfo?.branchInfo?.branchEmail!}
+          id={branchData?.branchInfo?.id!}
+          name={branchData?.branchInfo?.branchInfo?.branchName!}
+          phone={branchData?.branchInfo?.branchInfo?.branchMobile!}
+        />
+      )}
 
       <BranchNav role={role} />
       <div className="flex items-start justify-start">
         <div
-          className={`md:hidden p-1 bg-white rounded-r-full absolute top-5 text-sm left-0 ${
+          className={`md:hidden p-1 bg-white rounded-r-md absolute top-5 text-sm left-0 ${
             open ? "hidden" : ""
           }`}
           onClick={() => setOpen(true)}
         >
-          {open ? <FaAnglesLeft /> : <FaAnglesRight />}
+          {<BsLayoutTextSidebar />}
         </div>
         <section
           className={`bg-white z-40  md:p-3 border-r-2 overflow-hidden  border-r-gray-300  shadow-sm  fixed  md:sticky top-0 left-0 h-screen transition-all ${
@@ -59,7 +75,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
         >
           <div className={`flex items-center justify-end `}>
             <span onClick={() => setOpen(!open)} className="cursor-pointer">
-              {open ? <FaAnglesLeft /> : <FaAnglesRight />}
+              {<BsLayoutTextSidebar />}
             </span>
           </div>
           <Accordion type="single" collapsible>
@@ -72,7 +88,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
                 {open ? (
                   <AccordionTrigger className="">
                     <h1
-                      className={`flex items-center justify-start gap-2 ${
+                      className={`flex hover:translate-x-2 transition-all items-center justify-start gap-2 ${
                         item.items.filter((d) => d.link === pathname).length >
                           0 && "text-amber-500"
                       } `}
@@ -118,7 +134,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
             ))}
           </Accordion>
         </section>
-        <section className="bg-slate-50 max-w-screen-2xl p-1 relative md:p-0 w-full ">
+        <section className="bg-slate-500 max-w-screen-2xl p-1 relative md:p-0 w-full ">
           {children}
         </section>
       </div>

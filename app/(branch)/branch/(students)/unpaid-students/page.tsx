@@ -35,6 +35,7 @@ const UnpaidStudents = () => {
         <UnPaidStudentTable
           info={data?.allStudents}
           feesData={data.feesData!}
+          isAdminStudent={data.isAdmin}
         />
       )}
     </div>

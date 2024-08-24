@@ -1,3 +1,4 @@
+"use client";
 import { ChangeBranchPasswordForOwner } from "@/actions/branchOwner";
 import { isImage } from "@/components/data/helpers";
 import { customToast } from "@/components/shared/ToastContainer";
@@ -7,6 +8,7 @@ import { GetBranchInfoType } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
   let { branchInfo, documents, moreInfo, personalInfo } = info;
@@ -36,7 +38,11 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
           <h2 className="text-xl font-semibold mb-4">
             Branch&apos;s Information
           </h2>
-          <table className="table-auto w-full border-collapse border border-gray-200 bg-gray-50">
+          <motion.table
+            initial={{ scale: 0.7, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            className="table-auto w-full border-collapse border border-gray-200 bg-white shadow-lg"
+          >
             <tbody className="">
               <tr>
                 <td className="border px-4 py-2 font-semibold">Branch Name</td>
@@ -57,18 +63,7 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
                   {branchInfo?.noOfComputers}
                 </td>
               </tr>
-              <tr>
-                <td className="border px-4 py-2 font-semibold">
-                  Alt Contact Name
-                </td>
-                <td className="border px-4 py-2"></td>
-              </tr>
-              <tr>
-                <td className="border px-4 py-2 font-semibold">
-                  Alt Contact Designation
-                </td>
-                <td className="border px-4 py-2"></td>
-              </tr>
+
               <tr>
                 <td className="border px-4 py-2 font-semibold">
                   Institute Age
@@ -80,13 +75,17 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
                 <td className="border px-4 py-2 text-blue-500">Active</td>
               </tr>
             </tbody>
-          </table>
+          </motion.table>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-4">
             Director&apos;s Information
           </h2>
-          <table className="table-auto w-full border-collapse border bg-gray-50 border-gray-200">
+          <motion.table
+            initial={{ scale: 0.7, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            className="table-auto w-full border-collapse border bg-white shadow-lg"
+          >
             <tbody>
               <tr>
                 <td className="border px-4 py-2 font-semibold">Director</td>
@@ -117,10 +116,6 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
                 </td>
               </tr>
               <tr>
-                <td className="border px-4 py-2 font-semibold">Alt Mobile</td>
-                <td className="border px-4 py-2"></td>
-              </tr>
-              <tr>
                 <td className="border px-4 py-2 font-semibold">Gender</td>
                 <td className="border px-4 py-2">{personalInfo?.gender}</td>
               </tr>
@@ -129,11 +124,15 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
                 <td className="border px-4 py-2">{personalInfo?.bloodGroup}</td>
               </tr>
             </tbody>
-          </table>
+          </motion.table>
         </div>
       </div>
       <div className="grid  grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className=" p-3 border border-gray-300 pb-8 bg-amber-500">
+        <motion.div
+          initial={{ scale: 0.7, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          className=" p-3 border border-gray-300 pb-8 bg-white shadow-lg"
+        >
           <h2 className="text-xl font-semibold mb-4">Attachment</h2>
           <div className="flex flex-col space-y-8">
             <div className="flex items-center justify-between relative space-x-4">
@@ -225,9 +224,11 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
               </a>
             </div>
           </div>
-        </div>
-        <form
-          className="p-4 border border-gray-300 bg-gray-50 self-start"
+        </motion.div>
+        <motion.form
+          initial={{ scale: 0.7, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          className="p-4 border border-gray-300 bg-white shadow-lg self-start"
           onSubmit={ChangePasswordHandler}
         >
           <h2 className="text-xl font-semibold mb-4">Change Password</h2>
@@ -247,7 +248,7 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
               {isPending ? "Update.." : "Update"}
             </Button>
           </div>
-        </form>
+        </motion.form>
       </div>
     </div>
   );

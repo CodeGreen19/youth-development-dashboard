@@ -6,7 +6,11 @@ import { IoGitBranchOutline } from "react-icons/io5";
 import { LuScrollText } from "react-icons/lu";
 import { FaRegImages } from "react-icons/fa6";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
-
+import { IoPricetagsOutline } from "react-icons/io5";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { RiQuestionMark } from "react-icons/ri";
+import { GrLineChart } from "react-icons/gr";
+import { FaInfoCircle } from "react-icons/fa";
 export const SideBarInfoArr = [
   {
     title: "Dashboard",
@@ -20,7 +24,7 @@ export const SideBarInfoArr = [
       { title: "New Student", link: "/branch/new-student" },
       { title: "Paid Students", link: "/branch/all-students" },
       { title: "Unpaid Students", link: "/branch/unpaid-students" },
-      { title: "Results", link: "/branch/student-results" },
+      // { title: "Results", link: "/branch/student-results" },
     ],
   },
   {
@@ -28,7 +32,7 @@ export const SideBarInfoArr = [
     icon: <FaCodeBranch />,
     items: [
       { title: "Branch Profile", link: "/branch/my-branch/profile" },
-      { title: "Billing Aggrement", link: "/branch/my-branch/aggrement" },
+      // { title: "Billing Aggrement", link: "/branch/my-branch/aggrement" },
     ],
   },
   {
@@ -37,6 +41,11 @@ export const SideBarInfoArr = [
     items: [
       { title: "Payment History", link: "/branch/billings/payment-history" },
     ],
+  },
+  {
+    title: "Info",
+    icon: <FaInfoCircle />,
+    items: [{ title: "Notices", link: "/branch/info/notices" }],
   },
 ];
 export const AdminLinks = [
@@ -48,15 +57,28 @@ export const AdminLinks = [
   { title: "Branches", icon: <IoGitBranchOutline />, link: "/admin/branches" },
   { title: "Notices", icon: <LuScrollText />, link: "/admin/notices" },
   { title: "Gallery Images", icon: <FaRegImages />, link: "/admin/gallery" },
-  { title: "Approved Branches", icon: <FaAnglesLeft />, link: "#" },
-  { title: "Rejected Branches", icon: <FaAnglesLeft />, link: "#" },
-  { title: "Revenue", icon: <FaAnglesLeft />, link: "#" },
+  {
+    title: "Verified Branches",
+    icon: <IoMdCheckmarkCircleOutline />,
+    link: "/admin/varified-branches",
+  },
+  {
+    title: "Unverfied Branches",
+    icon: <RiQuestionMark />,
+    link: "/admin/not-varified-branches",
+  },
+
   {
     title: "Course Fees",
     icon: <LiaMoneyBillWaveSolid />,
     link: "/admin/course-fees",
   },
-  { title: "Charts", icon: <FaAnglesLeft />, link: "#" },
+  {
+    title: "Branch Payment",
+    icon: <IoPricetagsOutline />,
+    link: "/admin/branch-payment",
+  },
+  { title: "Revenue", icon: <GrLineChart />, link: "/admin/revenue" },
 ];
 
 export const AllCourses = [

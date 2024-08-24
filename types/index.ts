@@ -87,7 +87,28 @@ export type Student = {
   trade: string;
   session: string;
   isPaid: boolean;
+  isAdminStudent: boolean;
   result: string;
   fees: string | boolean;
   picture: string | undefined;
+};
+
+export interface EditResultType {
+  id: string;
+  roll: string;
+  result: string | null;
+}
+export interface EditResultTypeForBackend extends EditResultType {
+  result: string;
+}
+
+export type LineChartArrType = {
+  male: number;
+  female: number;
+  day: Date;
+};
+
+export type AdminBranchProgressType = {
+  date: Date;
+  count: number;
 };

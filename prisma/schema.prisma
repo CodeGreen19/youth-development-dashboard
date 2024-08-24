@@ -14,16 +14,18 @@ model Branch {
   role          Role          @default(USER)
   isVarified    Boolean       @default(false)
   disabled      Boolean       @default(false)
+  isOneTimePaid Boolean       @default(false)
+  haveToPay     Boolean       @default(true)
+  transId       String?
+  otp           Int?
+  otpToken      String?
+  otpSentDate   DateTime?
   branchInfo    BranchInfo?
   personalInfo  PersonalInfo?
   moreInfo      MoreInfo?
   documents     Document?
   students      Student[]
   paymentInfo   Payment[]
-  isOneTimePaid Boolean       @default(false)
-  otp           Int?
-  otpToken      String?
-  otpSentDate   DateTime?
   createdAt     DateTime      @default(now())
 }
 
@@ -148,6 +150,13 @@ model CourseFees {
   threeYears  String
   fourYears   String
   createdAt   DateTime @default(now())
+}
+
+// one time payment
+model OneTimePaymentForBranch {
+  id        String   @id @default(uuid())
+  price     String
+  createdAt DateTime @default(now())
 }
 
 // notice and other 

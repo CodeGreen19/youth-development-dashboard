@@ -18,7 +18,7 @@ let BranchesInfo = async () => {
   return info;
 };
 
-const Branches = () => {
+const BranchesPage = () => {
   const { isPending, data } = useQuery({
     queryKey: ["branches"],
     queryFn: BranchesInfo,
@@ -58,4 +58,4 @@ const Branches = () => {
   );
 };
 
-export default Branches;
+export default BranchesPage;

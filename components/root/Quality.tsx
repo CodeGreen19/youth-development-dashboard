@@ -43,8 +43,8 @@ const Quality = () => {
 
       {programms.map((item, i) => (
         <motion.div
-          initial={{ opacity: 0, scale: 0.4 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ scale: 0.4 }}
+          whileInView={{ scale: 1 }}
           key={item.icon}
           className=" w-[95%] md:w-2/3 lg:w-[24%] bg-slate-50 border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700  transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-lg shadow-[#f0f0f0] "
         >

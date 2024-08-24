@@ -66,7 +66,11 @@ const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {
             {AdminLinks.map((item) => (
               <Link key={item.title} href={item.link}>
                 {" "}
-                <li className="flex my-3 items-center justify-start gap-3">
+                <li
+                  className={`flex my-3 hover:translate-x-2 transition-all items-center justify-start gap-3 ${
+                    pathname === item.link ? "text-blue-600" : ""
+                  }`}
+                >
                   <span>{item.icon}</span>
                   {open && <span>{item.title}</span>}
                 </li>

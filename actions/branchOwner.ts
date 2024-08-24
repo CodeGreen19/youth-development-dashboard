@@ -1,7 +1,9 @@
 "use server";
 
 import { hashedPassword, jwtDecode } from "@/data/auth";
+import { getLast30Days } from "@/data/lineChartInfo";
 import { prisma } from "@/lib/db";
+import { LineChartArrType } from "@/types";
 import { cookies } from "next/headers";
 
 export const GetBranchWithoutIdAction = async () => {
@@ -58,6 +60,13 @@ export const getAllStudentsOfBranch = async () => {
       return { message: "token does'nt exist" };
     }
     let { id } = jwtDecode(token);
+    let BranchRole = await prisma.branch.findUnique({
+      where: { id },
+      select: { role: true },
+    });
+
+    let isAdmin = BranchRole!.role === "ADMIN" ? true : false;
+
     let allStudents = await prisma.student.findMany({
       where: { branchId: id },
       include: { docs: true },
@@ -74,8 +83,66 @@ export const getAllStudentsOfBranch = async () => {
       },
     });
 
-    return { allStudents, feesData };
+    return { allStudents, feesData, isAdmin };
   } catch (error) {
     return { error: "internal server error" };
   }
 };
+
+export const getDashboardInfoForBranch = async () => {
+  try {
+    let token = cookies().get("branch_token")?.value;
+    if (!token) {
+      return { message: "token does'nt exist" };
+    }
+    let { id } = jwtDecode(token);
+
+    let allStudents = await prisma.student.findMany({
+      where: { branchId: id },
+      select: { isPaid: true, name: true, gender: true, createdAt: true },
+    });
+    let totalStudent = allStudents.length;
+    let paidStudent = allStudents.filter((item) => item.isPaid === true).length;
+    let unpaidStudent = totalStudent - paidStudent;
+    let lastFiveStudent = allStudents.reverse().slice(0, 5);
+    let maleCount = allStudents.filter((item) => item.gender === "male").length;
+    let FemaleCount = totalStudent - maleCount;
+
+    let notices = await prisma.notice.findMany();
+    let lastNotice = notices[notices.length - 1];
+
+    let transitions = await prisma.payment.findMany({
+      where: { branchId: id },
+    });
+    let lastFiveTrans = transitions.reverse().slice(0, 5);
+
+    // for chart
+    let lastMonths = getLast30Days();
+
+    allStudents.forEach((item) => {
+      lastMonths.forEach((info, i) => {
+        if (
+          item.createdAt.toString().slice(0, 14) ===
+          info.day.toString().slice(0, 14)
+        ) {
+          if (item.gender === "male") lastMonths[i].male += 1;
+          if (item.gender === "female") lastMonths[i].female += 1;
+        }
+      });
+    });
+    return {
+      totalStudent,
+      paidStudent,
+      unpaidStudent,
+      lastNotice,
+      lastFiveTrans,
+      lastFiveStudent,
+      maleCount,
+      FemaleCount,
+      lastMonths,
+    };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};
+///

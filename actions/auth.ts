@@ -84,9 +84,21 @@ export const getUserAction = async () => {
         id: true,
         role: true,
         disabled: true,
+        isOneTimePaid: true,
+        haveToPay: true,
+        branchInfo: {
+          select: { branchName: true, branchEmail: true, branchMobile: true },
+        },
       },
     });
-    return { branchInfo };
+    let oneTimePayAmount = "";
+    if (branchInfo?.isOneTimePaid === false) {
+      let data = await prisma.oneTimePaymentForBranch.findMany();
+      if (data[0].price) {
+        oneTimePayAmount = data[0].price!;
+      }
+    }
+    return { branchInfo, oneTimePayAmount };
   } catch (error) {
     return { error: "internal server error" };
   }

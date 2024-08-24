@@ -10,11 +10,19 @@ type DateType = {
   title: string;
   num: string | number;
 };
-const BranchInfoDashboard = () => {
+const BranchInfoDashboard = ({
+  all,
+  paid,
+  unpaid,
+}: {
+  all: number;
+  paid: number;
+  unpaid: number;
+}) => {
   let data: DateType[] = [
-    { icon: <PiStudentLight />, title: "Total Students", num: 45 },
-    { icon: <BsDatabaseDown />, title: "Unpaid Students", num: 45 },
-    { icon: <HiOutlineBanknotes />, title: "Paid Students", num: 45 },
+    { icon: <PiStudentLight />, title: "Total Students", num: all },
+    { icon: <BsDatabaseDown />, title: "Unpaid Students", num: unpaid },
+    { icon: <HiOutlineBanknotes />, title: "Paid Students", num: paid },
     { icon: <SiStatuspal />, title: "Active", num: "Status" },
   ];
   return (
@@ -28,7 +36,9 @@ const BranchInfoDashboard = () => {
             {item.icon}
           </div>
           <div className="flex items-start justify-center flex-col">
-            <span className="text-[1.5rem] font-bold">{item.num}</span>{" "}
+            <span className="text-[1.5rem] font-bold font-salsa">
+              {item.num}
+            </span>{" "}
             <span className="text-sm text-zinc-500 mt-1">{item.title}</span>
           </div>
         </div>

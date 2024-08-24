@@ -42,9 +42,7 @@ const AdminNav = ({ role }: { role?: "USER" | "ADMIN" }) => {
                 </DropdownMenuItem>
               </Link>
             )}
-            <DropdownMenuItem className="cursor-pointer">
-              Profile
-            </DropdownMenuItem>
+
             <DropdownMenuItem
               className="text-red-500 cursor-pointer"
               onClick={() => {

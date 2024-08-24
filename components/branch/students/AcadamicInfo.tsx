@@ -20,8 +20,8 @@ const AcadamicInfo = () => {
   );
 
   return (
-    <Fragment>
-      <h1 className="branch_heading flex items-center justify-start gap-3">
+    <div className="bg-white rounded-sm ">
+      <h1 className="branch_heading flex ml-5 items-center justify-start gap-3">
         <span>Academic Information </span>
         <div className="">
           <Button
@@ -153,7 +153,7 @@ const AcadamicInfo = () => {
           </div>
         </section>
       )}
-    </Fragment>
+    </div>
   );
 };
 

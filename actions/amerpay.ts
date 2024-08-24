@@ -124,3 +124,56 @@ export const FailedPayment = async (trans_id: string) => {
     return { error: "internal server error" };
   }
 };
+
+// for branch
+type BranchType = {
+  id: string;
+  amount: string;
+  phone: string;
+  email: string;
+  name: string;
+};
+// branch payment
+export async function processAmerpayPaymentForBranch({
+  id,
+  amount,
+  name,
+  email,
+  phone,
+}: BranchType) {
+  let trans_id = generateUniqueTransId();
+  let uniqueId = Math.round(Math.random() * 354254).toString();
+  const payload = {
+    store_id: process.env.AMERPAY_STORE_ID,
+    tran_id: uniqueId,
+    success_url: `${process.env.BASE_URL}/api/payment/branch?amount=${amount}&transId=${trans_id}`,
+    fail_url: `${process.env.BASE_URL}/api/payment/branch/fail?transId=${trans_id}`,
+    cancel_url: `${process.env.BASE_URL}/branch/dashboard/analytics`,
+
+    amount: amount,
+    currency: "BDT",
+    signature_key: process.env.AMERPAY_SIGNATURE,
+    desc: "Digital Youth It development Resource",
+    cus_name: name,
+    cus_email: email,
+    cus_phone: phone,
+    type: "json",
+  };
+
+  try {
+    let { data } = (await axios.post(
+      "https://​sandbox​.aamarpay.com/jsonpost.php",
+      payload
+    )) as { data: { result: string; payment_url: string } };
+
+    await prisma.branch.update({
+      where: { id },
+      data: {
+        transId: trans_id,
+      },
+    });
+    return { data };
+  } catch (error) {
+    return { error: "error" };
+  }
+}

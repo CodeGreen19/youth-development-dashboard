@@ -3,6 +3,7 @@
 import { GetSingleBranchAction } from "@/actions/branch";
 import AdminBranchAction from "@/components/admin/branches/AdminBranchAction";
 import DetailBranch from "@/components/admin/branches/DetailBranch";
+import StudentsActions from "@/components/admin/branches/branchStudent/StudentsActions";
 import { Button } from "@/components/ui/button";
 
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +15,9 @@ let getSingleBranchInfo = async (id: string) => {
 };
 
 const DetailBranchInfo = ({ params }: { params: { id: string } }) => {
-  const [showAction, setShowAction] = useState<boolean>(false);
+  const [showAction, setShowAction] = useState<"info" | "action" | "student">(
+    "info"
+  );
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["branch"],
@@ -34,34 +37,49 @@ const DetailBranchInfo = ({ params }: { params: { id: string } }) => {
         <div className="flex items-center gap-2">
           <Button
             className={`${
-              showAction
-                ? "bg-transparent shadow-none text-green-500"
-                : "bg-black"
+              showAction === "info"
+                ? "bg-black"
+                : "bg-transparent shadow-none text-green-500"
             }`}
-            onClick={() => setShowAction(false)}
+            onClick={() => setShowAction("info")}
           >
             Info
           </Button>
           <Button
             className={`${
-              !showAction
-                ? "bg-transparent shadow-none text-green-500"
-                : "bg-black"
+              showAction === "action"
+                ? "bg-black"
+                : "bg-transparent shadow-none text-green-500"
             }`}
-            onClick={() => setShowAction(true)}
+            onClick={() => setShowAction("action")}
           >
             Actions
           </Button>
+          <Button
+            className={`${
+              showAction === "student"
+                ? "bg-black"
+                : "bg-transparent shadow-none text-green-500"
+            }`}
+            onClick={() => setShowAction("student")}
+          >
+            Students
+          </Button>
         </div>
       </h1>
-      {showAction ? (
+      {showAction === "action" ? (
         <AdminBranchAction
           varified={data.branch?.isVarified!}
           id={data.branch?.id!}
           checked={data.branch?.disabled!}
+          branchAllowChecked={!data.branch?.haveToPay!}
+          isPaid={data.branch?.isOneTimePaid!}
+          isAdmin={data.branch?.role!}
         />
-      ) : (
+      ) : showAction === "info" ? (
         <DetailBranch branchInfo={data.branch!} />
+      ) : (
+        <StudentsActions id={params.id} />
       )}
     </div>
   );

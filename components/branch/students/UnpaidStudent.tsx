@@ -6,7 +6,6 @@ import { BranchStudentType } from "@/types/students";
 import Link from "next/link";
 import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-
 import { FaDownload, FaEdit, FaIdBadge } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import DeleteStudent from "./DeleteStudent";
@@ -14,6 +13,9 @@ import { processAmerpayPayment } from "@/actions/amerpay";
 import { CourseFeesType, Student } from "@/types";
 import { consizeData, PriceSettingHelper } from "@/components/data/priceHelper";
 import Image from "next/image";
+import { AdminStudentPayment } from "@/actions/payments";
+import { useQueryClient } from "@tanstack/react-query";
+import { customToast } from "@/components/shared/ToastContainer";
 
 type PaymentType = {
   id: string;
@@ -21,111 +23,146 @@ type PaymentType = {
   phone: string;
   name: string;
 };
-const hanleClickFunc = async (info: PaymentType) => {
-  try {
-    let data = await processAmerpayPayment(info);
-    if (data.data?.payment_url) {
-      window.open(data.data.payment_url, "_self");
-    }
-  } catch (error) {}
-};
-
-const columns: TableColumn<Student>[] = [
-  {
-    name: "Picture",
-    cell: (row) => (
-      <Image
-        height={100}
-        width={100}
-        src={row.picture!}
-        alt={row.name}
-        className="w-10 my-2 h-10 rounded-sm"
-      />
-    ),
-    sortable: false,
-  },
-  {
-    name: "Name",
-    selector: (row) => row.name,
-    sortable: true,
-  },
-
-  {
-    name: "Mobile",
-    selector: (row) => row.mobile,
-    sortable: true,
-  },
-  {
-    name: "Trade",
-    selector: (row) => row.trade,
-    sortable: true,
-  },
-  {
-    name: "Session",
-    selector: (row) => row.session,
-    sortable: true,
-  },
-  {
-    name: "Fees",
-    cell: (row) => (
-      <div>
-        {typeof row.fees === "boolean" || row.fees === "" ? (
-          <div className="p-2 rounded text-white bg-amber-500">
-            Contact with admin
-          </div>
-        ) : (
-          <div className="">
-            <Button
-              className="bg-amber-500 font-sans text-sm hover:bg-amber-600"
-              onClick={async () =>
-                await hanleClickFunc({
-                  id: row.id,
-                  amount: row.fees as string,
-                  name: row.name,
-                  phone: row.mobile,
-                })
-              }
-            >
-              Pay {row.fees} BDT
-            </Button>
-          </div>
-        )}
-      </div>
-    ),
-  },
-
-  {
-    name: "Actions",
-    cell: (row) => (
-      <div className="flex items-center gap-2">
-        <Link href={`/branch/unpaid-students/${row.id}`}>
-          {" "}
-          <Button className="bg-purple-500 hover:bg-purple-600">
-            <FaEdit className="text-white" />
-          </Button>
-        </Link>
-        <DeleteStudent id={row.id} imgUrl={row.picture!}>
-          <div className="bg-red-500 p-3 rounded cursor-pointer hover:bg-red-600">
-            <RiDeleteBin2Line className="text-white" />
-          </div>
-        </DeleteStudent>
-      </div>
-    ),
-  },
-];
 
 const UnPaidStudentTable = ({
   info,
   feesData,
+  isAdminStudent,
 }: {
   info: BranchStudentType[] | null;
   feesData: CourseFeesType[];
+  isAdminStudent: boolean;
 }) => {
   const [filterText, setFilterText] = useState("");
-  let data =
-    info === null ? [] : consizeData({ data: info, feesInfo: feesData });
-
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const hanleClickFunc = async (info: PaymentType) => {
+    setLoading(info.id);
+    try {
+      let data = await processAmerpayPayment(info);
+      if (data.data?.payment_url) {
+        window.open(data.data.payment_url, "_self");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const hanleAdminStudentPayment = async (id: string) => {
+    setLoading(id);
+    try {
+      let data = await AdminStudentPayment(id);
+      if (data?.success) {
+        customToast("success", "Student Accepted");
+        queryClient.invalidateQueries({ queryKey: ["allStudentsOfBranch"] });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const columns: TableColumn<Student>[] = [
+    {
+      name: "Picture",
+      cell: (row) => (
+        <Image
+          height={100}
+          width={100}
+          src={row.picture!}
+          alt={row.name}
+          className="w-10 my-2 h-10 rounded-sm"
+        />
+      ),
+      sortable: false,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Mobile",
+      selector: (row) => row.mobile,
+      sortable: true,
+    },
+    {
+      name: "Trade",
+      selector: (row) => row.trade,
+      sortable: true,
+    },
+    {
+      name: "Session",
+      selector: (row) => row.session,
+      sortable: true,
+    },
+    {
+      name: "Fees",
+      cell: (row) =>
+        row.isAdminStudent ? (
+          <Button
+            className="bg-amber-500 hover:bg-amber-700"
+            onClick={() => hanleAdminStudentPayment(row.id)}
+            disabled={loading === row.id} // Disable button if request is in progress
+          >
+            {loading === row.id ? "Processing..." : "Accept"}
+          </Button>
+        ) : (
+          <div>
+            {typeof row.fees === "boolean" || row.fees === "" ? (
+              <div className="p-2 rounded text-white bg-amber-500">
+                Contact with admin
+              </div>
+            ) : (
+              <div className="">
+                <Button
+                  className="bg-amber-500 font-sans text-sm hover:bg-amber-600"
+                  onClick={async () =>
+                    await hanleClickFunc({
+                      id: row.id,
+                      amount: row.fees as string,
+                      name: row.name,
+                      phone: row.mobile,
+                    })
+                  }
+                  disabled={loading === row.id} // Disable button if request is in progress
+                >
+                  {loading === row.id ? "Processing..." : `Pay ${row.fees} BDT`}
+                </Button>
+              </div>
+            )}
+          </div>
+        ),
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="flex items-center gap-2">
+          <Link href={`/branch/unpaid-students/${row.id}`}>
+            <Button className="bg-purple-500 hover:bg-purple-600">
+              <FaEdit className="text-white" />
+            </Button>
+          </Link>
+          <DeleteStudent id={row.id} imgUrl={row.picture!}>
+            <div className="bg-red-500 p-3 rounded cursor-pointer hover:bg-red-600">
+              <RiDeleteBin2Line className="text-white" />
+            </div>
+          </DeleteStudent>
+        </div>
+      ),
+    },
+  ];
+
+  let data =
+    info === null
+      ? []
+      : consizeData({ data: info, feesInfo: feesData, isAdminStudent });
 
   const filteredItems = data.filter(
     (item) =>

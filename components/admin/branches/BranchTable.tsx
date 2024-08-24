@@ -56,9 +56,9 @@ const columns: TableColumn<BranchesTableType>[] = [
     selector: (row) => row.varified,
     cell: (row) =>
       row.varified === true ? (
-        <span>varified</span>
+        <span>verified</span>
       ) : (
-        <span className="text-red-500">not varified</span>
+        <span className="text-red-500">not verified</span>
       ),
     sortable: true,
   },

@@ -38,9 +38,9 @@ const Notices = () => {
 
   return (
     <div>
-      <div className=" bg-sky-300  rounded">
+      <div className=" bg-stone-200  rounded">
         <textarea
-          className="min-h-64  w-full bg-white rounded p-4 border border-green-400"
+          className="min-h-64  w-full bg-white rounded p-4 border border-stone-400"
           placeholder="enter a new notice..."
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -58,24 +58,27 @@ const Notices = () => {
         {isPending && <div>loading....</div>}
         {data?.allNotice && data.allNotice.length > 0 ? (
           <ul>
-            {data.allNotice.map((item) => (
-              <li
-                key={item.id}
-                className="bg-cyan-300 p-3 my-2 rounded relative"
-              >
-                <div className="text-sm font-bold">
-                  Date: <FormatDate date={item.createdAt} />
-                </div>
-                <p className="">{item.text}</p>
-                <Button
-                  disabled={deleteLoading}
-                  className="absolute bg-red-500 hover:bg-red-600 -top-2 text-sm right-4"
-                  onClick={() => DeleteMutate(item.id)}
+            {data.allNotice
+              .slice()
+              .reverse()
+              .map((item) => (
+                <li
+                  key={item.id}
+                  className="bg-stone-200 p-3 my-3 rounded relative"
                 >
-                  {deleteLoading ? "Deleting" : "Delete"}
-                </Button>
-              </li>
-            ))}
+                  <div className="text-sm font-bold">
+                    Date: <FormatDate date={item.createdAt} />
+                  </div>
+                  <p className="">{item.text}</p>
+                  <Button
+                    disabled={deleteLoading}
+                    className="absolute bg-red-500 hover:bg-red-600 -top-2 text-sm right-4"
+                    onClick={() => DeleteMutate(item.id)}
+                  >
+                    {deleteLoading ? "Deleting" : "Delete"}
+                  </Button>
+                </li>
+              ))}
           </ul>
         ) : (
           <div>no notice has been crated</div>

@@ -49,9 +49,11 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
               </Link>
             ))}
           </ul>
-          <SheetFooter className="flex w-full mt-6 items-start justify-start">
-            <SocialIcons className="flex-col" />
-          </SheetFooter>
+          <div className="flex mt-6 items-start justify-start">
+            <div>
+              <SocialIcons className="" />
+            </div>
+          </div>
         </SheetContent>
       </Sheet>
     </div>

@@ -26,9 +26,11 @@ export const PriceSettingHelper = ({
 export const consizeData = ({
   data,
   feesInfo,
+  isAdminStudent,
 }: {
   data: BranchStudentType[];
   feesInfo: CourseFeesType[];
+  isAdminStudent: boolean;
 }): Student[] => {
   let students: Student[] = data.map((item) => {
     return {
@@ -43,6 +45,7 @@ export const consizeData = ({
       genReg: item.genReg!,
       genRoll: item.genRoll!,
       isPaid: item.isPaid,
+      isAdminStudent,
       fees: PriceSettingHelper({
         duration: item.courseDuration,
         title: item.courseTrade,
