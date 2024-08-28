@@ -71,7 +71,9 @@ const CourseInfo = () => {
                         <SelectItem
                           key={i}
                           value={`${range.from} to ${range.to} ${current_year}`}
-                        >{`${range.from} to ${range.to} ${current_year}`}</SelectItem>
+                        >{`${range.from} to ${range.to} ${
+                          current_year + item.addYear
+                        }`}</SelectItem>
                       )
                   )
                 )}

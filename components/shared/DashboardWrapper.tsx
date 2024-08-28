@@ -27,12 +27,14 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   let [isOneTimePaid, setIsOneTimePaid] = useState<boolean>(true);
   let [oneTimeAmount, setOneTimeAmount] = useState<string>("0");
   let [needToPay, setNeedToPay] = useState<boolean>(true);
+
+  // query the data
   const { data: branchData, isPending } = useQuery({
-    queryKey: ["getUser"],
+    queryKey: ["branch-initial-data"],
     queryFn: async () => {
       let data = await getUserAction();
       if (!data?.branchInfo) {
-        return router.push("/");
+        return;
       }
 
       setDisable(data.branchInfo.disabled === true ? false : true);

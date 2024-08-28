@@ -1,6 +1,7 @@
 "use server";
 
 import { hashedPassword, jwtDecode } from "@/data/auth";
+import sendCredentialMail from "@/data/sendCredentialMail";
 import { uploadBranchFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
 import {
@@ -172,7 +173,10 @@ export const createBranchPassAction = async ({
   password: string;
 }) => {
   try {
-    let branch = await prisma.branch.findUnique({ where: { id } });
+    let branch = await prisma.branch.findUnique({
+      where: { id },
+      include: { branchInfo: { select: { branchEmail: true } } },
+    });
     if (!branch) {
       return { error: "branch not found" };
     }
@@ -186,6 +190,7 @@ export const createBranchPassAction = async ({
         password: encryptPass,
       },
     });
+    await sendCredentialMail(branch.branchInfo?.branchEmail!, password);
     return { message: "new branch password created" };
   } catch (error) {
     return { error: "internal server error" };

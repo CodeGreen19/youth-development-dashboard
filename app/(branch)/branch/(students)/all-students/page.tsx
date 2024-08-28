@@ -33,7 +33,7 @@ const AllStudents = () => {
 
   return (
     <div>
-      <StudentFilteredBox />
+      {/* <StudentFilteredBox /> */}
       {data?.allStudents && <PaidStudentTable info={data?.allStudents} />}
     </div>
   );

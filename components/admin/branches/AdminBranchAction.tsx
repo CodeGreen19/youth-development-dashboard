@@ -92,28 +92,35 @@ const AdminBranchAction = ({
                 onCheckedChange={() => mutate(id)}
               />
             </div>
-
-            <form
-              className="border border-[#252525] bg-stone-200 max-w-sm rounded-sm p-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                passMutate({ id, password: newPass });
-              }}
-            >
-              <h1 className="mb-2">Change Branch Password</h1>
-              <Input
-                placeholder="enter new password..."
-                type="text"
-                className="bg-stone-50 "
-                value={newPass}
-                onChange={(e) => setNewPass(e.target.value)}
-              />
-              <div className="flex items-center my-3 justify-end">
-                <Button type="submit" disabled={createPassLoading}>
-                  {createPassLoading ? "Update..." : "Update"}
-                </Button>
-              </div>
-            </form>
+            <div>
+              <form
+                className="border border-[#252525] bg-stone-200 max-w-sm rounded-sm p-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  passMutate({ id, password: newPass });
+                }}
+              >
+                <h1 className="mb-2">Change Branch Password</h1>
+                <Input
+                  placeholder="enter new password..."
+                  type="text"
+                  className="bg-stone-50 "
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                />
+                <div className="flex items-center my-3 justify-end">
+                  <Button type="submit" disabled={createPassLoading}>
+                    {createPassLoading ? "Update..." : "Update"}
+                  </Button>
+                </div>
+              </form>
+              <p className="text-sm my-4">
+                Note : if you update the password of the owner of the branch
+                will automatically get the
+                <span className="text-green-500"> email</span> and{" "}
+                <span className="text-green-500">password</span> throught email.
+              </p>
+            </div>
             <div
               className={`flex items-center justify-start gap-3 rounded my-2 
             }`}

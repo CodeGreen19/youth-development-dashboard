@@ -26,10 +26,7 @@ const PersonalInfoSchema = z.object({
 
 // MoreInfo Zod schema with custom messages
 const MoreInfoSchema = z.object({
-  additionalMobile: z
-    .string()
-    .length(11, { message: "additional mobile number must be 11 character" })
-    .optional(),
+  additionalMobile: z.string().optional(),
   division: z.string().min(1, { message: "Division cannot be empty" }),
   district: z.string().min(1, { message: "District cannot be empty" }),
   upazila: z.string().min(1, { message: "Upazila cannot be empty" }),

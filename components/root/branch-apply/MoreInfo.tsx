@@ -37,7 +37,7 @@ const MoreInfoForm: React.FC = () => {
         />
 
         <Select onValueChange={(value) => setMoreInfo({ division: value })}>
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger className="w-full bg-white py-6">
             <SelectValue placeholder="Select your Divition" />
           </SelectTrigger>
           <SelectContent className="w-full">
@@ -54,7 +54,7 @@ const MoreInfoForm: React.FC = () => {
           disabled={moreInfo.division ? false : true}
           onValueChange={(value) => setMoreInfo({ district: value })}
         >
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger className="w-full bg-white py-6">
             <SelectValue placeholder="Select your District" />
           </SelectTrigger>
           <SelectContent className="w-full">
@@ -78,7 +78,7 @@ const MoreInfoForm: React.FC = () => {
           disabled={moreInfo.district ? false : true}
           onValueChange={(value) => setMoreInfo({ upazila: value })}
         >
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger className="w-full bg-white py-6">
             <SelectValue placeholder="Select your Upazila" />
           </SelectTrigger>
           <SelectContent className="w-full">

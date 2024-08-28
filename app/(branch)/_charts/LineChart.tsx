@@ -1,3 +1,5 @@
+"use client";
+
 import { formattedDate } from "@/data/lineChartInfo";
 import { LineChartArrType } from "@/types";
 import {
@@ -16,11 +18,13 @@ type ChartDataType = {
   day: string;
 };
 const LineCharts = ({ data }: { data: LineChartArrType[] }) => {
-  let newData: ChartDataType[] = data.map((item) => ({
-    day: formattedDate(item.day).slice(0, 6),
-    male: item.male,
-    female: item.female,
-  }));
+  let newData: ChartDataType[] =
+    data &&
+    data.map((item) => ({
+      day: formattedDate(item.day).slice(0, 6),
+      male: item.male,
+      female: item.female,
+    }));
 
   return (
     <div className="p-2 rounded shadow-md overflow-x-scroll scrollbar_hidden">

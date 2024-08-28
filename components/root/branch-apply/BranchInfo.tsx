@@ -50,10 +50,13 @@ const BranchInfoForm: React.FC = () => {
         <Select
           onValueChange={(value) => setBranchInfo({ instituteAge: value })}
         >
-          <SelectTrigger className="w-full py-6">
-            <SelectValue placeholder="age of your institution" />
+          <SelectTrigger className="w-full bg-white py-6">
+            <SelectValue
+              className="bg-white"
+              placeholder="age of your institution"
+            />
           </SelectTrigger>
-          <SelectContent className="w-full">
+          <SelectContent className="w-full bg-white">
             <SelectItem value="0 to 1 years">form 0 to 1 years</SelectItem>
             <SelectItem value="1 to 3 years">from 1 to 3 years</SelectItem>
             <SelectItem value="3 to 5 years">from 3 to 5 years</SelectItem>

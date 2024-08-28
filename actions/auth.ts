@@ -98,6 +98,7 @@ export const getUserAction = async () => {
         oneTimePayAmount = data[0].price!;
       }
     }
+
     return { branchInfo, oneTimePayAmount };
   } catch (error) {
     return { error: "internal server error" };

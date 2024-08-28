@@ -64,10 +64,13 @@ export default function RegistrationCard({
 
   return (
     <>
-      <div className="cursor-pointer" onClick={handleDownload}>
+      <div
+        className="cursor-pointer my-4 text-blue-500 underline"
+        onClick={handleDownload}
+      >
         {children}
       </div>
-      <div className="h-0 w-0 overflow-scroll ">
+      <div className="h-0 w-0 overflow-scroll">
         <div
           ref={componentRef}
           className="p-2 relative border box-border border-red-200 m-auto w-[48rem] aspect-[11.6/16] text-center "
@@ -80,14 +83,14 @@ export default function RegistrationCard({
             className="w-full z-20"
           />
           <div className="h-[400px] z-30 absolute right-0 bottom-[205px] w-[450px] ">
-            <ul className="flex mt-1 text-[1.3rem] font-bold items-start justify-start gap-4 flex-col">
+            <ul className="flex mt-4 gap-1 items-start font-bold font-salsa justify-start flex-col">
               <li>{name}</li>
               <li>{fatherName}</li>
-              <li>{motherName}</li>
-              <li>{gender}</li>
-              <li>{dateOfBirth}</li>
-              <li>branch name here</li>
-              <li>{genReg}</li>
+              <li className="mt-1">{motherName}</li>
+              <li className="mt-[2px]">{gender}</li>
+              <li className="mt-3">{dateOfBirth}</li>
+              <li>branch name</li>
+              <li className="mt-2">{genReg}</li>
             </ul>
             <Image
               src={`${docs?.profileUrl}`}
@@ -96,12 +99,12 @@ export default function RegistrationCard({
               alt="registration"
               className="absolute  w-32 top-0 right-16"
             />
-            <div className="absolute left-0 text-[1.3rem]  bottom-[85px] font-bold">
+            <div className="absolute -left-1 text-[1rem] font-salsa bottom-[75px] font-bold">
               {genRoll}
             </div>
-            <div className="absolute left-[190px] gap-2 text-[1.2rem] bottom-[55px] flex flex-col justify-start items-start font-bold">
+            <div className="absolute left-[190px] text-[1.2rem] bottom-[40px] flex flex-col justify-start items-start font-bold">
               <div>{courseRange}</div>
-              <div className="ml-8">2024</div>
+              <div className="ml-7 italic">2024</div>
             </div>
           </div>
           <div className="h-5 w-5 bg-white absolute left-[167px] bottom-[288px]"></div>

@@ -94,3 +94,9 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: normal;
   font-style: normal;
 }
+
+@layer base {
+  img {
+    display: initial;
+  }
+}

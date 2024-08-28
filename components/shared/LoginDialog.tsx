@@ -2,7 +2,12 @@
 
 import React, { ReactNode, RefObject, useRef, useState } from "react";
 
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { LoginForm } from "./LoginForm";
 import { ForgotPassword } from "./ForgotPassword";
 import { OtpPage } from "./OtpPage";
@@ -23,6 +28,7 @@ const LoginDialog = ({ children }: { children: ReactNode }) => {
     <div>
       <Dialog>
         <DialogTrigger ref={dialogRef}>{children}</DialogTrigger>
+        <DialogTitle></DialogTitle>
         <DialogContent className="bg-transparent  p-0 max-w-sm border-none shadow-none">
           {selectedPage === "login" && (
             <LoginForm

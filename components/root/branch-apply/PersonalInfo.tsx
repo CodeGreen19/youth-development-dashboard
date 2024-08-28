@@ -48,7 +48,7 @@ const PersonalInfoForm: React.FC = () => {
         />
 
         <Select onValueChange={(value) => setPersonalInfo({ gender: value })}>
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger className="w-full py-6 bg-white">
             <SelectValue placeholder="Select Gender" />
           </SelectTrigger>
           <SelectContent className="w-full">
@@ -60,7 +60,7 @@ const PersonalInfoForm: React.FC = () => {
         <Select
           onValueChange={(value) => setPersonalInfo({ bloodGroup: value })}
         >
-          <SelectTrigger className="w-full py-6">
+          <SelectTrigger className="w-full py-6 bg-white">
             <SelectValue placeholder="Select Blood Group" />
           </SelectTrigger>
           <SelectContent className="w-full">

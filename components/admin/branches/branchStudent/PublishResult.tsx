@@ -60,7 +60,7 @@ const PublishResult = ({
       studentInfo === null ||
       studentInfo?.filter((item) => item.result === null).length! > 0
     ) {
-      customToast("error", "Please Provide all the results");
+      return customToast("error", "Please Provide all the results");
     }
 
     mutate(studentInfo!);

@@ -79,9 +79,9 @@ const columns: TableColumn<StudentPaidType>[] = [
             <FaDownload />
           </div>
         </RegistrationCard>
-        <button className="bg-blue-500 text-white p-2 rounded">
+        {/* <button className="bg-blue-500 text-white p-2 rounded">
           <FaIdBadge />
-        </button>
+        </button> */}
       </div>
     ),
   },
@@ -109,7 +109,7 @@ const PaidStudentTable = ({ info }: { info: BranchStudentType[] | null }) => {
                 <Button>Excel</Button>
               </DownloadListForExcel>
             </div>{" "}
-            <div className="flex items-center my-2 justify-end gap-2">
+            <div className="flex items-center mr-2 my-2 justify-end gap-2">
               <Input
                 type="text"
                 placeholder="Search by name"

@@ -90,6 +90,8 @@ export const createStudentAction = async (formData: FormData) => {
     });
     return { message: "new student has created" };
   } catch (error) {
+    console.log(error);
+
     return { error: "internal server error" };
   }
 };
