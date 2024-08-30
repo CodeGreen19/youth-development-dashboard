@@ -34,7 +34,12 @@ const AllStudents = () => {
   return (
     <div>
       {/* <StudentFilteredBox /> */}
-      {data?.allStudents && <PaidStudentTable info={data?.allStudents} />}
+      {data?.allStudents && (
+        <PaidStudentTable
+          info={data?.allStudents}
+          branchName={data.branchName!}
+        />
+      )}
     </div>
   );
 };

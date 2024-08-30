@@ -14,6 +14,7 @@ import {
   StudentPaidType,
 } from "@/components/data/tableHelper";
 import DownloadListForExcel from "./_docs/DownloadListForExcel";
+import RegistrationCardModal from "./RegistrationCardModal";
 
 const columns: TableColumn<StudentPaidType>[] = [
   {
@@ -74,22 +75,27 @@ const columns: TableColumn<StudentPaidType>[] = [
     name: "Actions",
     cell: (row) => (
       <div className="flex space-x-2">
-        <RegistrationCard info={row.studentInfo} id={row.id}>
-          <div className="bg-green-500 text-white p-2 rounded">
-            <FaDownload />
-          </div>
-        </RegistrationCard>
-        {/* <button className="bg-blue-500 text-white p-2 rounded">
-          <FaIdBadge />
-        </button> */}
+        <RegistrationCardModal
+          info={row.studentInfo}
+          branchName={row.branchName}
+          id={row.id}
+        >
+          <div className="bg-green-500 text-white p-2 rounded">Reg. Card</div>
+        </RegistrationCardModal>
       </div>
     ),
   },
 ];
 
-const PaidStudentTable = ({ info }: { info: BranchStudentType[] | null }) => {
+const PaidStudentTable = ({
+  info,
+  branchName,
+}: {
+  info: BranchStudentType[] | null;
+  branchName: string;
+}) => {
   const [filterText, setFilterText] = useState("");
-  let data = info === null ? [] : consizeDataPaid(info);
+  let data = info === null ? [] : consizeDataPaid(info, branchName);
 
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 

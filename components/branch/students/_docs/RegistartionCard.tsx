@@ -18,13 +18,13 @@ const SelectedStudent = ({
 };
 
 export default function RegistrationCard({
-  children,
   info,
   id,
+  branchName,
 }: {
-  children: ReactNode;
   info: BranchStudentType[];
   id: string;
+  branchName: string;
 }) {
   const componentRef = useRef<HTMLDivElement | null>(null);
 
@@ -65,31 +65,34 @@ export default function RegistrationCard({
   return (
     <>
       <div
-        className="cursor-pointer my-4 text-blue-500 underline"
+        className="cursor-pointer inline m-auto my-4 text-blue-500 underline"
         onClick={handleDownload}
       >
-        {children}
+        click to download
       </div>
-      <div className="h-0 w-0 overflow-scroll">
+      <div>
         <div
           ref={componentRef}
-          className="p-2 relative border box-border border-red-200 m-auto w-[48rem] aspect-[11.6/16] text-center "
+          className="p-2 relative box-border m-auto w-[48rem] aspect-[11.6/16] text-center "
         >
           <Image
-            src={"/reg.jpeg"}
+            src={"/reg2.jpeg"}
             height={1200}
             width={1000}
             alt="registration"
-            className="w-full z-20"
+            className="w-full -translate-y-[6px] z-20"
           />
+          <div className="font-bold left-0 w-full flex items-center justify-center absolute top-[420px] text-[2.1rem] ">
+            {courseTrade}
+          </div>
           <div className="h-[400px] z-30 absolute right-0 bottom-[205px] w-[450px] ">
-            <ul className="flex mt-4 gap-1 items-start font-bold font-salsa justify-start flex-col">
+            <ul className="flex mt-3 gap-1 items-start font-bold font-salsa justify-start flex-col">
               <li>{name}</li>
               <li>{fatherName}</li>
               <li className="mt-1">{motherName}</li>
               <li className="mt-[2px]">{gender}</li>
               <li className="mt-3">{dateOfBirth}</li>
-              <li>branch name</li>
+              <li>{branchName}</li>
               <li className="mt-2">{genReg}</li>
             </ul>
             <Image
@@ -103,7 +106,7 @@ export default function RegistrationCard({
               {genRoll}
             </div>
             <div className="absolute left-[190px] text-[1.2rem] bottom-[40px] flex flex-col justify-start items-start font-bold">
-              <div>{courseRange}</div>
+              <div className="text-sm mb-1">{courseRange}</div>
               <div className="ml-7 italic">2024</div>
             </div>
           </div>

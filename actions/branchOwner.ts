@@ -60,12 +60,12 @@ export const getAllStudentsOfBranch = async () => {
       return { message: "token does'nt exist" };
     }
     let { id } = jwtDecode(token);
-    let BranchRole = await prisma.branch.findUnique({
+    let BranchInfo = await prisma.branch.findUnique({
       where: { id },
-      select: { role: true },
+      select: { role: true, branchInfo: { select: { branchName: true } } },
     });
 
-    let isAdmin = BranchRole!.role === "ADMIN" ? true : false;
+    let isAdmin = BranchInfo!.role === "ADMIN" ? true : false;
 
     let allStudents = await prisma.student.findMany({
       where: { branchId: id },
@@ -83,7 +83,12 @@ export const getAllStudentsOfBranch = async () => {
       },
     });
 
-    return { allStudents, feesData, isAdmin };
+    return {
+      allStudents,
+      feesData,
+      isAdmin,
+      branchName: BranchInfo?.branchInfo?.branchName,
+    };
   } catch (error) {
     return { error: "internal server error" };
   }

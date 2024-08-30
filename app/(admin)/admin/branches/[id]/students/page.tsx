@@ -12,6 +12,7 @@ import { FaPrint } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa6";
 import { MdRadioButtonChecked } from "react-icons/md";
 import { PiShareNetworkFill } from "react-icons/pi";
+import CertificateModel from "@/app/(admin)/_certificate/CertificateModel";
 
 const FilteredStudentsPage = ({ params }: { params: { id: string } }) => {
   return (
@@ -139,12 +140,15 @@ const FilteredStudents = ({ id }: { id: string }) => {
                   )}
                 </span>
                 <span className="text-[0.8rem] flex items-center justify-center gap-3">
-                  <Button className="text-sm p-2 px-3 bg-green-500">
-                    <FaPrint />
-                  </Button>
-                  <Button className="text-sm p-2 px-3 bg-purple-500">
-                    <FaDownload />
-                  </Button>
+                  {item.genResult ? (
+                    <CertificateModel id={item.id}>
+                      Get Certificate
+                    </CertificateModel>
+                  ) : (
+                    <div className="bg-slate-700 rounded-md text-sm p-2 px-3">
+                      Get Certificate
+                    </div>
+                  )}
                 </span>
               </li>
             ))}

@@ -112,3 +112,19 @@ export type AdminBranchProgressType = {
   date: Date;
   count: number;
 };
+
+// certficate
+
+export type CertificateInfoType = {
+  roll: string;
+  reg: string;
+  issueDate: string;
+  fullName: string;
+  fathersName: string;
+  mothersName: string;
+  courseName: string;
+  branchCode: string;
+  branchName: string;
+  held: string;
+  grade: string;
+};

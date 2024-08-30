@@ -10,12 +10,14 @@ export type StudentPaidType = {
   session: string;
   isPaid: boolean;
   result: string;
+  branchName: string;
   picture: string | undefined;
   studentInfo: BranchStudentType[];
 };
 
 export const consizeDataPaid = (
-  data: BranchStudentType[]
+  data: BranchStudentType[],
+  branchName: string
 ): StudentPaidType[] => {
   let students: StudentPaidType[] = data.map((item) => {
     return {
@@ -31,6 +33,7 @@ export const consizeDataPaid = (
       genRoll: item.genRoll!,
       isPaid: item.isPaid,
       studentInfo: data,
+      branchName,
     };
   });
 

@@ -8,7 +8,6 @@ export type BranchStudentType = {
   isPaid: boolean;
   bloodGroup: string;
   gender: string;
-
   courseDuration: string;
   courseRange: string;
   courseTrade: string;

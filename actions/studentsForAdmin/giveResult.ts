@@ -1,7 +1,14 @@
 "use server";
 
+import { jwtDecode } from "@/data/auth";
 import { prisma } from "@/lib/db";
-import { EditResultType, EditResultTypeForBackend } from "@/types";
+import {
+  CertificateInfoType,
+  EditResultType,
+  EditResultTypeForBackend,
+} from "@/types";
+import { format } from "date-fns";
+import { cookies } from "next/headers";
 
 export const admin_AllStudentsOfBranch = async ({ id }: { id: string }) => {
   try {
@@ -45,6 +52,35 @@ export const admin_PublishResult = async (data: EditResultType[]) => {
       });
     });
     return { message: "result is published" };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};
+export const getCertificateInfo = async (studentId: string) => {
+  try {
+    let { id } = jwtDecode(cookies().get("branch_token")?.value!);
+    let branch = await prisma.branch.findUnique({
+      where: { id },
+      select: { branchInfo: { select: { branchName: true, branchNo: true } } },
+    });
+    let studentInfo = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+    let info: CertificateInfoType = {
+      branchCode: branch?.branchInfo?.branchNo!.toString()!,
+      branchName: branch?.branchInfo?.branchName!,
+      courseName: studentInfo?.courseTrade!,
+      fathersName: studentInfo?.fatherName!,
+      mothersName: studentInfo?.motherName!,
+      fullName: studentInfo?.name!,
+      grade: studentInfo?.genResult!,
+      held: studentInfo?.courseRange!,
+      issueDate: format(new Date(), "PPP"),
+      reg: studentInfo?.genReg!,
+      roll: studentInfo?.genRoll!,
+    };
+
+    return { info };
   } catch (error) {
     return { error: "internal server error" };
   }
