@@ -42,7 +42,7 @@ const BranchesPage = () => {
           mobile: e.branchInfo?.branchMobile!,
           name: e.personalInfo?.fullName!,
           noOfCom: e.branchInfo?.noOfComputers!,
-          picture: e.documents?.ppSizePhoto!,
+          picture: e.ppSizePhoto?.secure_url!,
           varified: e.isVarified,
         });
       });

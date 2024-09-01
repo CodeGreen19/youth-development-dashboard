@@ -145,7 +145,7 @@ const FilteredStudents = ({ id }: { id: string }) => {
                       Get Certificate
                     </CertificateModel>
                   ) : (
-                    <div className="bg-slate-700 rounded-md text-sm p-2 px-3">
+                    <div className="bg-slate-400 rounded-md text-sm p-2 px-3">
                       Get Certificate
                     </div>
                   )}

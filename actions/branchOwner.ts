@@ -18,7 +18,10 @@ export const GetBranchWithoutIdAction = async () => {
       include: {
         personalInfo: true,
         branchInfo: true,
-        documents: true,
+        ppSizePhoto: true,
+        nationalIDCard: true,
+        signature: true,
+        tradeLicense: true,
         moreInfo: true,
       },
     });
@@ -69,7 +72,7 @@ export const getAllStudentsOfBranch = async () => {
 
     let allStudents = await prisma.student.findMany({
       where: { branchId: id },
-      include: { docs: true },
+      include: { profileDoc: true },
     });
     let feesData = await prisma.courseFees.findMany({
       select: {

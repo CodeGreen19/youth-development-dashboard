@@ -33,10 +33,12 @@ export const branchLoginAction = async ({
     let branch = await prisma.branch.findUnique({
       where: { id: branchInfo.branchId },
     });
+
     if (branch?.password === null) {
       return { error: "invalid credentials" };
     }
     let isComparePassword = comparePassword(password, branch?.password!);
+
     if (!isComparePassword) {
       return { error: "invalid credentials" };
     }

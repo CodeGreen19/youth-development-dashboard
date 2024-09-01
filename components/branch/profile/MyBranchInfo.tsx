@@ -11,7 +11,15 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
-  let { branchInfo, documents, moreInfo, personalInfo } = info;
+  let {
+    branchInfo,
+    nationalIDCard,
+    ppSizePhoto,
+    signature,
+    tradeLicense,
+    moreInfo,
+    personalInfo,
+  } = info;
 
   const { mutate, isPending } = useMutation({
     mutationFn: ChangeBranchPasswordForOwner,
@@ -140,13 +148,14 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
               <Image
                 height={100}
                 width={100}
-                src={documents?.ppSizePhoto!}
+                src={ppSizePhoto?.secure_url!}
                 alt="Director"
                 className="w-12 h-12 object-cover"
               />
               <a
                 download
-                href={documents?.ppSizePhoto}
+                target="_blank"
+                href={ppSizePhoto?.secure_url!}
                 className="text-sm absolute -bottom-6 right-0 text-blue-500"
               >
                 download
@@ -154,26 +163,19 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
             </div>
             <div className="flex relative items-center justify-between space-x-4">
               <span className="font-semibold">National ID</span>
-              {isImage(documents?.nationalIDCard!) ? (
-                <Image
-                  height={100}
-                  width={100}
-                  src={documents?.nationalIDCard!}
-                  alt="national_id"
-                  className="w-12 h-12 object-cover"
-                />
-              ) : (
-                <Image
-                  height={100}
-                  width={100}
-                  src="/pdf.jpg"
-                  alt="PDF Document"
-                  className="w-12 h-12 object-cover"
-                />
-              )}
+
+              <Image
+                height={100}
+                width={100}
+                src={nationalIDCard?.secure_url!}
+                alt="PDF Document"
+                className="w-12 h-12 object-cover"
+              />
+
               <a
                 download
-                href={documents?.nationalIDCard}
+                target="_blank"
+                href={nationalIDCard?.secure_url!}
                 className="text-sm absolute -bottom-6 right-0 text-blue-500"
               >
                 download
@@ -181,26 +183,18 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
             </div>
             <div className="flex relative items-center justify-between space-x-4">
               <span className="font-semibold">Trade License</span>
-              {isImage(documents?.tradeLicense!) ? (
-                <Image
-                  height={100}
-                  width={100}
-                  src={documents?.tradeLicense!}
-                  alt="trade_licence"
-                  className="w-12 h-12 object-cover"
-                />
-              ) : (
-                <Image
-                  height={100}
-                  width={100}
-                  src="/pdf.jpg"
-                  alt="PDF Document"
-                  className="w-12 h-12 object-cover"
-                />
-              )}
+              <Image
+                height={100}
+                width={100}
+                src={tradeLicense?.secure_url!}
+                alt="PDF Document"
+                className="w-12 h-12 object-cover"
+              />
+
               <a
                 download
-                href={documents?.tradeLicense}
+                target="_blank"
+                href={tradeLicense?.secure_url!}
                 className="text-sm absolute -bottom-6 right-0 text-blue-500"
               >
                 download
@@ -211,13 +205,15 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
               <Image
                 height={100}
                 width={100}
-                src={documents?.signature!}
-                alt="Signature"
+                src={signature?.secure_url!}
+                alt="PDF Document"
                 className="w-12 h-12 object-cover"
               />
+
               <a
                 download
-                href={documents?.signature}
+                target="_blank"
+                href={signature?.secure_url!}
                 className="text-sm absolute -bottom-6 right-0 text-blue-500"
               >
                 download

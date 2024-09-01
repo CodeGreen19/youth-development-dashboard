@@ -149,7 +149,7 @@ const UnPaidStudentTable = ({
               <FaEdit className="text-white" />
             </Button>
           </Link>
-          <DeleteStudent id={row.id} imgUrl={row.picture!}>
+          <DeleteStudent id={row.id} public_id={row.publicId!}>
             <div className="bg-red-500 p-3 rounded cursor-pointer hover:bg-red-600">
               <RiDeleteBin2Line className="text-white" />
             </div>

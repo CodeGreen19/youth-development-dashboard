@@ -38,8 +38,7 @@ export default function RegistrationCard({
     genRoll,
     genReg,
     courseRange,
-
-    docs,
+    profileDoc,
   } = SelectedStudent({ id, info });
 
   const handleDownload = async () => {
@@ -82,7 +81,7 @@ export default function RegistrationCard({
             alt="registration"
             className="w-full -translate-y-[6px] z-20"
           />
-          <div className="font-bold left-0 w-full flex items-center justify-center absolute top-[420px] text-[2.1rem] ">
+          <div className="font-bold z-50 left-0 w-full flex items-center justify-center absolute top-[420px] text-[2.1rem] ">
             {courseTrade}
           </div>
           <div className="h-[400px] z-30 absolute right-0 bottom-[205px] w-[450px] ">
@@ -96,7 +95,7 @@ export default function RegistrationCard({
               <li className="mt-2">{genReg}</li>
             </ul>
             <Image
-              src={`${docs?.profileUrl}`}
+              src={`${profileDoc?.secure_url}`}
               height={100}
               width={100}
               alt="registration"

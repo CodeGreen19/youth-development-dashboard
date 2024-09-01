@@ -1,6 +1,7 @@
 "use server";
 
 import { hashedPassword, jwtDecode } from "@/data/auth";
+import { uploadtoCloud } from "@/data/cloudinary_upload";
 import sendCredentialMail from "@/data/sendCredentialMail";
 import { uploadBranchFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
@@ -34,20 +35,25 @@ export const CreateBranchAction = async (formData: FormData) => {
       return { error: result.error.format() };
     }
 
-    // upload image/pdf file
-    let ppSizePhoto = (await uploadBranchFile(documents.ppSizePhoto!)).url;
-    let tradeLicense = (await uploadBranchFile(documents.tradeLicense!)).url;
-    let nationalIDCard = (await uploadBranchFile(documents.nationalIDCard!))
-      .url;
-    let signature = (await uploadBranchFile(documents.signature!)).url;
+    /// upload the images
 
-    const newDocument = {
-      ppSizePhoto,
-      tradeLicense,
-      nationalIDCard,
-      signature,
-    };
-
+    let passportImg = await uploadtoCloud({
+      file: documents.ppSizePhoto!,
+      folder: "branch",
+    });
+    let nidImage = await uploadtoCloud({
+      file: documents.nationalIDCard!,
+      folder: "branch",
+    });
+    let signatureImg = await uploadtoCloud({
+      file: documents.signature!,
+      folder: "branch",
+    });
+    let licenceImg = await uploadtoCloud({
+      file: documents.tradeLicense!,
+      folder: "branch",
+    });
+    // checking the vlidation
     let isEmailExist = await prisma.branchInfo.findFirst({
       where: {
         branchEmail: branchInfo.branchEmail,
@@ -65,11 +71,21 @@ export const CreateBranchAction = async (formData: FormData) => {
         branchInfo: {
           create: branchInfo,
         },
-        documents: {
-          create: newDocument,
-        },
+
         moreInfo: {
           create: moreInfo,
+        },
+        ppSizePhoto: {
+          create: passportImg,
+        },
+        nationalIDCard: {
+          create: nidImage,
+        },
+        signature: {
+          create: signatureImg,
+        },
+        tradeLicense: {
+          create: licenceImg,
         },
       },
     });
@@ -91,7 +107,7 @@ export const getAllBranches = async () => {
       include: {
         personalInfo: true,
         branchInfo: true,
-        documents: true,
+        ppSizePhoto: true,
         moreInfo: true,
       },
     });
@@ -109,7 +125,10 @@ export const GetSingleBranchAction = async (id: string) => {
       include: {
         personalInfo: true,
         branchInfo: true,
-        documents: true,
+        ppSizePhoto: true,
+        nationalIDCard: true,
+        signature: true,
+        tradeLicense: true,
         moreInfo: true,
       },
     });

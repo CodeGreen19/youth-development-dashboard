@@ -9,29 +9,64 @@ datasource db {
 }
 
 model Branch {
-  id            String        @id @default(uuid())
-  password      String?
-  role          Role          @default(USER)
-  isVarified    Boolean       @default(false)
-  disabled      Boolean       @default(false)
-  isOneTimePaid Boolean       @default(false)
-  haveToPay     Boolean       @default(true)
-  transId       String?
-  otp           Int?
-  otpToken      String?
-  otpSentDate   DateTime?
-  branchInfo    BranchInfo?
-  personalInfo  PersonalInfo?
-  moreInfo      MoreInfo?
-  documents     Document?
-  students      Student[]
-  paymentInfo   Payment[]
-  createdAt     DateTime      @default(now())
+  id             String        @id @default(uuid())
+  password       String?
+  role           Role          @default(USER)
+  isVarified     Boolean       @default(false)
+  disabled       Boolean       @default(false)
+  isOneTimePaid  Boolean       @default(false)
+  haveToPay      Boolean       @default(true)
+  transId        String?
+  otp            Int?
+  otpToken       String?
+  otpSentDate    DateTime?
+  branchInfo     BranchInfo?
+  personalInfo   PersonalInfo?
+  moreInfo       MoreInfo?
+  students       Student[]
+  paymentInfo    Payment[]
+  ppSizePhoto    PassportUrls?
+  tradeLicense   TLicenseUrls?
+  nationalIDCard NIDCardUrls?
+  signature      SignUrls?
+  createdAt      DateTime      @default(now())
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model PassportUrls {
+  id         String @id @default(uuid())
+  secure_url String
+  public_id  String
+  branchId   String @unique
+  branch     Branch @relation(fields: [branchId], references: [id])
+}
+
+model TLicenseUrls {
+  id         String @id @default(uuid())
+  secure_url String
+  public_id  String
+  branchId   String @unique
+  branch     Branch @relation(fields: [branchId], references: [id])
+}
+
+model NIDCardUrls {
+  id         String @id @default(uuid())
+  secure_url String
+  public_id  String
+  branchId   String @unique
+  branch     Branch @relation(fields: [branchId], references: [id])
+}
+
+model SignUrls {
+  id         String @id @default(uuid())
+  secure_url String
+  public_id  String
+  branchId   String @unique
+  branch     Branch @relation(fields: [branchId], references: [id])
 }
 
 model BranchInfo {
@@ -69,25 +104,15 @@ model MoreInfo {
   branch           Branch  @relation(fields: [branchId], references: [id])
 }
 
-model Document {
-  id             String @id @default(uuid())
-  ppSizePhoto    String
-  tradeLicense   String
-  nationalIDCard String
-  signature      String
-  branchId       String @unique
-  branch         Branch @relation(fields: [branchId], references: [id])
-}
-
 // student model 
 model Student {
-  id             String       @id @default(uuid())
+  id             String      @id @default(uuid())
   name           String
   fatherName     String
   motherName     String
   mobile         String
-  docs           StudentDocs?
-  isPaid         Boolean      @default(false)
+  profileDoc     ProfileImg?
+  isPaid         Boolean     @default(false)
   gender         String
   dateOfBirth    String
   nationality    String
@@ -108,8 +133,8 @@ model Student {
   passedType     PassedType
   transId        String?
   branchId       String
-  branch         Branch       @relation(fields: [branchId], references: [id])
-  createdAt      DateTime     @default(now())
+  branch         Branch      @relation(fields: [branchId], references: [id])
+  createdAt      DateTime    @default(now())
 }
 
 enum PassedType {
@@ -117,11 +142,12 @@ enum PassedType {
   SSC
 }
 
-model StudentDocs {
-  profileUrl          String
-  registrationCardUrl String
-  studentId           String  @unique
-  student             Student @relation(fields: [studentId], references: [id])
+model ProfileImg {
+  id         String  @id @default(uuid())
+  secure_url String
+  public_id  String
+  studentId  String  @unique
+  student    Student @relation(fields: [studentId], references: [id])
 }
 
 model Payment {

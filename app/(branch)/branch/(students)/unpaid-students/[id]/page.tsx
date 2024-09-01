@@ -49,7 +49,7 @@ const EditStudentData = () => {
           passedType,
           gender,
           passedYear,
-          docs,
+          profileDoc,
         } = info.student;
         setStudentInfo({
           name,
@@ -72,8 +72,8 @@ const EditStudentData = () => {
           gender,
           passedYear,
         });
-        if (docs?.profileUrl) {
-          setExistImgUrl(docs.profileUrl);
+        if (profileDoc) {
+          setExistImgUrl(profileDoc.secure_url);
         }
       }
       return info;

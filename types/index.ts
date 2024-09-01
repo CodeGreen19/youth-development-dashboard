@@ -18,7 +18,10 @@ export type GetBranchInfoType = {
   branchInfo?: BranchInfo | null;
   personalInfo?: PersonalInfo | null;
   moreInfo?: MoreInfo | null;
-  documents?: Document | null;
+  ppSizePhoto: ImageUrlType | null;
+  nationalIDCard: ImageUrlType | null;
+  signature: ImageUrlType | null;
+  tradeLicense: ImageUrlType | null;
   createdAt: Date;
 };
 
@@ -91,6 +94,7 @@ export type Student = {
   result: string;
   fees: string | boolean;
   picture: string | undefined;
+  publicId: string;
 };
 
 export interface EditResultType {
@@ -127,4 +131,9 @@ export type CertificateInfoType = {
   branchName: string;
   held: string;
   grade: string;
+};
+
+export type ImageUrlType = {
+  secure_url: string;
+  public_id: string;
 };

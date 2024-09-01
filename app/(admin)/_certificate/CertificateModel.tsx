@@ -27,8 +27,6 @@ const RegistrationCardModal = ({
     mutate(id);
   };
 
-  console.log(data);
-
   return (
     <div>
       <Dialog>
@@ -41,7 +39,7 @@ const RegistrationCardModal = ({
         <DialogTitle></DialogTitle>
         <DialogContent className="md:max-w-[80vw] border-black  bg-sky-900">
           <div className="max-h-[80vh] w-full scrollbar_hidden  overflow-y-scroll">
-            <Certificate info={data?.info!} isPending={isPending} />
+            {data && <Certificate info={data?.info!} isPending={isPending} />}
           </div>
         </DialogContent>
       </Dialog>

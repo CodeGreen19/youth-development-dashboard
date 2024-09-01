@@ -1,6 +1,7 @@
 "use server";
 
 import { jwtDecode } from "@/data/auth";
+import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { generateRollAndRegistrationNumbers } from "@/data/RollAndReg";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
@@ -48,9 +49,9 @@ export const createStudentAction = async (formData: FormData) => {
       email,
     } = studentInfo;
 
-    let uploadedImg = await uploadStudentFile({
+    let uploadedImg = await uploadtoCloud({
       file: profileUrl,
-      type: "profile",
+      folder: "student",
     });
 
     let { nextRollNumber, nextRegistrationNumber } =
@@ -78,20 +79,15 @@ export const createStudentAction = async (formData: FormData) => {
         passedYear,
         religion,
         email,
-        genReg: nextRollNumber,
-        genRoll: nextRegistrationNumber,
-        docs: {
-          create: {
-            profileUrl: uploadedImg.profileUrl!,
-            registrationCardUrl: "",
-          },
+        genReg: nextRegistrationNumber,
+        genRoll: nextRollNumber,
+        profileDoc: {
+          create: uploadedImg,
         },
       },
     });
     return { message: "new student has created" };
   } catch (error) {
-    console.log(error);
-
     return { error: "internal server error" };
   }
 };
@@ -168,7 +164,7 @@ export const GetSingleStudentById = async (id: string) => {
   try {
     let student = await prisma.student.findUnique({
       where: { id },
-      include: { docs: true },
+      include: { profileDoc: true },
     });
     if (!student) {
       return { error: "student not found" };
@@ -181,23 +177,20 @@ export const GetSingleStudentById = async (id: string) => {
 
 export const DeleteSingleStudentById = async ({
   id,
-  imgUrl,
+  public_id,
 }: {
   id: string;
-  imgUrl: string;
+  public_id: string;
 }) => {
   try {
-    await prisma.studentDocs.delete({
+    await deleteFromCloud(public_id);
+    await prisma.profileImg.delete({
       where: { studentId: id },
     });
     await prisma.student.delete({
       where: { id },
     });
 
-    let isDeleted = await deleteStudentFile(imgUrl);
-    if (!isDeleted) {
-      return { error: "something wrong happens" };
-    }
     return { message: "student has been deleted" };
   } catch (error) {
     return { error: "internal server error" };

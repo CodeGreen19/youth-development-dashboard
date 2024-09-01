@@ -4,14 +4,18 @@ import { GetBranchInfoType } from "@/types";
 import Image from "next/image";
 
 const DetailBranch = ({ branchInfo }: { branchInfo: GetBranchInfoType }) => {
-  let { branchInfo: branch, documents, moreInfo, personalInfo } = branchInfo;
+  let {
+    branchInfo: branch,
+    nationalIDCard,
+    ppSizePhoto,
+    signature,
+    tradeLicense,
+    moreInfo,
+    personalInfo,
+  } = branchInfo;
 
-  let newDocuments = {
-    ppSizePhoto: documents?.ppSizePhoto,
-    tradeLicense: documents?.tradeLicense,
-    nationalIDCard: documents?.nationalIDCard,
-    signature: documents?.signature,
-  };
+  let docsArr = [nationalIDCard, ppSizePhoto, signature, tradeLicense];
+
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,43 +78,26 @@ const DetailBranch = ({ branchInfo }: { branchInfo: GetBranchInfoType }) => {
         </div>
         <div className="bg-white p-4 rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Documents</h2>
-          {documents &&
-            Object.entries(newDocuments).map(([key, value]) => (
-              <div key={key} className="mb-4">
-                <p>
-                  <strong>{key.replace(/([A-Z])/g, " $1")}:</strong>
-                  {value ? "Uploaded" : "Not Uploaded"}
-                </p>
-                {value && (
-                  <div>
-                    {isImage(value) ? (
-                      <Image
-                        height={100}
-                        width={100}
-                        src={value}
-                        alt={key}
-                        className="w-32 h-32 object-cover mb-2"
-                      />
-                    ) : (
-                      <Image
-                        height={100}
-                        width={100}
-                        src="/pdf.jpg"
-                        alt="PDF Document"
-                        className="w-32 h-32 object-cover mb-2"
-                      />
-                    )}
-                    <a
-                      href={value}
-                      download
-                      className="text-blue-500 hover:underline"
-                    >
-                      Download
-                    </a>
-                  </div>
-                )}
-              </div>
-            ))}
+          {docsArr.map((item, i) => (
+            <div key={i} className="mt-2">
+              <Image
+                height={200}
+                width={200}
+                src={item?.secure_url!}
+                alt="PDF Document"
+                className="w-28 h-28 mr-3 object-cover mb-2"
+              />
+
+              <a
+                href={item?.secure_url!}
+                target="_blank"
+                download
+                className="text-blue-500 text-sm hover:underline"
+              >
+                Detail view
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </div>

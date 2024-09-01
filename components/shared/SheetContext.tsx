@@ -26,7 +26,7 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
     <div>
       <Sheet>
         <SheetTrigger ref={sheetRef}>{children}</SheetTrigger>
-        <SheetContent>
+        <SheetContent className="w-full">
           <SheetHeader>
             <div className="p-5 mt-4 flex items-center justify-center bg-yellow-500">
               <Image

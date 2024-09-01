@@ -1,7 +1,6 @@
 "use client";
 
 import { getAllStudentsOfBranch } from "@/actions/branchOwner";
-import StudentFilteredBox from "@/components/branch/students/StudentFilteredBox";
 
 import { customToast } from "@/components/shared/ToastContainer";
 import { useQuery } from "@tanstack/react-query";

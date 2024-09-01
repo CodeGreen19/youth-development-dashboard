@@ -1,3 +1,5 @@
+import { ImageUrlType } from ".";
+
 type DocsType = {
   registrationCardUrl: string;
   profileUrl: string;
@@ -29,6 +31,6 @@ export type BranchStudentType = {
   genResult: string | null;
   email: string | null;
   branchId: string;
-  docs: DocsType | null;
+  profileDoc: ImageUrlType | null;
   createdAt: Date;
 };

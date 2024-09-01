@@ -18,11 +18,11 @@ import { customToast } from "@/components/shared/ToastContainer";
 const DeleteStudent = ({
   children,
   id,
-  imgUrl,
+  public_id,
 }: {
   children: React.ReactNode;
   id: string;
-  imgUrl: string;
+  public_id: string;
 }) => {
   const queryClient = useQueryClient();
   const { mutate, isPending, isSuccess, data } = useMutation({
@@ -48,7 +48,7 @@ const DeleteStudent = ({
               <Button
                 disabled={isPending}
                 className="bg-red-500  my-6 hover:bg-red-600"
-                onClick={() => mutate({ id, imgUrl })}
+                onClick={() => mutate({ id, public_id })}
               >
                 {data?.message ? "Deleted" : "Delete"}
               </Button>

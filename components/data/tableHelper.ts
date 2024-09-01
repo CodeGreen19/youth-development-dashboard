@@ -24,8 +24,8 @@ export const consizeDataPaid = (
       id: item.id,
       mobile: item.mobile,
       name: item.name,
-      picture: item.docs?.profileUrl,
-      registration: item.docs?.registrationCardUrl,
+      picture: item.profileDoc?.secure_url,
+
       result: item.genResult ?? "",
       session: item.courseRange,
       trade: item.courseTrade,

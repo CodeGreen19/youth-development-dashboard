@@ -24,14 +24,6 @@ const RevenueChart = ({ revenue }: RevenueType) => {
           </Link>
         </div>
       </div>
-      {/* <div className="bg-white rounded-lg shadow mb-2">
-        <ul className=" flex flex-col gap-2 p-4">
-          <li className="flex items-center justify-between px-4">
-            <span>text</span>
-            <span>amount</span>
-          </li>
-        </ul>
-      </div> */}
     </div>
   );
 };
