@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <>
       <motion.div
-        className="fixed z-50 right-0 top-0 left-0 origin-left h-1 md:h-3 bg-amber-500"
+        className="fixed z-50 right-0 top-0 left-0 origin-left h-1 md:h-2 bg-amber-500"
         style={{ scaleX: scrollYProgress }}
       />
 

@@ -32,7 +32,7 @@ const Quality = () => {
   ];
 
   return (
-    <div className="py-4 overflow-hidden relative  pb-20 lg:pb-0 flex flex-col items-center justify-between gap-2 lg:flex-row  lg:min-h-screen">
+    <div className="py-4 px-3 overflow-hidden relative  pb-20 lg:pb-0 flex flex-col items-center justify-between gap-2 lg:flex-row  lg:min-h-screen">
       <div className=" lg:absolute top-3 lg:top-10 text-[1.1rem] md:text-[1.4rem] lg:text-[1.8rem] text-center md:px-16 leading-5 lg:leading-10 text-amber-600 my-4">
         Since 2021, we have been partnering with education leaders to increase
         <span className="mx-3 border-b-2 border-b-yellow-500">
@@ -46,7 +46,7 @@ const Quality = () => {
           initial={{ scale: 0.4 }}
           whileInView={{ scale: 1 }}
           key={item.icon}
-          className=" w-[95%] md:w-2/3 lg:w-[24%] bg-slate-50 border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700  transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-lg shadow-[#f0f0f0] "
+          className=" w-[95%] md:w-2/3 lg:w-[24%]  border border-yellow-200 flex items-center justify-center gap-3 flex-col duration-700  transition-all hover:border-yellow-400 hover:border-2 hover:rounded-tr-[50px] text-center h-[300px] shadow-xl shadow-[#f0f0f0] "
         >
           <div className="flex  items-center justify-center">
             <Image src={item.icon} height={60} width={60} alt="img" />

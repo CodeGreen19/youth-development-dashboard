@@ -20,6 +20,7 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
     { text: "Apply Branch", link: "/branch-apply" },
     { text: "All Courses", link: "/all-courses" },
     { text: "Image Gallary", link: "/gallery" },
+    { text: "About Us", link: "/about-us" },
     { text: "Contact", link: "/contact" },
   ];
   return (
