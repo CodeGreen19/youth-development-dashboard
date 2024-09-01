@@ -5,7 +5,7 @@ import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import { motion } from "framer-motion";
-const Contact = () => {
+const Contact = ({ isBgRemoved }: { isBgRemoved?: boolean }) => {
   const locationInfo = [
     {
       icon: <FaLocationCrosshairs />,
@@ -22,7 +22,11 @@ const Contact = () => {
   ];
 
   return (
-    <div className="md:bg-[#000000bc] relative z-0 p-4 lg:pt-[100px] overflow-hidden lg:pl-[200px] 2xl:min-h-[95vh] lg:min-h-screen">
+    <div
+      className={` relative z-0 p-4 mt-3 lg:pt-[100px] overflow-hidden lg:pl-[200px] 2xl:min-h-[95vh] lg:min-h-screen ${
+        isBgRemoved ? "bg-slate-100" : "md:bg-[#000000bc]"
+      }`}
+    >
       <Svg hideUp="lg" svgFile="/line.svg" width={300} right={0} top={0} />
       <Svg hideUp="lg" svgFile="/line.svg" width={200} right={200} top={300} />
       <Svg hideUp="lg" svgFile="/line.svg" width={200} right={100} bottom={0} />

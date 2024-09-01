@@ -6,7 +6,7 @@ import React from "react";
 const ContactPage = () => {
   return (
     <div className="md:min-h-screen md:container">
-      <Contact />
+      <Contact isBgRemoved={true} />
     </div>
   );
 };
