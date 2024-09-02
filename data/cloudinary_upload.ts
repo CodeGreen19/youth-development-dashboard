@@ -16,34 +16,38 @@ export const uploadtoCloud = async ({
   file: File;
   folder: "student" | "branch" | "gallery";
 }): Promise<ImageUrlType> => {
-  // Convert the file to a buffer
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-  // return
-  let data = new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { resource_type: "auto", folder: `/${folder}` },
-      (error, result) => {
-        if (error) {
-          reject({
-            secure_url: "",
-            public_id: "",
-          });
-        } else {
-          resolve({
-            public_id: result!.public_id,
-            secure_url: result!.secure_url.endsWith(".pdf")
-              ? result!.secure_url.replace(".pdf", ".jpg")
-              : result!.secure_url,
-          });
+    const data = new Promise<ImageUrlType>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { resource_type: "auto", folder: `/${folder}` },
+        (error, result) => {
+          if (error) {
+            console.error("Cloudinary upload error:", error); // Log the error
+            reject({
+              secure_url: "",
+              public_id: "",
+            });
+          } else {
+            resolve({
+              public_id: result!.public_id,
+              secure_url: result!.secure_url.endsWith(".pdf")
+                ? result!.secure_url.replace(".pdf", ".jpg")
+                : result!.secure_url,
+            });
+          }
         }
-      }
-    );
-    stream.end(buffer);
-  });
-  let info = (await data) as ImageUrlType;
-  return info;
+      );
+      stream.end(buffer);
+    });
+
+    return await data;
+  } catch (error) {
+    console.error("Upload to Cloudinary failed:", error); // Log the error
+    throw new Error("Failed to upload file to Cloudinary.");
+  }
 };
 
 // Delete image from Cloudinary
@@ -57,46 +61,4 @@ export const deleteFromCloud = async (publicId: string) => {
       }
     });
   });
-};
-
-/// for testing purpose
-
-export const uploadtoCloudTest = async ({
-  formData,
-  folder,
-  fileName,
-}: {
-  formData: FormData;
-  fileName: string;
-  folder: "student" | "branch" | "gallery";
-}): Promise<ImageUrlType> => {
-  // Convert the file to a buffer
-  let file = formData.get(fileName) as File;
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  // return
-  let data = new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { resource_type: "auto", folder: `/${folder}` },
-      (error, result) => {
-        if (error) {
-          reject({
-            secure_url: "",
-            public_id: "",
-          });
-        } else {
-          resolve({
-            public_id: result!.public_id,
-            secure_url: result!.secure_url.endsWith(".pdf")
-              ? result!.secure_url.replace(".pdf", ".jpg")
-              : result!.secure_url,
-          });
-        }
-      }
-    );
-    stream.end(buffer);
-  });
-  let info = (await data) as ImageUrlType;
-  return info;
 };
