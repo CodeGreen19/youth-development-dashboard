@@ -193,8 +193,9 @@ model Notice {
 }
 
 model Gallery {
-  id        String   @id @default(uuid())
-  imgUrl    String
-  text      String
-  createdAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  public_id  String
+  secure_url String
+  text       String
+  createdAt  DateTime @default(now())
 }

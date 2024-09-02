@@ -31,7 +31,7 @@ const ImageGallery = () => {
               className="relative overflow-hidden shadow-lg  group mainBox w-full md:w-[49.5%] lg:w-[24.5%] my-2 flex-none aspect-[3/2] border border-yellow-200 group"
             >
               <Image
-                src={item.imgUrl}
+                src={item.secure_url}
                 height={500}
                 width={500}
                 className="w-full rounded object-cover"

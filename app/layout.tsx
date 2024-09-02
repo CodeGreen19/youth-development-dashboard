@@ -13,7 +13,7 @@ const salsa = Salsa({
 });
 
 export const metadata: Metadata = {
-  title: "The Earn Way Youth Development Dashboard",
+  title: "The Earn Way Youth Development Resource",
   description: "to empower the the youth is the primary duity of our institute",
 };
 

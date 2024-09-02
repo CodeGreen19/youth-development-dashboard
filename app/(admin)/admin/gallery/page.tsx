@@ -131,7 +131,7 @@ const GalleryImage = () => {
               <Image
                 height={200}
                 width={200}
-                src={item.imgUrl}
+                src={item.secure_url}
                 alt="logo"
                 className="object-cover w-full   rounded"
               />
@@ -139,7 +139,9 @@ const GalleryImage = () => {
               <button
                 disabled={deleteLoading}
                 className="text-sm absolute top-0 right-0  p-2 rounded-full bg-red-500 shadow-xl"
-                onClick={() => DeleteMutate(item.id)}
+                onClick={() =>
+                  DeleteMutate({ id: item.id, public_id: item.public_id })
+                }
               >
                 <MdDeleteForever className="text-white" />
               </button>

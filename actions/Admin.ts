@@ -1,5 +1,6 @@
 "use server";
 
+import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
 
@@ -40,13 +41,14 @@ export const addGalleryImgAction = async (formData: FormData) => {
     if (text === "") {
       return { error: "text and img file both are required" };
     }
-    let imgUrl = await uploadStudentFile({ file: imgFile, type: "gallery" });
+    let imgUrl = await uploadtoCloud({ file: imgFile, folder: "gallery" });
     // todo: upload
 
     await prisma.gallery.create({
       data: {
         text,
-        imgUrl: imgUrl.galleryImgUrl!,
+        secure_url: imgUrl.secure_url,
+        public_id: imgUrl.public_id,
       },
     });
     return { message: "success" };
@@ -63,13 +65,16 @@ export const allGalleryImgAction = async () => {
     return { error: "internal server error" };
   }
 };
-export const anyImgDeleteAction = async (id: string) => {
+export const anyImgDeleteAction = async ({
+  id,
+  public_id,
+}: {
+  id: string;
+  public_id: string;
+}) => {
   try {
-    let data = await prisma.gallery.delete({ where: { id } });
-    let isDeleted = await deleteStudentFile(data.imgUrl);
-    if (!isDeleted.success) {
-      return { error: "something went wrong!" };
-    }
+    await prisma.gallery.delete({ where: { id } });
+    await deleteFromCloud(public_id);
     return { message: "deleted" };
   } catch (error) {
     return { error: "internal server error" };

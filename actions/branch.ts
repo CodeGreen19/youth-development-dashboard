@@ -94,6 +94,8 @@ export const CreateBranchAction = async (formData: FormData) => {
     if (error.code === "P2002") {
       return { error: "email already exists" };
     }
+    console.log(error);
+
     return { error: "internal server error" };
   }
 };

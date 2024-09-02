@@ -6,7 +6,7 @@ export const uploadtoCloud = async ({
   folder,
 }: {
   file: File;
-  folder: "student" | "branch";
+  folder: "student" | "branch" | "gallery";
 }): Promise<ImageUrlType> => {
   // Convert the file to a buffer
   const arrayBuffer = await file.arrayBuffer();
