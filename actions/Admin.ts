@@ -1,6 +1,10 @@
 "use server";
 
-import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
+import {
+  deleteFromCloud,
+  uploadtoCloud,
+  uploadtoCloudTest,
+} from "@/data/cloudinary_upload";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
 
@@ -41,7 +45,11 @@ export const addGalleryImgAction = async (formData: FormData) => {
     if (text === "") {
       return { error: "text and img file both are required" };
     }
-    let imgUrl = await uploadtoCloud({ file: imgFile, folder: "gallery" });
+    let imgUrl = await uploadtoCloudTest({
+      formData,
+      fileName: "imgFile",
+      folder: "gallery",
+    });
     // todo: upload
 
     await prisma.gallery.create({
