@@ -41,10 +41,14 @@ const BranchApply: React.FC = () => {
     formData.append("branchInfo", JSON.stringify(branchInfo));
     formData.append("personalInfo", JSON.stringify(personalInfo));
     formData.append("moreInfo", JSON.stringify(moreInfo));
-    let doucmentUrl = await getBase64String(documents.ppSizePhoto as File);
-    let tradeUrl = await getBase64String(documents.tradeLicense as File);
-    let NIDUrl = await getBase64String(documents.nationalIDCard as File);
-    let signatureUrl = await getBase64String(documents.signature as File);
+    let doucmentUrl = await getBase64String(
+      documents.ppSizePhoto as File | null
+    );
+    let tradeUrl = await getBase64String(documents.tradeLicense as File | null);
+    let NIDUrl = await getBase64String(documents.nationalIDCard as File | null);
+    let signatureUrl = await getBase64String(
+      documents.signature as File | null
+    );
     formData.append("ppSizePhoto", doucmentUrl);
     formData.append("tradeLicense", tradeUrl);
     formData.append("nationalIDCard", NIDUrl);

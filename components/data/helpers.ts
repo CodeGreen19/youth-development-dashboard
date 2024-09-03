@@ -30,18 +30,22 @@ export const estimateReadingTime = (text: string) => {
   return Math.ceil(minutes);
 };
 
-export const getBase64String = (file: File): Promise<string> => {
+export const getBase64String = (file: File | null): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    if (file) {
+      const reader = new FileReader();
 
-    reader.onload = (e) => {
-      resolve(e.target!.result as string);
-    };
+      reader.onload = (e) => {
+        resolve(e.target!.result as string);
+      };
 
-    reader.onerror = (error) => {
-      reject(error);
-    };
+      reader.onerror = (error) => {
+        reject("empty");
+      };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    } else {
+      resolve("empty");
+    }
   });
 };

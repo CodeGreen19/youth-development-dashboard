@@ -54,7 +54,6 @@ export const BranchSchema = z.object({
   branchInfo: BranchInfoSchema,
   personalInfo: PersonalInfoSchema,
   moreInfo: MoreInfoSchema,
-  documents: DocumentsSchema,
 });
 
 // Export the types

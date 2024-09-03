@@ -46,8 +46,6 @@ const GalleryImage = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
-    console.log("outside", files![0].size, 1 * 1024 * 1024);
-
     if (files![0].size > 1 * 1024 * 1024) {
       customToast("error", "image size must be less than 1 MB");
       return;

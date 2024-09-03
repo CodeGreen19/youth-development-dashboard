@@ -13,7 +13,8 @@ const DocumentsForm: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
-    if (files![0].size > 1 * 2024 * 2024) {
+
+    if (files![0].size > 1 * 1024 * 1024) {
       return customToast("error", "file size must be less than 1 MB");
     }
     if (files && files.length > 0) {

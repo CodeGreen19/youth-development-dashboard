@@ -52,8 +52,6 @@ export const addGalleryImgAction = async (formData: FormData) => {
       folder: "gallery",
     });
 
-    console.log(imgUrl);
-
     // todo: upload
 
     await prisma.gallery.create({

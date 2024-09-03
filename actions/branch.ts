@@ -24,34 +24,39 @@ export const CreateBranchAction = async (formData: FormData) => {
     ) as PersonalInfo;
     const moreInfo = JSON.parse(formData.get("moreInfo") as string) as MoreInfo;
 
-    const documents = {
+    const { nationalIDCard, ppSizePhoto, signature, tradeLicense } = {
       ppSizePhoto: formData.get("ppSizePhoto") as string,
       tradeLicense: formData.get("tradeLicense") as string,
       nationalIDCard: formData.get("nationalIDCard") as string,
       signature: formData.get("signature") as string,
     };
-    let BranchInfo = { branchInfo, personalInfo, moreInfo, documents };
+    let BranchInfo = { branchInfo, personalInfo, moreInfo };
     const result = BranchSchema.safeParse(BranchInfo);
     if (result.error) {
       return { error: result.error.format() };
     }
+    if (ppSizePhoto === "empty")
+      return { error: "pasport size image is required" };
+    if (tradeLicense === "empty") return { error: "trade licence is required" };
+    if (nationalIDCard === "empty") return { error: "NID card is required" };
+    if (signature === "empty") return { error: "signature image is required" };
 
     /// upload the images
 
     let passportImg = await uploadToCloudinary({
-      file: documents.ppSizePhoto!,
+      file: ppSizePhoto!,
       folder: "branch",
     });
     let nidImage = await uploadToCloudinary({
-      file: documents.nationalIDCard!,
+      file: nationalIDCard!,
       folder: "branch",
     });
     let signatureImg = await uploadToCloudinary({
-      file: documents.signature!,
+      file: signature!,
       folder: "branch",
     });
     let licenceImg = await uploadToCloudinary({
-      file: documents.tradeLicense!,
+      file: tradeLicense!,
       folder: "branch",
     });
     // checking the vlidation
@@ -107,7 +112,6 @@ export const CreateBranchAction = async (formData: FormData) => {
     if (error.code === "P2002") {
       return { error: "email already exists" };
     }
-    console.log(error);
 
     return { error: "internal server error" };
   }
