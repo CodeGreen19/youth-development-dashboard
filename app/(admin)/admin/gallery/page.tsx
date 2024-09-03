@@ -5,6 +5,7 @@ import {
   allGalleryImgAction,
   anyImgDeleteAction,
 } from "@/actions/Admin";
+import { getBase64String } from "@/components/data/helpers";
 import { customToast } from "@/components/shared/ToastContainer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,20 +45,29 @@ const GalleryImage = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
+
+    console.log("outside", files![0].size, 1 * 1024 * 1024);
+
+    if (files![0].size > 1 * 1024 * 1024) {
+      customToast("error", "image size must be less than 1 MB");
+      return;
+    }
     if (files && files.length > 0) {
       setFile(files[0]);
     }
   };
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (text.length < 10) {
       return customToast("error", "the text should be at least 10 char");
     }
 
-    let formData = new FormData();
-    formData.append("imgText", JSON.stringify(text));
-
-    formData.append("imgFile", file as File);
-    mutate(formData);
+    if (file) {
+      let base64file = await getBase64String(file);
+      let formData = new FormData();
+      formData.append("imgText", JSON.stringify(text));
+      formData.append("imgFile", base64file);
+      mutate(formData);
+    }
   };
 
   if (isPending) {

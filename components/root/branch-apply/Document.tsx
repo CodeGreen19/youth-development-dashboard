@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import useBranchStore from "@/hooks/useBranchStore";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { customToast } from "@/components/shared/ToastContainer";
 
 const DocumentsForm: React.FC = () => {
   const { documents, setDocuments } = useBranchStore();
@@ -12,6 +13,9 @@ const DocumentsForm: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    if (files![0].size > 1 * 2024 * 2024) {
+      return customToast("error", "file size must be less than 1 MB");
+    }
     if (files && files.length > 0) {
       setDocuments({ [name]: files[0] });
     }

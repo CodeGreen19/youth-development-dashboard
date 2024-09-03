@@ -1,5 +1,6 @@
 "use server";
 
+import { ImageUrlType } from "@/types";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
@@ -8,45 +9,30 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadToCloudinaryTest = async ({
-  formData,
+export const uploadToCloudinary = async ({
+  file,
+  folder,
 }: {
-  formData: FormData;
+  file: string;
+  folder: "student" | "branch" | "gallery";
 }) => {
   try {
-    let file = formData.get("file") as File;
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const uploadResult = await new Promise((resolve) => {
-      cloudinary.uploader
-        .upload_stream((error, uploadResult) => {
-          return resolve(uploadResult);
-        })
-        .end(buffer);
-    });
-
-    console.log(uploadResult);
-
-    return { message: "success" };
+    let data = await cloudinary.uploader.upload(file, { folder });
+    return { secure_url: data.secure_url, public_id: data.public_id };
   } catch (error) {
-    console.log(error);
-
-    return { error: "error" };
+    console.error("upload error", error);
+    return { error: "error occurs" };
   }
 };
-// export const uploadToCloudinaryTest = async ({
-//   formData,
-// }: {
-//   formData: FormData;
-// }) => {
-//   try {
-//     let file = formData.get("base") as string;
 
-//     let data = await cloudinary.uploader.upload(file);
-
-//     return { secure_url: data.secure_url };
-//   } catch (error) {
-//     console.log("upload error", error);
-//     return { error: "error occurs" };
-//   }
-// };
+export const deleteFromCloudinary = async (publicId: string) => {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error || result.result !== "ok") {
+        reject(new Error("Failed to delete image."));
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};

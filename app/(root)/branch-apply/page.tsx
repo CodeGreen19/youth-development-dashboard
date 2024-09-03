@@ -9,7 +9,7 @@ import DocumentsForm from "@/components/root/branch-apply/Document";
 import PersonalInfoForm from "@/components/root/branch-apply/PersonalInfo";
 import { CreateBranchAction } from "@/actions/branch";
 import { customToast } from "@/components/shared/ToastContainer";
-import { extractErrors } from "@/components/data/helpers";
+import { extractErrors, getBase64String } from "@/components/data/helpers";
 import { useMutation } from "@tanstack/react-query";
 import SuccessMessage from "@/components/root/branch-apply/SuccessMessage";
 import { useRouter } from "next/navigation";
@@ -41,10 +41,14 @@ const BranchApply: React.FC = () => {
     formData.append("branchInfo", JSON.stringify(branchInfo));
     formData.append("personalInfo", JSON.stringify(personalInfo));
     formData.append("moreInfo", JSON.stringify(moreInfo));
-    formData.append("ppSizePhoto", documents.ppSizePhoto as File);
-    formData.append("tradeLicense", documents.tradeLicense as File);
-    formData.append("nationalIDCard", documents.nationalIDCard as File);
-    formData.append("signature", documents.signature as File);
+    let doucmentUrl = await getBase64String(documents.ppSizePhoto as File);
+    let tradeUrl = await getBase64String(documents.tradeLicense as File);
+    let NIDUrl = await getBase64String(documents.nationalIDCard as File);
+    let signatureUrl = await getBase64String(documents.signature as File);
+    formData.append("ppSizePhoto", doucmentUrl);
+    formData.append("tradeLicense", tradeUrl);
+    formData.append("nationalIDCard", NIDUrl);
+    formData.append("signature", signatureUrl);
     mutate(formData);
   };
 

@@ -1,6 +1,7 @@
 "use server";
 
 import { hashedPassword, jwtDecode } from "@/data/auth";
+import { uploadToCloudinary } from "@/data/cloudinary_file_upload";
 import { uploadtoCloud } from "@/data/cloudinary_upload";
 import sendCredentialMail from "@/data/sendCredentialMail";
 import { uploadBranchFile } from "@/data/uploads";
@@ -24,10 +25,10 @@ export const CreateBranchAction = async (formData: FormData) => {
     const moreInfo = JSON.parse(formData.get("moreInfo") as string) as MoreInfo;
 
     const documents = {
-      ppSizePhoto: formData.get("ppSizePhoto") as File | null,
-      tradeLicense: formData.get("tradeLicense") as File | null,
-      nationalIDCard: formData.get("nationalIDCard") as File | null,
-      signature: formData.get("signature") as File | null,
+      ppSizePhoto: formData.get("ppSizePhoto") as string,
+      tradeLicense: formData.get("tradeLicense") as string,
+      nationalIDCard: formData.get("nationalIDCard") as string,
+      signature: formData.get("signature") as string,
     };
     let BranchInfo = { branchInfo, personalInfo, moreInfo, documents };
     const result = BranchSchema.safeParse(BranchInfo);
@@ -37,19 +38,19 @@ export const CreateBranchAction = async (formData: FormData) => {
 
     /// upload the images
 
-    let passportImg = await uploadtoCloud({
+    let passportImg = await uploadToCloudinary({
       file: documents.ppSizePhoto!,
       folder: "branch",
     });
-    let nidImage = await uploadtoCloud({
+    let nidImage = await uploadToCloudinary({
       file: documents.nationalIDCard!,
       folder: "branch",
     });
-    let signatureImg = await uploadtoCloud({
+    let signatureImg = await uploadToCloudinary({
       file: documents.signature!,
       folder: "branch",
     });
-    let licenceImg = await uploadtoCloud({
+    let licenceImg = await uploadToCloudinary({
       file: documents.tradeLicense!,
       folder: "branch",
     });
@@ -76,16 +77,28 @@ export const CreateBranchAction = async (formData: FormData) => {
           create: moreInfo,
         },
         ppSizePhoto: {
-          create: passportImg,
+          create: {
+            secure_url: passportImg.secure_url!,
+            public_id: passportImg.public_id!,
+          },
         },
         nationalIDCard: {
-          create: nidImage,
+          create: {
+            secure_url: nidImage.secure_url!,
+            public_id: nidImage.public_id!,
+          },
         },
         signature: {
-          create: signatureImg,
+          create: {
+            secure_url: signatureImg.secure_url!,
+            public_id: signatureImg.public_id!,
+          },
         },
         tradeLicense: {
-          create: licenceImg,
+          create: {
+            secure_url: licenceImg.secure_url!,
+            public_id: licenceImg.public_id!,
+          },
         },
       },
     });

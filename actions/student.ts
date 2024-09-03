@@ -1,6 +1,10 @@
 "use server";
 
 import { jwtDecode } from "@/data/auth";
+import {
+  deleteFromCloudinary,
+  uploadToCloudinary,
+} from "@/data/cloudinary_file_upload";
 import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { generateRollAndRegistrationNumbers } from "@/data/RollAndReg";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
@@ -13,15 +17,13 @@ export const createStudentAction = async (formData: FormData) => {
     const studentInfo = JSON.parse(
       formData.get("studentInfo") as string
     ) as StudentType;
-    const profileUrl = formData.get("profileUrl") as File | null | string;
+    const profileUrl = formData.get("profileUrl") as string;
 
     let result = StudentSchema.safeParse(studentInfo);
     if (result.error) {
       return { error: result.error.format() };
     }
-    if (profileUrl === null || typeof profileUrl === "string") {
-      return { error: "Passport Side Photo is required" };
-    }
+
     let token = cookies().get("branch_token")?.value;
     if (!token) {
       return { error: "token does'nt exist" };
@@ -49,7 +51,7 @@ export const createStudentAction = async (formData: FormData) => {
       email,
     } = studentInfo;
 
-    let uploadedImg = await uploadtoCloud({
+    let { secure_url, public_id } = await uploadToCloudinary({
       file: profileUrl,
       folder: "student",
     });
@@ -82,7 +84,7 @@ export const createStudentAction = async (formData: FormData) => {
         genReg: nextRegistrationNumber,
         genRoll: nextRollNumber,
         profileDoc: {
-          create: uploadedImg,
+          create: { secure_url: secure_url!, public_id: public_id! },
         },
       },
     });
@@ -183,7 +185,7 @@ export const DeleteSingleStudentById = async ({
   public_id: string;
 }) => {
   try {
-    await deleteFromCloud(public_id);
+    await deleteFromCloudinary(public_id);
     await prisma.profileImg.delete({
       where: { studentId: id },
     });

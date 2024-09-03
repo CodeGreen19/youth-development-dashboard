@@ -29,3 +29,19 @@ export const estimateReadingTime = (text: string) => {
   const minutes = numWords / wordsPerMinute;
   return Math.ceil(minutes);
 };
+
+export const getBase64String = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      resolve(e.target!.result as string);
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+};

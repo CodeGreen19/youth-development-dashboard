@@ -1,6 +1,9 @@
 "use server";
 
-import { uploadToCloudinaryTest } from "@/data/cloudinary_file_upload";
+import {
+  deleteFromCloudinary,
+  uploadToCloudinary,
+} from "@/data/cloudinary_file_upload";
 import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
@@ -38,23 +41,28 @@ export const deleteNoticeAction = async (id: string) => {
 export const addGalleryImgAction = async (formData: FormData) => {
   try {
     let text = JSON.parse(formData.get("imgText") as string);
-    let imgFile = formData.get("imgFile") as File;
+    let imgFile = formData.get("imgFile") as string;
+
     if (text === "") {
       return { error: "text and img file both are required" };
     }
-    let imgUrl = await uploadtoCloud({
+
+    let imgUrl = await uploadToCloudinary({
       file: imgFile,
       folder: "gallery",
     });
+
+    console.log(imgUrl);
+
     // todo: upload
 
-    // await prisma.gallery.create({
-    //   data: {
-    //     text,
-    //     secure_url: imgUrl.secure_url,
-    //     public_id: imgUrl.public_id,
-    //   },
-    // });
+    await prisma.gallery.create({
+      data: {
+        text,
+        secure_url: imgUrl.secure_url!,
+        public_id: imgUrl.public_id!,
+      },
+    });
     return { message: "success" };
   } catch (error) {
     return { error: "internal server error" };
@@ -78,7 +86,7 @@ export const anyImgDeleteAction = async ({
 }) => {
   try {
     await prisma.gallery.delete({ where: { id } });
-    await deleteFromCloud(public_id);
+    await deleteFromCloudinary(public_id);
     return { message: "deleted" };
   } catch (error) {
     return { error: "internal server error" };

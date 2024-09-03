@@ -3,7 +3,7 @@ import { createStudentAction } from "@/actions/student";
 import AcadamicInfo from "@/components/branch/students/AcadamicInfo";
 import CourseInfo from "@/components/branch/students/CourseInfo";
 import PersonalInfo from "@/components/branch/students/PersonalInfo";
-import { extractErrors } from "@/components/data/helpers";
+import { extractErrors, getBase64String } from "@/components/data/helpers";
 import { customToast } from "@/components/shared/ToastContainer";
 import { Button } from "@/components/ui/button";
 import useStudentStore from "@/hooks/useStudentStore";
@@ -31,12 +31,17 @@ const AddnewPage = () => {
       router.push("/branch/unpaid-students");
     },
   });
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append("studentInfo", JSON.stringify(studentInfo));
-    formData.append("profileUrl", (profileUrl as File) || null);
-
-    mutate(formData);
+  const handleSubmit = async () => {
+    if (profileUrl) {
+      const formData = new FormData();
+      if (profileUrl.size > 1 * 2024 * 2024) {
+        return customToast("error", "file size must be less that 1 MB");
+      }
+      let stringFile = await getBase64String(profileUrl as File);
+      formData.append("studentInfo", JSON.stringify(studentInfo));
+      formData.append("profileUrl", stringFile);
+      mutate(formData);
+    }
   };
   useEffect(() => {
     resetForm();
