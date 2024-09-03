@@ -85,7 +85,7 @@ const BranchInfo = ({ info }: { info: GetBranchInfoType }) => {
             </tbody>
           </motion.table>
         </div>
-        <div>
+        <div className="overflow-scroll ">
           <h2 className="text-xl font-semibold mb-4">
             Director&apos;s Information
           </h2>

@@ -53,7 +53,7 @@ const AddnewPage = () => {
       <AcadamicInfo />
       <div className="flex items-center justify-end my-5">
         <Button
-          className=" p-6 md:p-8 px-8 md:px-10 text-lg rounded-sm "
+          className=" m-4 md:m-0 p-6 md:p-8 px-8 md:px-10 text-lg rounded-sm "
           onClick={handleSubmit}
           disabled={isPending}
         >

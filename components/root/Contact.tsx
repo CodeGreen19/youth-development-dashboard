@@ -5,19 +5,23 @@ import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Link from "next/link";
 const Contact = ({ isBgRemoved }: { isBgRemoved?: boolean }) => {
   const locationInfo = [
     {
       icon: <FaLocationCrosshairs />,
       info: "Sohidul Islam Market, 2nd floor, Damurhuda,Chuadanga,BD",
+      link: "https://maps.app.goo.gl/t833Num97ikau2T46",
     },
     {
       icon: <FaPhoneFlip />,
       info: "01880110842",
+      link: "tel:01880110842",
     },
     {
       icon: <FaFacebookF />,
       info: "FaceBook Page",
+      link: "https://www.facebook.com/the.earn.way?mibextid=ZbWKwL",
     },
   ];
 
@@ -66,16 +70,15 @@ const Contact = ({ isBgRemoved }: { isBgRemoved?: boolean }) => {
           successful future in technology.
         </motion.p>
         <ul className="flex items-start flex-col gap-3 mt-4 justify-start">
-          {locationInfo.map((item) => (
-            <li
-              key={item.info}
-              className="flex items-center justify-center gap-4"
-            >
-              <span className="p-2 rounded-full border border-[yellow] bg-yellow-50 text-yellow-500">
-                {item.icon}
-              </span>
-              <span>{item.info}</span>
-            </li>
+          {locationInfo.map((item, i) => (
+            <Link key={i} href={item.link}>
+              <li className="flex items-center justify-center gap-4 text-blue-500">
+                <span className="p-2 rounded-full border border-[yellow] bg-yellow-50 text-yellow-500">
+                  {item.icon}
+                </span>
+                <span>{item.info}</span>
+              </li>
+            </Link>
           ))}
         </ul>
       </motion.div>

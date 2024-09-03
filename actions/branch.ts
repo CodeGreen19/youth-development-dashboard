@@ -228,7 +228,9 @@ export const createBranchPassAction = async ({
         password: encryptPass,
       },
     });
-    await sendCredentialMail(branch.branchInfo?.branchEmail!, password);
+    if (branch.role === "USER") {
+      await sendCredentialMail(branch.branchInfo?.branchEmail!, password);
+    }
     return { message: "new branch password created" };
   } catch (error) {
     return { error: "internal server error" };

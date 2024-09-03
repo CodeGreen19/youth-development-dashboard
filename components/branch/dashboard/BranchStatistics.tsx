@@ -12,10 +12,10 @@ const BranchStatistics = ({
 }) => {
   return (
     <div className="flex flex-col md:flex-row  items-center  md:justify-between gap-2">
-      <div className=" w-1/2 rounded">
+      <div className="md:w-1/2 rounded">
         <BranchEarning data={male} />
       </div>
-      <div className=" w-1/2 rounded">
+      <div className=" md:w-1/2 rounded">
         <BranchEarning data={female} />
       </div>
     </div>

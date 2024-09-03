@@ -70,6 +70,9 @@
   .branch_heading {
     @apply py-4 text-sm md:text-lg font-bold w-full;
   }
+  .tableContainer {
+    @apply w-full md:w-auto overflow-scroll md:overflow-hidden;
+  }
 }
 
 .branch_input {

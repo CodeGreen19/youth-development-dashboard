@@ -4,8 +4,7 @@ import {
   deleteFromCloudinary,
   uploadToCloudinary,
 } from "@/data/cloudinary_file_upload";
-import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
-import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
+
 import { prisma } from "@/lib/db";
 
 export const newNoticeAction = async ({ text }: { text: string }) => {

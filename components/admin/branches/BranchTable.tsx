@@ -88,41 +88,43 @@ const BranchTable = ({ data }: { data: BranchesTableType[] }) => {
   );
 
   return (
-    <div className="p-4 bg-white rounded-sm">
-      <DataTable
-        title={
-          <div className="w-full flex items-center justify-between">
-            <div>
-              <span>Students Lists</span>
-            </div>{" "}
-            <div className="flex items-center my-2 justify-end gap-2">
-              <Input
-                type="text"
-                placeholder="Search by name"
-                className="p-2 border w-52 border-gray-300 rounded"
-                value={filterText}
-                onChange={(e) => setFilterText(e.target.value)}
-              />
-              <Button
-                className="ml-2 bg-amber-500 hover:bg-amber-600  text-white p-2 px-4 rounded"
-                onClick={() => {
-                  setResetPaginationToggle(!resetPaginationToggle);
-                  setFilterText("");
-                }}
-              >
-                Reset
-              </Button>
+    <div className="tableContainer">
+      <div className="p-4 min-w-[600px] bg-white rounded-sm">
+        <DataTable
+          title={
+            <div className="w-full flex items-center justify-between">
+              <div>
+                <span>Students Lists</span>
+              </div>{" "}
+              <div className="flex items-center my-2 justify-end gap-2">
+                <Input
+                  type="text"
+                  placeholder="Search by name"
+                  className="p-2 border w-52 border-gray-300 rounded"
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                />
+                <Button
+                  className="ml-2 bg-amber-500 hover:bg-amber-600  text-white p-2 px-4 rounded"
+                  onClick={() => {
+                    setResetPaginationToggle(!resetPaginationToggle);
+                    setFilterText("");
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
             </div>
-          </div>
-        }
-        theme="tomato"
-        columns={columns}
-        data={filteredItems}
-        pagination
-        highlightOnHover
-        paginationResetDefaultPage={resetPaginationToggle}
-        responsive
-      />
+          }
+          theme="tomato"
+          columns={columns}
+          data={filteredItems}
+          pagination
+          highlightOnHover
+          paginationResetDefaultPage={resetPaginationToggle}
+          responsive
+        />
+      </div>
     </div>
   );
 };

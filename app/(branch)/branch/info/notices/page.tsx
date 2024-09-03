@@ -16,7 +16,9 @@ const NoticeShowPage = () => {
   }
   return (
     <div>
-      <h1 className=" my-4 text-[1.6rem] underline text-blue-500 ">Notices</h1>
+      <h1 className=" my-4 text-sm pl-4 md:text-[1.6rem]  underline text-blue-500 ">
+        Notices
+      </h1>
       {data?.allNotice?.length === 0 ? (
         <div className="my-6 text-center">there is no such any notice !</div>
       ) : (
