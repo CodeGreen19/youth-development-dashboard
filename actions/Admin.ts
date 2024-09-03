@@ -1,5 +1,6 @@
 "use server";
 
+import { uploadToCloudinaryTest } from "@/data/cloudinary_file_upload";
 import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
 import { prisma } from "@/lib/db";
@@ -47,13 +48,13 @@ export const addGalleryImgAction = async (formData: FormData) => {
     });
     // todo: upload
 
-    await prisma.gallery.create({
-      data: {
-        text,
-        secure_url: imgUrl.secure_url,
-        public_id: imgUrl.public_id,
-      },
-    });
+    // await prisma.gallery.create({
+    //   data: {
+    //     text,
+    //     secure_url: imgUrl.secure_url,
+    //     public_id: imgUrl.public_id,
+    //   },
+    // });
     return { message: "success" };
   } catch (error) {
     return { error: "internal server error" };
