@@ -30,6 +30,7 @@ model Branch {
   nationalIDCard NIDCardUrls?
   signature      SignUrls?
   createdAt      DateTime      @default(now())
+  Employee       Employee[]
 }
 
 enum Role {
@@ -106,13 +107,13 @@ model MoreInfo {
 
 // student model 
 model Student {
-  id             String      @id @default(uuid())
+  id             String           @id @default(uuid())
   name           String
   fatherName     String
   motherName     String
   mobile         String
   profileDoc     ProfileImg?
-  isPaid         Boolean     @default(false)
+  isPaid         Boolean          @default(false)
   gender         String
   dateOfBirth    String
   nationality    String
@@ -133,10 +134,64 @@ model Student {
   passedType     PassedType
   transId        String?
   branchId       String
-  branch         Branch      @relation(fields: [branchId], references: [id])
-  createdAt      DateTime    @default(now())
+  paymentHistory PaymentHistory[]
+  branch         Branch           @relation(fields: [branchId], references: [id])
+  createdAt      DateTime         @default(now())
 }
 
+model PaymentHistory {
+  id               String   @id @default(uuid())
+  amount           Int
+  employeeId       String?
+  employeeName     String?
+  employeePosition String?
+  studentId        String
+  student          Student  @relation(fields: [studentId], references: [id])
+  createdAt        DateTime @default(now())
+}
+
+// for employee 
+model Employee {
+  id                String   @id @default(uuid())
+  fullName          String
+  fatherName        String
+  phoneNumber       String
+  position          String
+  address           String
+  fixedSalary       Int
+  public_id         String
+  secure_url        String
+  salaryChangedDate DateTime
+  joinedAt          DateTime @default(now())
+  username          String   @unique
+  password          String
+  active            Boolean  @default(false)
+  branchId          String
+  branch            Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  salaries          Salary[]
+  updatedAt         DateTime @updatedAt
+}
+
+enum AmountStatus {
+  awaiting
+  accepted
+}
+
+model Salary {
+  id         String       @id @default(uuid())
+  amount     Int
+  month      String
+  monthIndex Int
+  year       Int
+  status     AmountStatus
+  method     String
+  employeeId String
+  eployee    Employee     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+// for studnet model
 enum PassedType {
   JSC
   SSC
@@ -192,10 +247,33 @@ model Notice {
   createdAt DateTime @default(now())
 }
 
+// home page galery
+
 model Gallery {
   id         String   @id @default(uuid())
   public_id  String
   secure_url String
   text       String
+  createdAt  DateTime @default(now())
+}
+
+// for team
+
+model Team {
+  id         String @id @default(uuid())
+  public_id  String
+  secure_url String
+  name       String
+  title      String
+  order      Int
+
+  createdAt DateTime @default(now())
+}
+
+// hero banner 
+model HeroBanner {
+  id         String   @id @default(uuid())
+  public_id  String
+  secure_url String
   createdAt  DateTime @default(now())
 }

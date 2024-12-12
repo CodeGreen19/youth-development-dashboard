@@ -22,7 +22,7 @@ const LottieComp = ({
   };
   return (
     <div className={className}>
-      <Lottie speed={speed} options={defaultOptions} height={height} />;
+      <Lottie speed={speed} options={defaultOptions} height={height} />
     </div>
   );
 };

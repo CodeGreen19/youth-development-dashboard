@@ -11,6 +11,7 @@ import LineCharts from "@/app/(branch)/_charts/LineChart";
 import { useQuery } from "@tanstack/react-query";
 import { getDashboardInfoForBranch } from "@/actions/branchOwner";
 import { BranchMaleFemaleType, TransInfoType } from "@/types/payment";
+import { TotalEarnings } from "@/app/(branch)/_charts/TotalEarnings";
 
 const Analytics = () => {
   const { data, isPending } = useQuery({
@@ -66,6 +67,7 @@ const Analytics = () => {
               paid={paidStudent!}
               unpaid={unpaidStudent!}
             />
+            <TotalEarnings />
             {lastMonths && <LineCharts data={lastMonths!} />}
             {lastNotice && (
               <LastNotice

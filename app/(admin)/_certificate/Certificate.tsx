@@ -65,8 +65,8 @@ export default function Certificate({
           >
             <Image
               src={"/certificate.jpeg"}
-              height={1200}
-              width={1000}
+              height={2200}
+              width={2000}
               alt="registration"
               className="w-full -translate-y-[6px] z-20"
             />

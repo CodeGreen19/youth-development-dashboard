@@ -6,7 +6,7 @@ import { AllCourses } from "../data";
 
 const PopularCourse = () => {
   return (
-    <div className="min-h-screen md:py-16 p-3 md:p-0 text-center">
+    <div className="min-h-screen md:py-16 p-3 px-6 md:p-0 text-center">
       <h1 className="my-8 text-2xl gap-3 md:text-3xl font-bold text-amber-500 underline">
         Popular Courses{" "}
         <Link href={"/all-courses"}>

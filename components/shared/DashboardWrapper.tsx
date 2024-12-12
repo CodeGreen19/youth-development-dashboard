@@ -6,8 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SideBarInfoArr } from "@/components/data/index";
-import { FaAngleRight } from "react-icons/fa6";
+import { managementInfo, SideBarInfoArr } from "@/components/data/index";
+import { FaAngleRight, FaUserClock } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import BranchNav from "./BranchNav";
@@ -17,9 +17,24 @@ import BranchLoading from "../branch/BranchLoading";
 import PermissionBlock from "../admin/branches/PermissionBlock";
 import OneTimePaymentAmount from "../admin/branches/OneTimePayment";
 import { BsLayoutTextSidebar } from "react-icons/bs";
+import { PiShirtFoldedFill } from "react-icons/pi";
+import { GrMoney } from "react-icons/gr";
+import { Button } from "../ui/button";
+import useEssentialsHooks from "@/hooks/useEssentialHooks";
+import { cn } from "@/lib/utils";
+import PermissionBlockEmployee from "../admin/branches/PermissionBlockEmployee";
 
 const DashboardWrapper = ({ children }: { children: ReactNode }) => {
-  const router = useRouter();
+  const {
+    isAllSalaryAccepted,
+    employeeName,
+    employeePosition,
+    setEmployeePosition,
+    setEmployeeName,
+    isEmployeeActive,
+    setIsEmployeeActive,
+  } = useEssentialsHooks();
+
   const [open, setOpen] = useState<boolean>(true);
   const [role, setRole] = useState<"USER" | "ADMIN">("USER");
   const pathname = usePathname();
@@ -42,6 +57,12 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
       setIsOneTimePaid(data.branchInfo.isOneTimePaid);
       setNeedToPay(data.branchInfo.haveToPay);
       setOneTimeAmount(data.oneTimePayAmount);
+      // for employee
+      if (data.employee_name && data.employee_position) {
+        setEmployeeName(data.employee_name);
+        setEmployeePosition(data.employee_position);
+        setIsEmployeeActive(data.is_employee_active!);
+      }
       return data;
     },
   });
@@ -49,6 +70,8 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <main className=" w-full">
       {isPending && <BranchLoading />}
+
+      {!isEmployeeActive && <PermissionBlockEmployee />}
       {disable && <PermissionBlock />}
       {!isPending && !disable && needToPay && !isOneTimePaid && (
         <OneTimePaymentAmount
@@ -76,7 +99,10 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
           }`}
         >
           <div className={`flex items-center justify-end `}>
-            <span onClick={() => setOpen(!open)} className="cursor-pointer">
+            <span
+              onClick={() => setOpen(!open)}
+              className="cursor-pointer  translate-x-1"
+            >
               {<BsLayoutTextSidebar />}
             </span>
           </div>
@@ -135,6 +161,76 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
               </AccordionItem>
             ))}
           </Accordion>
+          {!branchData?.employeeRole && !isPending ? (
+            <div className="mt-5">
+              {!isPending && (
+                <fieldset className="border border-l-0 ">
+                  {open && (
+                    <legend className="p-2 text-sm text-green-500">
+                      Managements
+                    </legend>
+                  )}
+                  <ul className=" my *:cursor-pointer my-1">
+                    <Link href={managementInfo.employeeLink}>
+                      <li
+                        data-state={
+                          pathname === managementInfo.employeeLink
+                            ? true
+                            : false
+                        }
+                        className="py-1  hover:text-amber-500 flex items-center gap-2 data-[state=true]:text-amber-500"
+                      >
+                        <PiShirtFoldedFill />
+                        {open && <span>Employees</span>}
+                      </li>
+                    </Link>
+                    <Link href={managementInfo.salaryLink}>
+                      <li
+                        data-state={
+                          pathname === managementInfo.salaryLink ? true : false
+                        }
+                        className="py-1  hover:text-amber-500 flex items-center gap-2 data-[state=true]:text-amber-500"
+                      >
+                        <GrMoney />
+                        {open && <span>Salary</span>}
+                      </li>
+                    </Link>
+                  </ul>
+                </fieldset>
+              )}
+            </div>
+          ) : (
+            <div>
+              {open && (
+                <fieldset className="border border-l-0 pl-0 p-2 mt-5">
+                  <legend className="text-xs text-blue-600">
+                    about myself
+                  </legend>
+                  <div className=" ">
+                    <div className="text-sm">
+                      <h1 className="font-bold">{employeeName}</h1>
+                      <h1 className="text-gray-400 text-sm">
+                        {employeePosition}
+                      </h1>
+                    </div>
+                    <Link href={"/branch/employee/salary"}>
+                      <Button className="mt-2 w-full relative ">
+                        Salary Info
+                        <span
+                          className={cn(
+                            "inline-block size-3 rounded-full  absolute -top-1  -right-1 bg-green-500",
+                            !isAllSalaryAccepted
+                              ? "animate-ping"
+                              : "bg-transparent"
+                          )}
+                        ></span>
+                      </Button>
+                    </Link>
+                  </div>
+                </fieldset>
+              )}
+            </div>
+          )}
         </section>
         <section className="bg-slate-500 max-w-screen-2xl p-1 relative md:p-0 w-full ">
           {children}

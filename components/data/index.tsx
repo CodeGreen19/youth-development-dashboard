@@ -8,9 +8,10 @@ import { FaRegImages } from "react-icons/fa6";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { RiQuestionMark } from "react-icons/ri";
+import { RiQuestionMark, RiTeamLine } from "react-icons/ri";
 import { GrLineChart } from "react-icons/gr";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle, FaTeamspeak } from "react-icons/fa";
+import { TbLayoutListFilled } from "react-icons/tb";
 export const SideBarInfoArr = [
   {
     title: "Dashboard",
@@ -21,7 +22,7 @@ export const SideBarInfoArr = [
     title: "Students",
     icon: <MdOutlinePersonPin />,
     items: [
-      { title: "New Student", link: "/branch/new-student" },
+      { title: "Add Student", link: "/branch/new-student" },
       { title: "Paid Students", link: "/branch/all-students" },
       { title: "Unpaid Students", link: "/branch/unpaid-students" },
       // { title: "Results", link: "/branch/student-results" },
@@ -48,6 +49,12 @@ export const SideBarInfoArr = [
     items: [{ title: "Notices", link: "/branch/info/notices" }],
   },
 ];
+
+export const managementInfo = {
+  salaryLink: "/branch/salary-management",
+  employeeLink: "/branch/employee-management",
+  subAdminLink: "/branch/create-sub-admin",
+};
 export const AdminLinks = [
   {
     title: "Dashboard",
@@ -79,6 +86,16 @@ export const AdminLinks = [
     link: "/admin/branch-payment",
   },
   { title: "Revenue", icon: <GrLineChart />, link: "/admin/revenue" },
+  {
+    title: "Edit Banner",
+    icon: <TbLayoutListFilled />,
+    link: "/admin/edit-banner",
+  },
+  {
+    title: "Update Team",
+    icon: <RiTeamLine />,
+    link: "/admin/edit-team",
+  },
 ];
 
 export const AllCourses = [
@@ -158,3 +175,6 @@ export const AllCourses = [
     url: "https://img.freepik.com/free-photo/digital-marketing-with-icons-business-people_53876-94833.jpg?ga=GA1.1.517858620.1695271177&semt=ais_user",
   },
 ];
+
+export const contact_bg_Img =
+  "https://img.freepik.com/free-photo/person-working-html-computer_23-2150038860.jpg?size=626&ext=jpg&ga=GA1.1.517858620.1695271177&semt=sph";

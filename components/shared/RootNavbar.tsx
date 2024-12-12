@@ -39,12 +39,17 @@ const RootNavbar = () => {
             />
           </div>
         </Link>
-        <div className="hidden md:block">
+        {/* <div className="hidden md:block">
           <SocialIcons />
-        </div>
-        <div className="flex items-center justify-center gap-2">
+        </div> */}
+        <div className="flex items-center justify-center gap-1">
+          <Link href={"/student-result"}>
+            <Button className="hidden md:flex rounded-none bg-slate-200 hover:bg-slate-300 py-5 md:py-6 px-6 text-black">
+              Student Result
+            </Button>
+          </Link>
           <Button
-            className=" rounded-none bg-yellow-500 hover:bg-yellow-600 py-5 md:py-6 px-6 text-black"
+            className=" rounded-none  bg-yellow-500 hover:bg-yellow-600 py-5 md:py-6 px-6 text-black"
             onClick={() => handleClick()}
           >
             Branch login

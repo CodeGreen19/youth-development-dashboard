@@ -16,6 +16,8 @@ import Image from "next/image";
 import { AdminStudentPayment } from "@/actions/payments";
 import { useQueryClient } from "@tanstack/react-query";
 import { customToast } from "@/components/shared/ToastContainer";
+import StudentActionLists from "./studentEditOptions/StudentActionLists";
+import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 
 type PaymentType = {
   id: string;
@@ -143,18 +145,16 @@ const UnPaidStudentTable = ({
     {
       name: "Actions",
       cell: (row) => (
-        <div className="flex items-center gap-2">
-          <Link href={`/branch/unpaid-students/${row.id}`}>
-            <Button className="bg-purple-500 hover:bg-purple-600">
-              <FaEdit className="text-white" />
-            </Button>
-          </Link>
-          <DeleteStudent id={row.id} public_id={row.publicId!}>
-            <div className="bg-red-500 p-3 rounded cursor-pointer hover:bg-red-600">
-              <RiDeleteBin2Line className="text-white" />
-            </div>
-          </DeleteStudent>
-        </div>
+        <StudentActionLists
+          studentId={row.id}
+          imgUrl={row.picture!}
+          publicId={row.publicId}
+          students={info}
+        >
+          <div className=" p-2 ">
+            <BsThreeDotsVertical className="text-xl" />
+          </div>
+        </StudentActionLists>
       ),
     },
   ];
@@ -169,6 +169,8 @@ const UnPaidStudentTable = ({
       item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  //single student info for showing student details
+
   return (
     <div className="tableContainer">
       <div className="p-4 min-w-[600px] bg-white rounded-sm">
@@ -176,7 +178,7 @@ const UnPaidStudentTable = ({
           title={
             <div className="w-full  flex items-center justify-between">
               <div>
-                <span>Students Lists</span> <Button>Excel</Button>
+                <span>Students Lists</span>
               </div>{" "}
               <div className="flex items-center my-2 justify-end gap-2">
                 <Input

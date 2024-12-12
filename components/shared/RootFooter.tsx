@@ -5,7 +5,7 @@ import SocialIcons from "./SocialIcons";
 
 const RootFooter = () => {
   return (
-    <div className=" bg-black">
+    <div className=" bg-black ">
       <div className="md:container px-2 flex items-center justify-between">
         <Link href={"/"}>
           <div className="p-4 -translate-y-6 z-40 relative bg-yellow-500 flex items-center justify-center">

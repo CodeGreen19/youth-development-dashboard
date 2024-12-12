@@ -2,6 +2,7 @@
 
 import {
   comparePassword,
+  decryptCryptoPassword,
   genToken,
   hashedPassword,
   jwtDecode,
@@ -10,41 +11,68 @@ import {
 import { addMinutesToDate, generateOTP } from "@/data/helper";
 import sendEmail from "@/data/sendmail";
 import { prisma } from "@/lib/db";
+import { LoginRoleType } from "@/types/auth";
 import { cookies } from "next/headers";
 // create branchpass
 export const branchLoginAction = async ({
   password,
   email,
+  loginRole,
+  userName,
 }: {
   password: string;
   email: string;
+  userName: string;
+  loginRole: LoginRoleType;
 }) => {
   try {
     if (password.length < 6) {
       return { error: "password must be at least 6 char.." };
     }
-    let branchInfo = await prisma.branchInfo.findFirst({
-      where: { branchEmail: email },
-    });
+    if (loginRole === "branch-owner") {
+      let branchInfo = await prisma.branchInfo.findFirst({
+        where: { branchEmail: email },
+      });
 
-    if (!branchInfo) {
-      return { error: "invalid credentials" };
-    }
-    let branch = await prisma.branch.findUnique({
-      where: { id: branchInfo.branchId },
-    });
+      if (!branchInfo) {
+        return { error: "invalid credentials" };
+      }
+      let branch = await prisma.branch.findUnique({
+        where: { id: branchInfo.branchId },
+      });
 
-    if (branch?.password === null) {
-      return { error: "invalid credentials" };
-    }
-    let isComparePassword = comparePassword(password, branch?.password!);
+      if (branch?.password === null) {
+        return { error: "invalid credentials" };
+      }
+      let isComparePassword = comparePassword(password, branch?.password!);
 
-    if (!isComparePassword) {
-      return { error: "invalid credentials" };
+      if (!isComparePassword) {
+        return { error: "invalid credentials" };
+      }
+      let token = genToken(branch?.id!);
+      setCookie(token);
+      return { message: "login successfully" };
+    } else {
+      // for employee
+      const employee = await prisma.employee.findUnique({
+        where: { username: userName },
+      });
+
+      if (!employee) {
+        return { error: "invalid credentials" };
+      }
+
+      const decryptPassword = decryptCryptoPassword(employee.password);
+
+      const isCompared = decryptPassword === password;
+
+      if (!isCompared) {
+        return { error: "invalid credentials" };
+      }
+      let token = genToken(employee.branchId, employee.position, employee.id);
+      setCookie(token);
+      return { message: "login successfully" };
     }
-    let token = genToken(branch?.id!);
-    setCookie(token);
-    return { message: "login successfully" };
   } catch (error) {
     return { error: "internal server error" };
   }
@@ -78,7 +106,19 @@ export const getUserAction = async () => {
     if (!token) {
       return { message: "token does'nt exist" };
     }
-    let { id } = jwtDecode(token);
+    let { id, role, employeeId } = jwtDecode(token);
+    let employee_name: string | undefined;
+    let employee_position: string | undefined;
+    let is_employee_active: boolean | undefined;
+
+    if (employeeId) {
+      let data = await prisma.employee.findUnique({
+        where: { id: employeeId },
+      });
+      employee_name = data?.fullName;
+      employee_position = data?.position;
+      is_employee_active = data?.active;
+    }
 
     let branchInfo = await prisma.branch.findUnique({
       where: { id },
@@ -101,7 +141,14 @@ export const getUserAction = async () => {
       }
     }
 
-    return { branchInfo, oneTimePayAmount };
+    return {
+      branchInfo,
+      oneTimePayAmount,
+      employeeRole: role,
+      employee_name,
+      employee_position,
+      is_employee_active,
+    };
   } catch (error) {
     return { error: "internal server error" };
   }

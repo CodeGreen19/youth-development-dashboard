@@ -37,6 +37,8 @@ export const deleteNoticeAction = async (id: string) => {
   }
 };
 
+// for gallery image
+
 export const addGalleryImgAction = async (formData: FormData) => {
   try {
     let text = JSON.parse(formData.get("imgText") as string);
@@ -89,6 +91,7 @@ export const anyImgDeleteAction = async ({
     return { error: "internal server error" };
   }
 };
+// for payments
 
 export const oneTimePaymentUpdate = async ({ amount }: { amount: string }) => {
   try {

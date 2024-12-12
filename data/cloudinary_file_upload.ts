@@ -14,7 +14,7 @@ export const uploadToCloudinary = async ({
   folder,
 }: {
   file: string;
-  folder: "student" | "branch" | "gallery";
+  folder: "student" | "branch" | "gallery" | "banner" | "employee" | "team";
 }) => {
   try {
     let data = await cloudinary.uploader.upload(file, { folder });

@@ -18,9 +18,10 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
   const sheetRef: RefObject<HTMLButtonElement> = useRef(null);
   const navData = [
     { text: "Apply Branch", link: "/branch-apply" },
+    { text: "Student Result", link: "/student-result" },
     { text: "All Courses", link: "/all-courses" },
     { text: "Image Gallary", link: "/gallery" },
-    { text: "About Us", link: "/about-us" },
+    { text: "About Us & Our Team", link: "/about-us" },
     { text: "Contact", link: "/contact" },
   ];
   return (
@@ -38,11 +39,11 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
               />
             </div>
           </SheetHeader>
-          <ul className="md:mt-8">
+          <ul className="mt-8">
             {navData.map((item) => (
               <Link key={item.link} href={item.link}>
                 <li
-                  className="p-3 text-yellow-600 hover:text-blue-500"
+                  className="p-3 py-2 text-yellow-600 hover:text-blue-500"
                   onClick={() => sheetRef.current?.click()}
                 >
                   {item.text}

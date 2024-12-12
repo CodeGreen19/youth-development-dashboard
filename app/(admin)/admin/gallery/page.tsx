@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import React, { ChangeEvent, LegacyRef, useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 
 import { MdDeleteForever } from "react-icons/md";
 
@@ -46,10 +46,6 @@ const GalleryImage = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
-    if (files![0].size > 1 * 1024 * 1024) {
-      customToast("error", "image size must be less than 1 MB");
-      return;
-    }
     if (files && files.length > 0) {
       setFile(files[0]);
     }
@@ -74,7 +70,7 @@ const GalleryImage = () => {
 
   return (
     <div className="p-2 md:p-0">
-      <ul className="flex items-center gap-2 justify-center md:justify-start flex-wrap">
+      <ul className="flex items-start gap-2 justify-center md:justify-start flex-wrap">
         {file === null ? (
           <li className="flex-none md:h-[200px] w-full md:w-[200px] rounded bg-white shadow-lg flex items-center justify-center">
             <Input
@@ -120,6 +116,7 @@ const GalleryImage = () => {
                 {createLoading ? "upload..." : "upload"}
               </Button>
               <Button
+                disabled={createLoading}
                 className="bg-red-500 hover:bg-red-600"
                 onClick={() => {
                   setFile(null);
@@ -134,14 +131,14 @@ const GalleryImage = () => {
           data.allImg?.map((item) => (
             <li
               key={item.id}
-              className="p-2 bg-sky-300 relative w-full md:w-[200px] rounded flex-none"
+              className="p-2 bg-sky-300 relative  w-full md:w-[200px] rounded flex-none"
             >
               <Image
                 height={200}
                 width={200}
                 src={item.secure_url}
                 alt="logo"
-                className="object-cover w-full   rounded"
+                className="object-cover w-full aspect-[3/2]  rounded"
               />
               <p className="text-sm bg-white p-2 rounded-sm">{item.text}</p>
               <button

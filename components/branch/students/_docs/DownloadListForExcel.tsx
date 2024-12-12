@@ -24,7 +24,7 @@ const modifyData = (info: StudentPaidType[]): StudentData[] => {
     Mobile: item.mobile,
 
     Trade: item.trade!,
-    Session: item.session!,
+    Session: item.range!,
     Result: item.result ?? "",
   }));
   return newData;

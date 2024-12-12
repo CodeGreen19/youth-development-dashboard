@@ -38,7 +38,7 @@ const DeleteStudent = ({
   return (
     <div>
       <Dialog>
-        <DialogTrigger>{children}</DialogTrigger>
+        <DialogTrigger className="hidden">{children}</DialogTrigger>
         <DialogContent className="rounded-sm">
           <DialogHeader>
             <DialogTitle className=" text-center">

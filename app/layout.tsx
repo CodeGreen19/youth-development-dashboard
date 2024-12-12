@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "react-hot-toast";
 import ReactQuery from "@/components/data/ReactQuery";
+import { Suspense } from "react";
 
 const incons = Inconsolata({ subsets: ["latin"], variable: "--font-incons" });
 const salsa = Salsa({
@@ -31,7 +32,7 @@ export default function RootLayout({
           salsa.variable
         )}
       >
-        <ReactQuery> {children}</ReactQuery>
+        <ReactQuery>{children}</ReactQuery>
         <Toaster />
       </body>
     </html>

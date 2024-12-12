@@ -24,7 +24,7 @@ const HowItsWork = () => {
     },
   ];
   return (
-    <div className="min-h-screen py-7 md:py-0 flex items-center justify-center overflow-hidden relative">
+    <div className="min-h-screen py-7 md:py-0 flex items-center justify-center overflow-hidden relative px-6">
       <div className="bg-[#000000af] top-0 left-0 z-10 w-full absolute h-full"></div>
       <Image
         src={"/banner2.png"}

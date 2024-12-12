@@ -23,7 +23,7 @@ const AnimatedBtn = () => {
         Apply for Branch
       </Button>
       <div className="absolute -top-14  left-6">
-        <Lottie speed={0.5} options={defaultOptions} height={140} />;
+        <Lottie speed={0.5} options={defaultOptions} height={140} />
       </div>
     </div>
   );
