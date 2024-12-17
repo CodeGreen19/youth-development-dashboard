@@ -14,7 +14,7 @@ const defaultOptions = {
 };
 const BranchLoading = () => {
   return (
-    <div className="h-screen z-50 w-full fixed top-0 left-0 flex items-center justify-center bg-[#00000082]">
+    <div className="h-screen z-50 w-full fixed top-0 left-0 flex items-center justify-center bg-white">
       <Lottie options={defaultOptions} height={100} width={100} />
     </div>
   );

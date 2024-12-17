@@ -72,7 +72,7 @@ export const getAllStudentsOfBranch = async () => {
 
     let allStudents = await prisma.student.findMany({
       where: { branchId: id },
-      include: { profileDoc: true },
+      include: { profileDoc: true, paymentHistory: true },
     });
     let feesData = await prisma.courseFees.findMany({
       select: {
@@ -138,6 +138,17 @@ export const getDashboardInfoForBranch = async () => {
         }
       });
     });
+    // get earning earning form students
+
+    const earnings = await prisma.paymentHistory.findMany({
+      where: { branchId: id },
+    });
+    let earnedAmount: number = 0;
+    earnings.forEach((item) => {
+      earnedAmount = earnedAmount + item.amount;
+    });
+
+    // return the values
     return {
       totalStudent,
       paidStudent,
@@ -148,6 +159,7 @@ export const getDashboardInfoForBranch = async () => {
       maleCount,
       FemaleCount,
       lastMonths,
+      earnedAmount,
     };
   } catch (error) {
     return { error: "internal server error" };

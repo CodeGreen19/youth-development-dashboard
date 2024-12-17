@@ -1,15 +1,14 @@
-import { prisma } from "@/lib/db";
 import React from "react";
 
-const TestingPage = async () => {
-  const data = await prisma.salary.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 1,
-  });
-  if (data.length === 0) {
-    return <div>loading...</div>;
-  }
-  return <div>{data[0].status}</div>;
+const TestingPage = () => {
+  return (
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic id maiores
+      optio reiciendis molestiae vero voluptatibus molestias. Sit totam, est,
+      minima praesentium exercitationem atque porro natus esse optio aspernatur
+      numquam!
+    </div>
+  );
 };
 
 export default TestingPage;

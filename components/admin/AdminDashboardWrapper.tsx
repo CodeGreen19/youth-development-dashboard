@@ -1,11 +1,6 @@
 "use client";
 import React, { ReactNode, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import Link from "next/link";
@@ -15,7 +10,6 @@ import { AdminLinks } from "../data";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useQuery } from "@tanstack/react-query";
 import { getUserAction } from "@/actions/auth";
-import BranchLoading from "../branch/BranchLoading";
 import AdminLoading from "./AdminLoading";
 
 const AdminDashboardWrapper = ({ children }: { children: ReactNode }) => {

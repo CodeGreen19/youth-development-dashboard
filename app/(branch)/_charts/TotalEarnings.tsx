@@ -24,20 +24,13 @@ const chartConfig = {
     label: "Desktop",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
 } satisfies ChartConfig;
 
-export function TotalEarnings() {
-  const totalVisitors = chartData[0].desktop + chartData[0].mobile;
-
+export function TotalEarnings({ amount }: { amount: number }) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Stacked</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Payments from students</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
@@ -63,16 +56,16 @@ export function TotalEarnings() {
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) - 16}
-                          className="fill-foreground text-2xl font-bold"
+                          className="fill-foreground text-2xl font-bold font-salsa"
                         >
-                          {totalVisitors.toLocaleString()}
+                          {amount.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 4}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          currency(taka)
                         </tspan>
                       </text>
                     );
@@ -87,22 +80,15 @@ export function TotalEarnings() {
               fill="var(--color-desktop)"
               className="stroke-transparent stroke-2"
             />
-            <RadialBar
-              dataKey="mobile"
-              fill="var(--color-mobile)"
-              stackId="a"
-              cornerRadius={5}
-              className="stroke-transparent stroke-2"
-            />
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          payment status <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          This chart illustrates the total payments received from all students.
         </div>
       </CardFooter>
     </Card>

@@ -101,11 +101,11 @@ const StudentResult = () => {
               <div className="w-[700px] m-auto bg-white">
                 <div>
                   <div className="p-2 pt-5 z-40 relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
-                    <Image
+                    <img
                       src={"/logo.png"}
                       className="drop-shadow-md  w-10 -translate-y-2"
-                      height={100}
-                      width={100}
+                      // height={100}
+                      // width={100}
                       alt="main_logo"
                     />
                   </div>

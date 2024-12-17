@@ -14,7 +14,7 @@ const ImageGallery = () => {
   });
 
   return (
-    <div className="md:min-h-screen  pt-10 md:container">
+    <div className="md:min-h-screen  pt-10 md:container text-center">
       <h1 className=" font-bold text-2xl text-amber-500 md:text-3xl md:my-5 text-center bg-gradient-to-r from-amber-700 via-amber-300 to-amber-700 inline m-auto bg-clip-text text-transparent">
         Image Gallery
       </h1>
@@ -32,7 +32,7 @@ const ImageGallery = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.3 }}
               key={item.id}
-              className="relative overflow-hidden border-2 border-gray-300 rounded-sm group mainBox w-full md:w-[49.5%] lg:w-[24.5%] my-2 flex-none aspect-[3/2] shadow group"
+              className="relative overflow-hidden border-2 border-gray-300 rounded-sm group mainBox w-full md:w-[48.5%] lg:w-[23.5%] my-2 flex-none aspect-[3/2] shadow group"
             >
               <Image
                 src={item.secure_url}

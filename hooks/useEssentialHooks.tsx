@@ -9,6 +9,8 @@ interface FilterInfo {
   setEmployeePosition: (info: string) => void;
   isEmployeeActive: boolean;
   setIsEmployeeActive: (info: boolean) => void;
+  isEmployeeDeleted: boolean;
+  setIsEmployeeDeleted: (info: boolean) => void;
 }
 
 const useEssentialsHooks = create<FilterInfo>((set) => ({
@@ -20,6 +22,8 @@ const useEssentialsHooks = create<FilterInfo>((set) => ({
   setEmployeePosition: (info) => set({ employeeName: info }),
   isEmployeeActive: true,
   setIsEmployeeActive: (info) => set({ isEmployeeActive: info }),
+  isEmployeeDeleted: false,
+  setIsEmployeeDeleted: (info) => set({ isEmployeeDeleted: info }),
 }));
 
 export default useEssentialsHooks;

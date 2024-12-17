@@ -67,8 +67,8 @@ const Analytics = () => {
               paid={paidStudent!}
               unpaid={unpaidStudent!}
             />
-            <TotalEarnings />
             {lastMonths && <LineCharts data={lastMonths!} />}
+            <TotalEarnings amount={data.earnedAmount!} />
             {lastNotice && (
               <LastNotice
                 date={lastNotice!.createdAt!}

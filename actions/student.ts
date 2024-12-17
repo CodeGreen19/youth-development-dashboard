@@ -5,9 +5,8 @@ import {
   deleteFromCloudinary,
   uploadToCloudinary,
 } from "@/data/cloudinary_file_upload";
-import { deleteFromCloud, uploadtoCloud } from "@/data/cloudinary_upload";
 import { generateRollAndRegistrationNumbers } from "@/data/RollAndReg";
-import { deleteStudentFile, uploadStudentFile } from "@/data/uploads";
+import { sendAdmissionEmail } from "@/data/student_mails";
 import { prisma } from "@/lib/db";
 import { StudentSchema, StudentType } from "@/Schema/studentSchema";
 import { cookies } from "next/headers";
@@ -22,6 +21,14 @@ export const createStudentAction = async (formData: FormData) => {
     let result = StudentSchema.safeParse(studentInfo);
     if (result.error) {
       return { error: result.error.format() };
+    }
+    if (studentInfo.email) {
+      const isEmailExists = await prisma.student.findUnique({
+        where: { email: studentInfo.email },
+      });
+      if (isEmailExists) {
+        return { email: "email already exists" };
+      }
     }
 
     let token = cookies().get("branch_token")?.value;
@@ -80,7 +87,7 @@ export const createStudentAction = async (formData: FormData) => {
         passedType,
         passedYear,
         religion,
-        email,
+        email: email ? email : null,
         genReg: nextRegistrationNumber,
         genRoll: nextRollNumber,
         profileDoc: {
@@ -88,6 +95,11 @@ export const createStudentAction = async (formData: FormData) => {
         },
       },
     });
+
+    if (email) {
+      await sendAdmissionEmail(name, email);
+    }
+
     return { message: "new student has created" };
   } catch (error) {
     return { error: "internal server error" };
@@ -131,6 +143,14 @@ export const updateStudentAction = async ({
       religion,
       email,
     } = studentInfo;
+    if (email) {
+      let isEmailExists = await prisma.student.findUnique({
+        where: { email: email },
+      });
+      if (isEmailExists) {
+        return { error: "email address already exists" };
+      }
+    }
 
     await prisma.student.update({
       where: { id },

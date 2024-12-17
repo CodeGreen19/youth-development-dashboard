@@ -34,7 +34,7 @@ const BranchNav = ({ role }: { role: "USER" | "ADMIN" }) => {
           <DropdownMenuTrigger>
             <BsPersonCircle className="text-lg " />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="-translate-x-5  ">
+          <DropdownMenuContent align="end" className=" ">
             {role === "ADMIN" && (
               <Link href={"/admin/analytics"}>
                 <DropdownMenuItem className="cursor-pointer text-green-500">

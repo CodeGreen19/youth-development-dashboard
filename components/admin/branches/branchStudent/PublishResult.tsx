@@ -48,7 +48,9 @@ const PublishResult = ({
 
   const hanldeChange = (id: string, result: string) => {
     const updatedInfo = studentInfo?.map((student) =>
-      student.id === id ? { ...student, result } : student
+      student.id === id
+        ? { ...student, result: result ? result : null }
+        : student
     );
     if (updatedInfo) {
       setStudentinfo(updatedInfo);
@@ -86,6 +88,7 @@ const PublishResult = ({
                   >
                     <span>{item.roll}</span>
                     <Select
+                      value={item.result ?? ""}
                       onValueChange={(value) => hanldeChange(item.id, value)}
                     >
                       <SelectTrigger className="w-[85px]">

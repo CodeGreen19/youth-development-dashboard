@@ -69,7 +69,9 @@ const SalaryTable = ({
 }) => {
   const queryclient = useQueryClient();
   const { setIsAllSalaryAccepted } = useEssentialsHooks();
-  const [selectedYear, setSelectedYear] = useState<number>();
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear()
+  );
   const groupedData = groupAndSortSalaries(employee.salaries);
 
   // filtered info to show
@@ -82,7 +84,7 @@ const SalaryTable = ({
       if (message) {
         customToast("success", message);
         await queryclient.invalidateQueries({
-          queryKey: ["employee-with-salary-info"],
+          queryKey: ["single-employee-with-salary-info"],
         });
       }
     },
@@ -100,18 +102,7 @@ const SalaryTable = ({
       }
     },
   });
-  useEffect(() => {
-    if (groupedData.length !== 0) {
-      setSelectedYear(groupedData[0].year);
-    }
-    if (isEmployee) {
-      let status =
-        employee.salaries.map((item) => item.status === "awaiting").length === 0
-          ? true
-          : false;
-      setIsAllSalaryAccepted(status);
-    }
-  }, [setIsAllSalaryAccepted, isEmployee, employee.salaries, groupedData]);
+
   return (
     <div className="">
       <div className="mt-8 max-w-6xl mx-auto p-2 md:p-6  text-base bg-gray-50 shadow-sm rounded-lg">
@@ -185,15 +176,20 @@ const SalaryTable = ({
                 {!isEmployee ? (
                   <li
                     className={cn(
-                      " px-2  flex items-center justify-between",
+                      " px-2  flex items-center justify-between text-xs",
                       item.status === "awaiting"
-                        ? "text-yellow-500"
+                        ? "text-yellow-500 "
                         : "text-green-500"
                     )}
                   >
                     {item.status}
                     {item.status === "awaiting" && (
-                      <MdOutlineDelete className="text-red-500 " />
+                      <div
+                        onClick={() => delete_mutate({ salaryId: item.id })}
+                        className=" size-5 rounded-full bg-red-500/20 flex items-center justify-center ml-1"
+                      >
+                        <MdOutlineDelete className="text-red-500  cursor-pointer" />
+                      </div>
                     )}
                   </li>
                 ) : item.status === "awaiting" ? (
@@ -204,13 +200,13 @@ const SalaryTable = ({
                       }
                     }}
                   >
-                    <span className="inline-block p-1 text-sm rounded-md shadow-md bg-green-500 px-3 text-white cursor-pointer">
+                    <span className="inline-block text-xs p-1  rounded-md shadow-md bg-green-500 px-3 text-white cursor-pointer">
                       Accept
                     </span>
                   </li>
                 ) : (
                   <li>
-                    <span className="inline-block p-1 text-sm rounded-md shadow-md bg-gray-500 px-3 text-white cursor-pointer">
+                    <span className="inline-block p-1 text-xs  rounded-md shadow-md bg-gray-500 px-3 text-white cursor-pointer">
                       Accepted
                     </span>
                   </li>

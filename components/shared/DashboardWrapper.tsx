@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import useEssentialsHooks from "@/hooks/useEssentialHooks";
 import { cn } from "@/lib/utils";
 import PermissionBlockEmployee from "../admin/branches/PermissionBlockEmployee";
+import EmployeeDeleted from "../admin/branches/employee/EmployeeBlock";
 
 const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   const {
@@ -33,6 +34,8 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
     setEmployeeName,
     isEmployeeActive,
     setIsEmployeeActive,
+    isEmployeeDeleted,
+    setIsEmployeeDeleted,
   } = useEssentialsHooks();
 
   const [open, setOpen] = useState<boolean>(true);
@@ -63,6 +66,9 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
         setEmployeePosition(data.employee_position);
         setIsEmployeeActive(data.is_employee_active!);
       }
+      if (data.is_employee_deleted === true) {
+        setIsEmployeeDeleted(true);
+      }
       return data;
     },
   });
@@ -73,6 +79,7 @@ const DashboardWrapper = ({ children }: { children: ReactNode }) => {
 
       {!isEmployeeActive && <PermissionBlockEmployee />}
       {disable && <PermissionBlock />}
+      {isEmployeeDeleted && <EmployeeDeleted />}
       {!isPending && !disable && needToPay && !isOneTimePaid && (
         <OneTimePaymentAmount
           amount={oneTimeAmount}

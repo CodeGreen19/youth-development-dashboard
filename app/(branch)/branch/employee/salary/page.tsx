@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import SalaryTable from "../../salary-management/_components/SalaryTable";
 
 const SalaryMangement = () => {
-  const [selectedId, setSelectedId] = useState<string>("");
   const { isPending, data } = useQuery({
     queryKey: ["single-employee-with-salary-info"],
     queryFn: async () => {
@@ -37,7 +36,7 @@ const SalaryMangement = () => {
             <ul className=" bg-gray-100 flex lg:block overflow-x-auto lg:space-y-1">
               <li
                 className={cn(
-                  "p-3 flex-none py-1 bg-white rounded-md hover:border-emerald-500 border-2                bg-green-500/10 border-green-400"
+                  "p-3 flex-none py-1 bg-white rounded-md hover:border-emerald-500 border-2  bg-green-500/10 border-green-400"
                 )}
               >
                 <h1 className="font-semibold">{data.employee.fullName}</h1>

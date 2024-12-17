@@ -1,4 +1,6 @@
-import React, { ReactNode, useRef } from "react";
+"use client";
+
+import React, { ReactNode, useEffect, useRef } from "react";
 
 import {
   DropdownMenu,
@@ -8,12 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Student } from "@/types";
 import Link from "next/link";
 import DeleteStudent from "../DeleteStudent";
 import DetailStudentInfo from "./DetailStudentInfo";
 import StudentPaymentRecords from "./StudentPaymentRecords";
 import { BranchStudentType } from "@/types/students";
+import AdmissionFormModal from "../_docs/AdmissionFormModal";
 
 const StudentActionLists = ({
   children,
@@ -31,14 +33,17 @@ const StudentActionLists = ({
   const deleteRef = useRef<HTMLDivElement | null>(null);
   const detailInfoRef = useRef<HTMLDivElement | null>(null);
   const paymentRef = useRef<HTMLDivElement | null>(null);
+  const addmissionFormRef = useRef<HTMLDivElement | null>(null);
 
   if (!students) {
     return null;
   }
+  // getdata
 
   const studentInfo: BranchStudentType = students.filter(
     (item) => item.id === studentId
   )[0];
+
   return (
     <div>
       <DropdownMenu>
@@ -65,6 +70,14 @@ const StudentActionLists = ({
             }}
           >
             Add Payment Record
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              addmissionFormRef.current?.click();
+            }}
+          >
+            admission form
           </DropdownMenuItem>
           {publicId && (
             <>
@@ -100,21 +113,11 @@ const StudentActionLists = ({
       <StudentPaymentRecords student={studentInfo} imgUrl={imgUrl}>
         <div ref={paymentRef} className="hidden"></div>
       </StudentPaymentRecords>
+      <AdmissionFormModal branchStudent={studentInfo}>
+        <div ref={addmissionFormRef} className="hidden"></div>
+      </AdmissionFormModal>
     </div>
   );
 };
 
 export default StudentActionLists;
-
-//  <div className="flex items-center gap-2">
-//    <Link >
-//      <Button className="bg-purple-500 hover:bg-purple-600">
-//        <FaEdit className="text-white" />
-//      </Button>
-//    </Link>
-//    <DeleteStudent id={row.id} public_id={row.publicId!}>
-//      <div className="bg-red-500 p-3 rounded cursor-pointer hover:bg-red-600">
-//        <RiDeleteBin2Line className="text-white" />
-//      </div>
-//    </DeleteStudent>
-//  </div>;

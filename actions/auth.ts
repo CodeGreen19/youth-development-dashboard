@@ -110,14 +110,20 @@ export const getUserAction = async () => {
     let employee_name: string | undefined;
     let employee_position: string | undefined;
     let is_employee_active: boolean | undefined;
+    let is_employee_deleted: boolean | undefined;
 
     if (employeeId) {
       let data = await prisma.employee.findUnique({
         where: { id: employeeId },
       });
-      employee_name = data?.fullName;
-      employee_position = data?.position;
-      is_employee_active = data?.active;
+
+      if (data) {
+        employee_name = data?.fullName;
+        employee_position = data?.position;
+        is_employee_active = data?.active;
+      } else {
+        is_employee_deleted = true;
+      }
     }
 
     let branchInfo = await prisma.branch.findUnique({
@@ -148,6 +154,7 @@ export const getUserAction = async () => {
       employee_name,
       employee_position,
       is_employee_active,
+      is_employee_deleted,
     };
   } catch (error) {
     return { error: "internal server error" };

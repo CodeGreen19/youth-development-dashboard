@@ -1,4 +1,5 @@
 import { ImageUrlType } from ".";
+import { StudentPaymentHistoryType } from "./payment";
 
 type DocsType = {
   registrationCardUrl: string;
@@ -32,5 +33,6 @@ export type BranchStudentType = {
   email: string | null;
   branchId: string;
   profileDoc: ImageUrlType | null;
+  paymentHistory: StudentPaymentHistoryType[];
   createdAt: Date;
 };

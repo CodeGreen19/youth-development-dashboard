@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,9 +16,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addPaymentOfStudent,
   deletPaymentHistory,
-  getPaymentHistoryOfStudent,
 } from "@/actions/studentPaymentHistory";
 import Image from "next/image";
+import { StudentPaymentHistoryType } from "@/types/payment";
 
 const StudentPaymentRecords = ({
   children,
@@ -32,28 +32,17 @@ const StudentPaymentRecords = ({
   const queryClient = useQueryClient();
   const [newPayment, setNewPayment] = useState<string>("");
 
-  // query the data
-  const { isPending, data } = useQuery({
-    queryKey: ["payment-history"],
-    queryFn: async () => {
-      let data = await getPaymentHistoryOfStudent({ studentId: student.id });
-      return data;
-    },
-  });
-
   // add payments
-  const {
-    mutate,
-    isPending: create_pending,
-    error,
-  } = useMutation({
+  const { mutate, isPending: create_pending } = useMutation({
     mutationFn: addPaymentOfStudent,
     onSuccess: async ({ message, error }) => {
       console.log(error);
 
       if (message) {
         setNewPayment("");
-        await queryClient.invalidateQueries({ queryKey: ["payment-history"] });
+        await queryClient.invalidateQueries({
+          queryKey: ["allStudentsOfBranch"],
+        });
       }
     },
   });
@@ -62,7 +51,9 @@ const StudentPaymentRecords = ({
   const { mutate: deleteMutate, isPending: delete_pending } = useMutation({
     mutationFn: deletPaymentHistory,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["payment-history"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["allStudentsOfBranch"],
+      });
     },
   });
 
@@ -81,10 +72,9 @@ const StudentPaymentRecords = ({
       deleteMutate({ paymentHistoryId: paymentId });
     }
   };
+  let isPending = false;
 
-  if (isPending) {
-    return null;
-  }
+  console.log(student.id);
 
   return (
     <div>
@@ -125,46 +115,55 @@ const StudentPaymentRecords = ({
           </div>
           <div className="mt-6">
             <h3 className="font-semibold text-lg mb-2">Payment History</h3>
-            <ul className="space-y-2">
-              {data?.history?.length !== 0 &&
-                data?.history?.map((payment) => (
-                  <li
-                    key={payment.id}
-                    className="flex justify-between items-center border p-2 rounded-md shadow-sm"
-                  >
-                    <div>
-                      <p className="text-sm font-medium">
-                        Amount: {payment.amount} taka
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Date: {payment.createdAt.toLocaleString()}
-                      </p>
-                      {payment.employeeId && (
-                        <p className="text-xs text-gray-500">
-                          taken by :{" "}
-                          <span className="font-semibold">
-                            {payment.employeeName}{" "}
-                          </span>
-                          <span className="text-xs text-gray-400">
-                            {payment.employeePosition}
-                          </span>
-                        </p>
-                      )}
-                    </div>
-                    <button
-                      disabled={delete_pending}
-                      onClick={() => deletePayment(payment.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      <Trash className="w-4 h-4" />
-                    </button>
-                  </li>
-                ))}
-            </ul>
-            {data?.history!.length === 0 && (
-              <p className="text-sm text-gray-500 mt-4">
-                No payments recorded.
-              </p>
+            {isPending ? (
+              <div>loading..</div>
+            ) : (
+              <Fragment>
+                {" "}
+                <ul className="space-y-2">
+                  {student.paymentHistory &&
+                    student.paymentHistory.length !== 0 &&
+                    student.paymentHistory?.map((payment) => (
+                      <li
+                        key={payment.id}
+                        className="flex justify-between items-center border p-2 rounded-md shadow-sm"
+                      >
+                        <div>
+                          <p className="text-sm font-medium">
+                            Amount: {payment.amount} taka
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            Date: {payment.createdAt.toLocaleString()}
+                          </p>
+                          {payment.employeeId && (
+                            <p className="text-xs text-gray-500">
+                              taken by :{" "}
+                              <span className="font-semibold">
+                                {payment.employeeName}{" "}
+                              </span>
+                              <span className="text-xs text-gray-400">
+                                {payment.employeePosition}
+                              </span>
+                            </p>
+                          )}
+                        </div>
+                        <button
+                          disabled={delete_pending}
+                          onClick={() => deletePayment(payment.id)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <Trash className="w-4 h-4" />
+                        </button>
+                      </li>
+                    ))}
+                </ul>
+                {student.paymentHistory &&
+                  student.paymentHistory.length === 0 && (
+                    <p className="text-sm text-gray-500 mt-4">
+                      No payments recorded.
+                    </p>
+                  )}
+              </Fragment>
             )}
           </div>
         </DialogContent>

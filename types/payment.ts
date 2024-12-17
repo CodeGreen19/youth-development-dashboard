@@ -27,3 +27,14 @@ export type BranchMaleFemaleType = {
   total: number;
   text: string;
 };
+
+export type StudentPaymentHistoryType = {
+  id: string;
+  amount: number;
+  employeeId: string | null;
+  employeeName: string | null;
+  employeePosition: string | null;
+  branchId: string;
+  studentId: string;
+  createdAt: Date;
+};

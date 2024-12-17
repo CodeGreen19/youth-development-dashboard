@@ -13,7 +13,7 @@ import { cookies } from "next/headers";
 export const admin_AllStudentsOfBranch = async ({ id }: { id: string }) => {
   try {
     let allStudents = await prisma.student.findMany({
-      where: { branchId: id },
+      where: { branchId: id, isPaid: true },
       select: { courseDuration: true, courseTrade: true },
     });
 
@@ -34,7 +34,12 @@ export const admin_AllFilteredStudentsOfBranch = async ({
 }) => {
   try {
     let filteredStudent = await prisma.student.findMany({
-      where: { branchId: id, courseDuration: duration, courseTrade: trade },
+      where: {
+        branchId: id,
+        courseDuration: duration,
+        courseTrade: trade,
+        isPaid: true,
+      },
     });
 
     return { filteredStudent };

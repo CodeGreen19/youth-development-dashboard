@@ -1,6 +1,7 @@
 "use server";
 
 import { jwtDecode } from "@/data/auth";
+import { sendPaymentNotificationEmail } from "@/data/student_mails";
 import { prisma } from "@/lib/db";
 import { cookies } from "next/headers";
 
@@ -25,6 +26,21 @@ export const addPaymentOfStudent = async ({
       (employeeName = data?.fullName), (employeePosition = data?.position);
     }
 
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+    if (!student) {
+      return { error: "student not found" };
+    }
+    if (student.email) {
+      await sendPaymentNotificationEmail(
+        student.name,
+        student.email,
+        student.courseTrade,
+        amount
+      );
+    }
+
     // create payment
     await prisma.paymentHistory.create({
       data: {
@@ -33,6 +49,7 @@ export const addPaymentOfStudent = async ({
         employeeId,
         employeeName,
         employeePosition,
+        branchId: id,
       },
     });
     return { message: `${amount} taka is added` };
@@ -52,14 +69,12 @@ export const deletPaymentHistory = async ({
     return { error: "internal server error" };
   }
 };
-export const getPaymentHistoryOfStudent = async ({
-  studentId,
-}: {
-  studentId: string;
-}) => {
+export const getPaymentHistoriesOfBranchStudent = async () => {
   try {
+    let token = cookies().get("branch_token")?.value!;
+    let { id } = jwtDecode(token);
     const history = await prisma.paymentHistory.findMany({
-      where: { studentId: studentId },
+      where: { branchId: id },
     });
 
     return { history };
