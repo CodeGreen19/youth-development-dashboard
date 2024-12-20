@@ -1,12 +1,13 @@
 "use client";
 
 import { getSingleStudentResult } from "@/actions/result";
+import { generateStudentResultPDF } from "@/components/data/pdf-func";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { StudentResultPDFtype } from "@/types/pdf";
 import { useMutation } from "@tanstack/react-query";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+
 import Image from "next/image";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 
@@ -15,6 +16,7 @@ const StudentResult = () => {
   const [reg, setReg] = useState<string>("");
   const [isBothFilled, setIsBothFilled] = useState<boolean>(false);
   const componentRef = useRef<HTMLDivElement | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   // get retsult
   const { isPending, data, mutate } = useMutation({
     mutationFn: getSingleStudentResult,
@@ -27,22 +29,21 @@ const StudentResult = () => {
   };
 
   const handleDownload = async () => {
-    if (componentRef.current) {
-      const canvas = await html2canvas(componentRef.current, {
-        scale: 2, // Increase for higher resolution
-        useCORS: true,
-        backgroundColor: "white", // White background for the canvas
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "px", "a4");
-
-      // Calculate width and height to fit into the PDF
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("result.pdf");
+    if (data?.result) {
+      setLoading(true);
+      const student: StudentResultPDFtype = {
+        name: data.result.name,
+        fatherName: data.result.fatherName,
+        motherName: data.result.motherName,
+        rollNo: data.result.genReg!,
+        regNo: data.result.genReg!,
+        result: data.result.genResult!,
+        branch: data.result.branch.branchInfo?.branchName!,
+        photoUrl: data.result.profileDoc?.secure_url!,
+        logoPath: "/logo.png", // Path in the public folder
+      };
+      await generateStudentResultPDF(student);
+      setLoading(false);
     }
   };
 
@@ -101,11 +102,11 @@ const StudentResult = () => {
               <div className="w-[700px] m-auto bg-white">
                 <div>
                   <div className="p-2 pt-5 z-40 relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
-                    <img
+                    <Image
                       src={"/logo.png"}
                       className="drop-shadow-md  w-10 -translate-y-2"
-                      // height={100}
-                      // width={100}
+                      height={100}
+                      width={100}
                       alt="main_logo"
                     />
                   </div>
@@ -162,7 +163,11 @@ const StudentResult = () => {
               </div>
             </div>
             <div className="my-3 w-full flex items-center justify-center">
-              <Button onClick={handleDownload}>PDF download</Button>
+              {loading ? (
+                <Button disabled={true}>Processing...</Button>
+              ) : (
+                <Button onClick={handleDownload}>PDF download</Button>
+              )}
             </div>
           </div>
         ) : (

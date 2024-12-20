@@ -14,6 +14,7 @@ export const getSingleStudentResult = async ({
       where: {
         genReg: reg,
         genRoll: roll,
+        isPaid: true,
       },
       include: {
         branch: { select: { branchInfo: { select: { branchName: true } } } },

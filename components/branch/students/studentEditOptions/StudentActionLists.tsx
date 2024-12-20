@@ -16,6 +16,8 @@ import DetailStudentInfo from "./DetailStudentInfo";
 import StudentPaymentRecords from "./StudentPaymentRecords";
 import { BranchStudentType } from "@/types/students";
 import AdmissionFormModal from "../_docs/AdmissionFormModal";
+import { Download } from "lucide-react";
+import { generateAdmissionFormPDF } from "@/components/data/pdf-func";
 
 const StudentActionLists = ({
   children,
@@ -72,12 +74,12 @@ const StudentActionLists = ({
             Add Payment Record
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer"
+            className="cursor-pointer "
             onClick={() => {
-              addmissionFormRef.current?.click();
+              generateAdmissionFormPDF(studentInfo);
             }}
           >
-            admission form
+            admission form <Download className="w-4 text-green-500 ml-2" />
           </DropdownMenuItem>
           {publicId && (
             <>
@@ -113,9 +115,9 @@ const StudentActionLists = ({
       <StudentPaymentRecords student={studentInfo} imgUrl={imgUrl}>
         <div ref={paymentRef} className="hidden"></div>
       </StudentPaymentRecords>
-      <AdmissionFormModal branchStudent={studentInfo}>
+      {/* <AdmissionFormModal branchStudent={studentInfo}>
         <div ref={addmissionFormRef} className="hidden"></div>
-      </AdmissionFormModal>
+      </AdmissionFormModal> */}
     </div>
   );
 };

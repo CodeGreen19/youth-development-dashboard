@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { BranchStudentType } from "@/types/students";
 import Image from "next/image";
+import { generateRegistrationCardPDF } from "@/components/data/pdf-func";
 
 const SelectedStudent = ({
   id,
@@ -42,23 +43,24 @@ export default function RegistrationCard({
   } = SelectedStudent({ id, info });
 
   const handleDownload = async () => {
-    if (componentRef.current) {
-      const canvas = await html2canvas(componentRef.current, {
-        scale: 2, // Increase for higher resolution
-        useCORS: true,
-        backgroundColor: "white", // White background for the canvas
-      });
+    generateRegistrationCardPDF(SelectedStudent({ id, info }), branchName);
+    // if (componentRef.current) {
+    //   const canvas = await html2canvas(componentRef.current, {
+    //     scale: 2, // Increase for higher resolution
+    //     useCORS: true,
+    //     backgroundColor: "white", // White background for the canvas
+    //   });
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "px", "a4");
+    //   const imgData = canvas.toDataURL("image/png");
+    //   const pdf = new jsPDF("p", "px", "a4");
 
-      // Calculate width and height to fit into the PDF
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    //   // Calculate width and height to fit into the PDF
+    //   const pdfWidth = pdf.internal.pageSize.getWidth();
+    //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("article.pdf");
-    }
+    //   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    //   pdf.save("article.pdf");
+    // }
   };
 
   return (

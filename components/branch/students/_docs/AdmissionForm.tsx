@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { Button } from "@/components/ui/button";
 import { BranchStudentType } from "@/types/students";
+import Image from "next/image";
 
 const AdmissionForm: React.FC<{ student: BranchStudentType }> = ({
   student,
@@ -37,7 +38,13 @@ const AdmissionForm: React.FC<{ student: BranchStudentType }> = ({
       >
         <header className="text-center mb-2 pb-3 pt-4 bg-sky-900/20 border border-gray-400/40">
           <div className="flex items-center justify-center my-3">
-            <img src="/logo.png" className="w-12"></img>
+            <Image
+              height={60}
+              width={60}
+              alt="main-logo"
+              src="/logo.png"
+              className="w-12"
+            ></Image>
           </div>
           <h1 className="text-xl font-bold ">Admission Form</h1>
           <p className="text-sm text-gray-600">
