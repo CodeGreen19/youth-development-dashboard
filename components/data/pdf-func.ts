@@ -1,3 +1,4 @@
+import { CertificateInfoType } from "@/types";
 import { StudentResultPDFtype } from "@/types/pdf";
 import { BranchStudentType } from "@/types/students";
 
@@ -179,6 +180,12 @@ export const generateRegistrationCardPDF = (
     doc.addImage(profileImg, "JPEG", 150, 135, 30, 30); // Position & size of profile picture
   }
 
+  // image for overwridding r
+
+  const img2 = new Image();
+  img2.src = "/white.png";
+  doc.addImage(img2, "PNG", 51, 212, 5, 5);
+
   // Set font settings
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
@@ -214,4 +221,50 @@ export const generateRegistrationCardPDF = (
 
   // Save the PDF
   doc.save(`${data.name}_Registration_Card.pdf`);
+};
+
+export const generateCertificatePdf = async (info: CertificateInfoType) => {
+  const doc = new jsPDF("l", "mm", "a4");
+
+  // show images
+  const img = new Image();
+  img.src = "/certificate/certificate.jpeg";
+  doc.addImage(img, "JPEF", 2, 2, 293, 206);
+  const img2 = new Image();
+  img2.src = "/certificate/symbol.png";
+  doc.addImage(img2, "PNG", 21.5, 19.5, 50, 60);
+  const img3 = new Image();
+  img3.src = "/certificate/subjects.png";
+  doc.addImage(img3, "PNG", 21.5, 81.5, 50.5, 66);
+  const img4 = new Image();
+  img4.src = "/certificate/score.png";
+  doc.addImage(img4, "PNG", 21.8, 151.5, 50, 37);
+
+  doc.setFontSize(12);
+
+  // for roll
+  doc.text(info.roll.toString(), 238, 83);
+  // for reg
+  doc.text(info.reg.toString(), 238, 90);
+  // for issueDate
+  doc.text(new Date().toLocaleString().slice(0, 10), 238, 98);
+
+  // for name
+  doc.text(info.fullName, 131, 107);
+  // for father
+  doc.text(info.fathersName, 125, 117);
+  // for mother
+  doc.text(info.mothersName, 210, 117);
+  // for courseName
+  doc.text(info.courseName, 172, 127);
+  // for institution name
+  doc.text(info.branchName, 130, 136);
+  // for held from
+  doc.text(info.held, 118, 145);
+  // for branch code
+  doc.text(info.branchCode, 252, 136);
+  // for grade
+  doc.text(info.grade, 247, 145.5);
+
+  doc.save("certificate.pdf");
 };

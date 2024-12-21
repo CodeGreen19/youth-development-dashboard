@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import { BranchStudentType } from "@/types/students";
 import Image from "next/image";
 import { CertificateInfoType } from "@/types";
+import { generateCertificatePdf } from "@/components/data/pdf-func";
 
 const textShorter = (text: string, count: number): string => {
   if (text.length > count) {
@@ -24,22 +25,26 @@ export default function Certificate({
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   const handleDownload = async () => {
+    // if (componentRef.current) {
+    //   const canvas = await html2canvas(componentRef.current, {
+    //     scale: 2, // Increase for higher resolution
+    //     useCORS: true,
+    //     backgroundColor: "white", // White background for the canvas
+    //   });
+
+    //   const imgData = canvas.toDataURL("image/png");
+    //   const pdf = new jsPDF("p", "px", "a4");
+
+    //   // Calculate width and height to fit into the PDF
+    //   const pdfWidth = pdf.internal.pageSize.getWidth();
+    //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    //   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    //   pdf.save("article.pdf");
+    // }
+
     if (componentRef.current) {
-      const canvas = await html2canvas(componentRef.current, {
-        scale: 2, // Increase for higher resolution
-        useCORS: true,
-        backgroundColor: "white", // White background for the canvas
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "px", "a4");
-
-      // Calculate width and height to fit into the PDF
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("article.pdf");
+      generateCertificatePdf(info);
     }
   };
 
