@@ -4,6 +4,7 @@ import { BranchStudentType } from "@/types/students";
 
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import { StudentPaidType } from "./tableHelper";
 
 // Define the interface
 
@@ -270,50 +271,110 @@ export const generateCertificatePdf = async (info: CertificateInfoType) => {
   doc.save("certificate.pdf");
 };
 
-export const generateStudentListsPDF = () => {
-  const { branchName, institute, session } = {
-    institute: "the earn way youth development resource",
-    branchName: "the ean way academy",
-    session: "july to december",
+export const generateStudentListsPDF = async (info: StudentPaidType[]) => {
+  if (info.length === 0) return;
+
+  const { branchName, institute, session, branchCode } = {
+    institute: "The Earn Way Youth Development Resource",
+    branchName: [info[0].branchName],
+    session: [info[0].range],
+    branchCode: 1,
   };
 
   const doc = new jsPDF("l", "mm", "a4");
-  const img = new Image();
-  img.src = "/logo.png";
-  doc.addImage(img, "PNG", 137, 4, 15, 15);
 
-  doc.setFontSize(13);
-  doc.text(institute, 140, 24, { align: "center" });
-  doc.setFontSize(11);
-  doc.text(
-    `${branchName} (${45}), ${session}, (total students ${50})`,
-    140,
-    29,
-    {
-      align: "center",
-    }
+  // Function to add the heading on each page
+  const addPageHeading = () => {
+    const img = new Image();
+    img.src = "/logo.png"; // Path to your logo
+    doc.addImage(img, "PNG", 137, 4, 15, 15); // Center the logo
+
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text(institute, 140, 24, { align: "center" });
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      `${branchName} (${branchCode}), ${session} (Total Students: ${info.length})`,
+      140,
+      29,
+      {
+        align: "center",
+      }
+    );
+  };
+
+  // modify the data
+
+  let newData = await Promise.all(
+    info.map(async (item) => {
+      let picture = await fetchImageAsDataURL(item.picture!);
+      return { ...item, picture };
+    })
   );
 
-  //
+  let dataArr = info.map((item, i) => {
+    return [
+      (i + 1).toString(),
+      `${item.name}\n${new Date(item.dob).toLocaleString().slice(0, 10)}`,
+      `${item.father}\n${item.mother}`,
+      `${item.genRoll}\n${item.genReg}`,
+      item.trade,
+      "img",
+      "",
+    ];
+  });
+
+  // Add heading to the first page
+  addPageHeading();
+
+  // AutoTable with page splitting and heading on each page
   autoTable(doc, {
-    head: [["Name", "Email", "Country", "Image"]],
-    startY: 35,
+    head: [
+      [
+        "SL No.",
+        "Name & DOB",
+        "Father & Mother",
+        "Roll & registration",
+        "Trade",
+        "Photo",
+        "Signature",
+      ],
+    ],
+    body: dataArr,
+    didDrawCell: (info) => {
+      if (info.cell.raw === "img") {
+        doc.addImage(
+          newData[info.row.index].picture,
+          "PNG",
+          info.cell.x,
+          info.cell.y,
+          16,
+          16
+        ); // Adjust positioning and size
+      }
+    },
+    startY: 35, // Table starts below the heading
     theme: "grid",
     styles: {
       cellPadding: 4,
-
       fontSize: 10,
       valign: "middle",
       halign: "left",
+      overflow: "linebreak",
+    },
+    columnStyles: {
+      0: { cellWidth: 23 },
+      8: { cellWidth: 80 },
     },
 
-    body: [
-      ["David", "david@gmail.com", "Seden", "cloudinary img url"],
-      ["David", "david@gmail.com", "Seden", "cloudinary img url"],
-    ],
+    margin: { top: 35 }, // Ensure space for header
+    didDrawPage: () => {
+      addPageHeading(); // Add the same header to each new page
+    },
   });
 
-  // download
-
+  // Download the PDF
   doc.save("student-lists.pdf");
 };

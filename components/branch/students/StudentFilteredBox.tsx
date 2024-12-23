@@ -1,3 +1,5 @@
+"use client";
+
 import {
   extractFiltersWithChildren,
   StudentPaidType,
@@ -12,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import useStudentFilter from "@/hooks/useStudentFilterStore";
 import { BranchStudentType } from "@/types/students";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import StudentResultModal from "./StudentResultModal";
 import { generateStudentListsPDF } from "@/components/data/pdf-func";
 
@@ -38,6 +40,7 @@ const StudentFilteredBox = ({
   const { admissionYears, courseDurations, courseTrades } =
     extractFiltersWithChildren(info);
 
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setCourseRange("");
   }, [courseDuration, setCourseRange]);
@@ -112,16 +115,19 @@ const StudentFilteredBox = ({
         >
           Reset Filter
         </Button>
-        {/* info={filteredInfo} */}
 
-        <div
+        <Button
+          variant={"outline"}
+          disabled={loading}
           onClick={async () => {
-            await generateStudentListsPDF();
+            setLoading(true);
+            await generateStudentListsPDF(info);
+            setLoading(false);
           }}
           className="border cursor-pointer hover:bg-gray-200 px-4 py-2 text-sm rounded-sm"
         >
-          Download PDF
-        </div>
+          {loading ? "Downloading.." : "Download PDF"}
+        </Button>
       </div>
     </div>
   );

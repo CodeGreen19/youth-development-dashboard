@@ -3,6 +3,8 @@ import { BranchStudentType } from "@/types/students";
 export type StudentPaidType = {
   id: string;
   name: string;
+  father: string;
+  mother: string;
   genRoll: string | undefined;
   genReg: string | undefined;
   mobile: string;
@@ -12,6 +14,7 @@ export type StudentPaidType = {
   createdAt: Date;
   isPaid: boolean;
   result: string;
+  dob: string;
   branchName: string;
   picture: string | undefined;
   studentInfo: BranchStudentType[];
@@ -26,6 +29,9 @@ export const consizeDataPaid = (
       id: item.id,
       mobile: item.mobile,
       name: item.name,
+      father: item.fatherName,
+      mother: item.motherName,
+      dob: item.dateOfBirth,
       picture: item.profileDoc?.secure_url,
       result: item.genResult ?? "",
       range: item.courseRange,

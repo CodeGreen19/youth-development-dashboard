@@ -65,7 +65,10 @@ export const getAllStudentsOfBranch = async () => {
     let { id } = jwtDecode(token);
     let BranchInfo = await prisma.branch.findUnique({
       where: { id },
-      select: { role: true, branchInfo: { select: { branchName: true } } },
+      select: {
+        role: true,
+        branchInfo: { select: { branchName: true, branchNo: true } },
+      },
     });
 
     let isAdmin = BranchInfo!.role === "ADMIN" ? true : false;
@@ -91,6 +94,7 @@ export const getAllStudentsOfBranch = async () => {
       feesData,
       isAdmin,
       branchName: BranchInfo?.branchInfo?.branchName,
+      branchCode: BranchInfo?.branchInfo?.branchNo,
     };
   } catch (error) {
     return { error: "internal server error" };
