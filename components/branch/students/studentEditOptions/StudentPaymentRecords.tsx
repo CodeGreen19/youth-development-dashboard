@@ -18,7 +18,6 @@ import {
   deletPaymentHistory,
 } from "@/actions/studentPaymentHistory";
 import Image from "next/image";
-import { StudentPaymentHistoryType } from "@/types/payment";
 
 const StudentPaymentRecords = ({
   children,
@@ -74,101 +73,101 @@ const StudentPaymentRecords = ({
   };
   let isPending = false;
 
-  console.log(student.id);
-
   return (
-    <div>
-      <Dialog onOpenChange={() => setNewPayment("")}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Payment Records</DialogTitle>
-          </DialogHeader>
-          <div className="flex items-center gap-4 mt-4">
-            <Image
-              src={imgUrl || "/default-avatar.png"}
-              alt={student.name}
-              height={50}
-              width={50}
-              className="w-12 h-12 rounded-full object-cover border"
-            />
-            <h2 className="text-lg font-bold">{student.name}</h2>
-          </div>
-          <div className="mt-6">
-            <div className="flex items-center gap-2">
-              <Input
-                type="number"
-                placeholder="Enter payment amount"
-                value={newPayment}
-                onChange={(e) => setNewPayment(e.target.value)}
-                className="flex-1"
+    student && (
+      <div>
+        <Dialog onOpenChange={() => setNewPayment("")}>
+          <DialogTrigger asChild>{children}</DialogTrigger>
+          <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Payment Records</DialogTitle>
+            </DialogHeader>
+            <div className="flex items-center gap-4 mt-4">
+              <Image
+                src={imgUrl || "/default-avatar.png"}
+                alt={student.name}
+                height={50}
+                width={50}
+                className="w-12 h-12 rounded-full object-cover border"
               />
-              <Button
-                disabled={create_pending}
-                onClick={addPayment}
-                className="flex items-center gap-2"
-              >
-                <PlusCircle className="w-4 h-4" />
-                Add
-              </Button>
+              <h2 className="text-lg font-bold">{student.name}</h2>
             </div>
-          </div>
-          <div className="mt-6">
-            <h3 className="font-semibold text-lg mb-2">Payment History</h3>
-            {isPending ? (
-              <div>loading..</div>
-            ) : (
-              <Fragment>
-                {" "}
-                <ul className="space-y-2">
-                  {student.paymentHistory &&
-                    student.paymentHistory.length !== 0 &&
-                    student.paymentHistory?.map((payment) => (
-                      <li
-                        key={payment.id}
-                        className="flex justify-between items-center border p-2 rounded-md shadow-sm"
-                      >
-                        <div>
-                          <p className="text-sm font-medium">
-                            Amount: {payment.amount} taka
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            Date: {payment.createdAt.toLocaleString()}
-                          </p>
-                          {payment.employeeId && (
-                            <p className="text-xs text-gray-500">
-                              taken by :{" "}
-                              <span className="font-semibold">
-                                {payment.employeeName}{" "}
-                              </span>
-                              <span className="text-xs text-gray-400">
-                                {payment.employeePosition}
-                              </span>
-                            </p>
-                          )}
-                        </div>
-                        <button
-                          disabled={delete_pending}
-                          onClick={() => deletePayment(payment.id)}
-                          className="text-red-600 hover:text-red-800"
+            <div className="mt-6">
+              <div className="flex items-center gap-2">
+                <Input
+                  type="number"
+                  placeholder="Enter payment amount"
+                  value={newPayment}
+                  onChange={(e) => setNewPayment(e.target.value)}
+                  className="flex-1"
+                />
+                <Button
+                  disabled={create_pending}
+                  onClick={addPayment}
+                  className="flex items-center gap-2"
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  Add
+                </Button>
+              </div>
+            </div>
+            <div className="mt-6">
+              <h3 className="font-semibold text-lg mb-2">Payment History</h3>
+              {isPending ? (
+                <div>loading..</div>
+              ) : (
+                <Fragment>
+                  {" "}
+                  <ul className="space-y-2">
+                    {student.paymentHistory &&
+                      student.paymentHistory.length !== 0 &&
+                      student.paymentHistory?.map((payment) => (
+                        <li
+                          key={payment.id}
+                          className="flex justify-between items-center border p-2 rounded-md shadow-sm"
                         >
-                          <Trash className="w-4 h-4" />
-                        </button>
-                      </li>
-                    ))}
-                </ul>
-                {student.paymentHistory &&
-                  student.paymentHistory.length === 0 && (
-                    <p className="text-sm text-gray-500 mt-4">
-                      No payments recorded.
-                    </p>
-                  )}
-              </Fragment>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+                          <div>
+                            <p className="text-sm font-medium">
+                              Amount: {payment.amount} taka
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Date: {payment.createdAt.toLocaleString()}
+                            </p>
+                            {payment.employeeId && (
+                              <p className="text-xs text-gray-500">
+                                taken by :{" "}
+                                <span className="font-semibold">
+                                  {payment.employeeName}{" "}
+                                </span>
+                                <span className="text-xs text-gray-400">
+                                  {payment.employeePosition}
+                                </span>
+                              </p>
+                            )}
+                          </div>
+                          <button
+                            disabled={delete_pending}
+                            onClick={() => deletePayment(payment.id)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            <Trash className="w-4 h-4" />
+                          </button>
+                        </li>
+                      ))}
+                  </ul>
+                  {student.paymentHistory &&
+                    student.paymentHistory.length === 0 && (
+                      <p className="text-sm text-gray-500 mt-4">
+                        No payments recorded.
+                      </p>
+                    )}
+                </Fragment>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+    )
   );
 };
 

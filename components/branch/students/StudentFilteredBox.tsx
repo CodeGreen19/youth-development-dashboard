@@ -14,6 +14,7 @@ import useStudentFilter from "@/hooks/useStudentFilterStore";
 import { BranchStudentType } from "@/types/students";
 import React, { useEffect } from "react";
 import StudentResultModal from "./StudentResultModal";
+import { generateStudentListsPDF } from "@/components/data/pdf-func";
 
 const StudentFilteredBox = ({
   info,
@@ -112,11 +113,15 @@ const StudentFilteredBox = ({
           Reset Filter
         </Button>
         {/* info={filteredInfo} */}
-        <StudentResultModal>
-          <div className="border hover:bg-gray-200 px-4 py-2 text-sm rounded-sm">
-            Download PDF
-          </div>
-        </StudentResultModal>
+
+        <div
+          onClick={async () => {
+            await generateStudentListsPDF();
+          }}
+          className="border cursor-pointer hover:bg-gray-200 px-4 py-2 text-sm rounded-sm"
+        >
+          Download PDF
+        </div>
       </div>
     </div>
   );

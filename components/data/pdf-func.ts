@@ -3,6 +3,7 @@ import { StudentResultPDFtype } from "@/types/pdf";
 import { BranchStudentType } from "@/types/students";
 
 import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 // Define the interface
 
@@ -267,4 +268,52 @@ export const generateCertificatePdf = async (info: CertificateInfoType) => {
   doc.text(info.grade, 247, 145.5);
 
   doc.save("certificate.pdf");
+};
+
+export const generateStudentListsPDF = () => {
+  const { branchName, institute, session } = {
+    institute: "the earn way youth development resource",
+    branchName: "the ean way academy",
+    session: "july to december",
+  };
+
+  const doc = new jsPDF("l", "mm", "a4");
+  const img = new Image();
+  img.src = "/logo.png";
+  doc.addImage(img, "PNG", 137, 4, 15, 15);
+
+  doc.setFontSize(13);
+  doc.text(institute, 140, 24, { align: "center" });
+  doc.setFontSize(11);
+  doc.text(
+    `${branchName} (${45}), ${session}, (total students ${50})`,
+    140,
+    29,
+    {
+      align: "center",
+    }
+  );
+
+  //
+  autoTable(doc, {
+    head: [["Name", "Email", "Country", "Image"]],
+    startY: 35,
+    theme: "grid",
+    styles: {
+      cellPadding: 4,
+
+      fontSize: 10,
+      valign: "middle",
+      halign: "left",
+    },
+
+    body: [
+      ["David", "david@gmail.com", "Seden", "cloudinary img url"],
+      ["David", "david@gmail.com", "Seden", "cloudinary img url"],
+    ],
+  });
+
+  // download
+
+  doc.save("student-lists.pdf");
 };

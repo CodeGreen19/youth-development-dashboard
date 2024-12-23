@@ -14,8 +14,11 @@ export type StudentPaidType = {
 };
 
 const StudentResultModal = ({ children }: { children: React.ReactNode }) => {
-  const {} = {
+  const { branchName, imgUrl, institute, session } = {
     institute: "the earn way youth development resource",
+    branchName: "the ean way academy",
+    imgUrl: "/logo.png",
+    session: "july to december",
   };
   const dummyData: StudentPaidType[] = [
     {
@@ -63,52 +66,6 @@ const StudentResultModal = ({ children }: { children: React.ReactNode }) => {
       align: "center",
     });
     doc.text("Crown Computer (145)", 105, 29, { align: "center" });
-
-    // Define table columns
-    const columns = [
-      { header: "SL#", dataKey: "id" },
-      { header: "Name/DOB", dataKey: "name" },
-      { header: "Father/Mother", dataKey: "fatherMother" },
-      { header: "Roll/Reg", dataKey: "rollReg" },
-      { header: "Trade", dataKey: "trade" },
-      { header: "Photo", dataKey: "photo" },
-      { header: "Signature", dataKey: "signature" },
-    ];
-
-    // Define table rows
-    const rows = dummyData.map((student, index) => ({
-      id: index + 1,
-      name: `${student.name}\n${student.dob}`,
-      fatherMother: student.fatherMother,
-      rollReg: student.rollReg,
-      trade: student.trade,
-      photo: "Photo Placeholder", // Add dynamic images separately
-      signature: student.signature,
-    }));
-
-    // Add table using autoTable
-    autoTable(doc, {
-      head: columns,
-      body: rows,
-      startY: 40,
-      theme: "grid",
-      didDrawCell: (data) => {
-        if (data.column.dataKey === "photo") {
-          const img = new Image();
-          img.src = "/path-to-photo-placeholder.jpg"; // Replace with correct path
-          doc.addImage(img, "JPEG", data.cell.x + 5, data.cell.y + 2, 10, 10);
-        }
-      },
-      styles: {
-        cellPadding: 2,
-        fontSize: 10,
-        valign: "middle",
-        halign: "center",
-      },
-      columnStyles: {
-        photo: { cellWidth: 20 },
-      },
-    });
 
     // Save the PDF
     doc.save("Student_List.pdf");
