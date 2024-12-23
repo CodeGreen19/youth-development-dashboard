@@ -111,7 +111,8 @@ const StudentFilteredBox = ({
         >
           Reset Filter
         </Button>
-        <StudentResultModal info={filteredInfo}>
+        {/* info={filteredInfo} */}
+        <StudentResultModal>
           <div className="border hover:bg-gray-200 px-4 py-2 text-sm rounded-sm">
             Download PDF
           </div>

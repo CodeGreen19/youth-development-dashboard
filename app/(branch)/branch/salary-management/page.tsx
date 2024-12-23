@@ -51,7 +51,7 @@ const SalaryMangement = () => {
           ))}
         </ul>
       </div>
-      {data?.employees?.length !== 0 && (
+      {data?.employees?.length !== 0 && selectedEmployee() && (
         <div className="bg-white border-2 border-emerald-400/30 rounded-md mt-4 lg:mt-0  p-2 md:p-6">
           <div className=" flex gap-2 items-end">
             <Image

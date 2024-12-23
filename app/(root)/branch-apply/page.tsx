@@ -61,7 +61,7 @@ const BranchApply: React.FC = () => {
     setShowSuccess(false);
   };
   return (
-    <div className="md:container z-30 py-10">
+    <div className="md:container z-30 py-10 overflow-hidden">
       {showSuccess && <SuccessMessage clear={clearAllField} />}
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8">

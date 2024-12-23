@@ -63,7 +63,7 @@ export const createStudentAction = async (formData: FormData) => {
       folder: "student",
     });
 
-    let { nextRollNumber, nextRegistrationNumber } =
+    let { nextRollNumber, nextRegistrationNumber, certificateSLNo } =
       await generateRollAndRegistrationNumbers();
 
     await prisma.student.create({
@@ -86,6 +86,7 @@ export const createStudentAction = async (formData: FormData) => {
         passedRoll,
         passedType,
         passedYear,
+        certificateSLNo,
         religion,
         email: email ? email : null,
         genReg: nextRegistrationNumber,

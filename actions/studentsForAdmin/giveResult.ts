@@ -2,11 +2,7 @@
 
 import { jwtDecode } from "@/data/auth";
 import { prisma } from "@/lib/db";
-import {
-  CertificateInfoType,
-  EditResultType,
-  EditResultTypeForBackend,
-} from "@/types";
+import { CertificateInfoType, EditResultType } from "@/types";
 import { format } from "date-fns";
 import { cookies } from "next/headers";
 

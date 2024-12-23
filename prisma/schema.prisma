@@ -131,6 +131,7 @@ model Student {
   genRoll           String?
   genReg            String?
   genResult         String?
+  certificateSLNo   String?
   passedType        PassedType
   transId           String?
   branchId          String
