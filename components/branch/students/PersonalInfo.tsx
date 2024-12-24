@@ -15,8 +15,7 @@ import {
 import SingleDatePicker from "./DatePicker";
 import useStudentStore from "@/hooks/useStudentStore";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { RxCross1 } from "react-icons/rx";
+import UpdateImage from "./UpdateImage";
 
 const AvatarEdit = dynamic(() => import("./AvaterEdit"), { ssr: false });
 
@@ -147,12 +146,7 @@ const PersonalInfo = () => {
               width={200}
               alt="Preview"
             />
-            {/* <span
-              className="absolute rounded-full cursor-pointer -top-1 -left-1 bg-red-500 hover:bg-red-600"
-              onClick={() => setExistImgUrl("")}
-            >
-              <RxCross1 className="m-2 text-sm text-white" />
-            </span> */}
+            <UpdateImage>Chnage Image</UpdateImage>
           </div>
         )}
       </div>

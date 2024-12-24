@@ -230,3 +230,45 @@ export const DeleteSingleStudentById = async ({
     return { error: "internal server error" };
   }
 };
+export const updateProfileImage = async ({
+  formData,
+}: {
+  formData: FormData;
+}) => {
+  try {
+    const imgString = formData.get("img_string") as string;
+    const studentId = formData.get("student_id") as string;
+    if (imgString === "" || imgString === undefined || imgString === null) {
+      return { error: "Please Select a Image" };
+    }
+
+    // for getting info
+    const studentImgInfo = await prisma.profileImg.findUnique({
+      where: { studentId },
+    });
+    if (!studentImgInfo) {
+      return { error: "not found !" };
+    }
+    await deleteFromCloudinary(studentImgInfo.public_id);
+    await prisma.profileImg.delete({ where: { studentId } });
+
+    const { public_id, secure_url } = await uploadToCloudinary({
+      file: imgString,
+      folder: "student",
+    });
+    if (!public_id && !secure_url) {
+      return { error: "error occurs while uloading the image !" };
+    }
+    await prisma.profileImg.create({
+      data: {
+        public_id,
+        secure_url,
+        studentId,
+      },
+    });
+
+    return { message: "profile Image updated" };
+  } catch (error) {
+    return { error: "internal server error" };
+  }
+};

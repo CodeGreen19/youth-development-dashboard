@@ -2,15 +2,24 @@
 
 import useStudentStore from "@/hooks/useStudentStore";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import React, { useRef } from "react";
 import Avatar from "react-avatar-edit";
 
-const AvatarEdit = () => {
-  const { profileUrl, setPorfileUrl } = useStudentStore();
+const AvatarEdit = ({
+  label,
+  isUpdate = false,
+}: {
+  label?: string;
+  isUpdate?: boolean;
+}) => {
+  const { profileUrl, setPorfileUrl, updateProfileUrl, setUpdateProfileUrl } =
+    useStudentStore();
   const avatarRef = useRef<HTMLDivElement>(null);
 
   const onClose = () => {
     setPorfileUrl(null);
+    setUpdateProfileUrl(null);
   };
 
   const onCrop = (preview: any) => {
@@ -20,7 +29,11 @@ const AvatarEdit = () => {
         const file = new File([blob], "cropped-image.png", {
           type: "image/png",
         });
-        setPorfileUrl(file);
+        if (isUpdate) {
+          setUpdateProfileUrl(file);
+        } else {
+          setPorfileUrl(file);
+        }
       });
   };
 
@@ -60,7 +73,7 @@ const AvatarEdit = () => {
           cropRadius={0}
           backgroundColor="gray"
           exportAsSquare
-          label="Add a Student Image"
+          label={label ? label : "Add a Student Image"}
           labelStyle={{ fontSize: "0.9rem", fontWeight: "bold" }}
         />
       </div>
@@ -71,6 +84,18 @@ const AvatarEdit = () => {
           <h1 className="font-bold text-sm my-3">Cropped Image</h1>
           <Image
             src={URL.createObjectURL(profileUrl)}
+            className="border rounded-md border-gray-800"
+            height={150}
+            width={150}
+            alt="Preview"
+          />
+        </div>
+      )}
+      {isUpdate && updateProfileUrl && (
+        <div className="mt-4">
+          <h1 className="font-bold text-sm my-3">Cropped Image</h1>
+          <Image
+            src={URL.createObjectURL(updateProfileUrl)}
             className="border rounded-md border-gray-800"
             height={150}
             width={150}

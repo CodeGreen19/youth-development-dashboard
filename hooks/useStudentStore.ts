@@ -6,6 +6,9 @@ interface FormState {
   profileUrl: File | null;
   existImgUrl: string;
   setPorfileUrl: (file: File | null) => void;
+  updateProfileUrl: File | null;
+
+  setUpdateProfileUrl: (file: File | null) => void;
   setStudentInfo: (info: Partial<StudentType>) => void;
   setExistImgUrl: (info: string) => void;
   resetForm: () => void;
@@ -46,6 +49,8 @@ const useStudentStore = create<FormState>((set) => ({
     })),
   existImgUrl: "",
   setExistImgUrl: (url) => set({ existImgUrl: url }),
+  updateProfileUrl: null,
+  setUpdateProfileUrl: (file) => set({ updateProfileUrl: file }),
 }));
 
 export default useStudentStore;
