@@ -18,7 +18,7 @@ export async function generateRollAndRegistrationNumbers() {
   } else {
     const newRoll = Number(lastStudent[0].genRoll!) + 1;
     const newReg = Number(lastStudent[0].genReg!) + 1;
-    const newSLNo = Number(lastStudent[0].certificateSLNo! + 1);
+    const newSLNo = Number(lastStudent[0].certificateSLNo!) + 1;
     return {
       nextRollNumber: newRoll.toString(),
       nextRegistrationNumber: newReg.toString(),
