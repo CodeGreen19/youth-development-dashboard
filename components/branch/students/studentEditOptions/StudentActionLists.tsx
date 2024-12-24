@@ -81,17 +81,14 @@ const StudentActionLists = ({
           >
             admission form <Download className="w-4 text-green-500 ml-2" />
           </DropdownMenuItem>
+          <Link
+            className="cursor-pointer"
+            href={`/branch/unpaid-students/${studentId}?back=all-students`}
+          >
+            <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
+          </Link>
           {publicId && (
             <>
-              <Link
-                className="cursor-pointer"
-                href={`/branch/unpaid-students/${studentId}`}
-              >
-                <DropdownMenuItem className="cursor-pointer">
-                  Edit
-                </DropdownMenuItem>
-              </Link>
-
               <DropdownMenuItem
                 className="text-red-500 cursor-pointer "
                 onClick={(e) => {

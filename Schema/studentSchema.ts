@@ -11,7 +11,7 @@ const studentSchema = z.object({
   religion: z.string().min(1, { message: "Religion is required" }),
   bloodGroup: z.string().min(1, { message: "Blood group is required" }),
   gender: z.string().min(1, { message: "Gender is requrired" }),
-  email: z.string().optional(),
+  email: z.union([z.string().email(), z.literal("")]),
   courseDuration: z.string().min(1, { message: "Course duration is required" }),
   courseRange: z.string().min(1, { message: "Course range is required" }),
   courseTrade: z.string().min(1, { message: "Course trade is required" }),

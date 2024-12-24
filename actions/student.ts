@@ -122,6 +122,7 @@ export const updateStudentAction = async ({
     if (result.error) {
       return { error: result.error.format() };
     }
+    console.log(result);
 
     let {
       bloodGroup,
@@ -174,11 +175,13 @@ export const updateStudentAction = async ({
         passedType,
         passedYear,
         religion,
-        email,
+        email: email ?? null,
       },
     });
     return { message: "student updated successfully" };
   } catch (error) {
+    console.log(error);
+
     return { error: "internal server error" };
   }
 };

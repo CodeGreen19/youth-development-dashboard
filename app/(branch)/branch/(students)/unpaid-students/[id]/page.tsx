@@ -13,13 +13,14 @@ import { Button } from "@/components/ui/button";
 import useStudentStore from "@/hooks/useStudentStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 
 const EditStudentData = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const back_to_url = useSearchParams().get("back");
   const { studentInfo, setStudentInfo, setExistImgUrl } = useStudentStore();
   let { id: studentId } = useParams<{ id: string }>();
 
@@ -104,7 +105,11 @@ const EditStudentData = () => {
   };
   return (
     <div>
-      <Link href={"/branch/unpaid-students"}>
+      <Link
+        href={
+          back_to_url ? `/branch/${back_to_url}` : "/branch/unpaid-students"
+        }
+      >
         {" "}
         <div className="my-3 text-blue-500 flex items-center gap-4">
           <FaAngleLeft /> back to list
