@@ -122,7 +122,7 @@ export const updateStudentAction = async ({
     if (result.error) {
       return { error: result.error.format() };
     }
-    console.log(result);
+    console.log("result", result);
 
     let {
       bloodGroup,
@@ -144,12 +144,20 @@ export const updateStudentAction = async ({
       passedYear,
       religion,
       email,
-    } = studentInfo;
+    } = result.data;
+
+    // update email ,
+    let new_email: string | null = null;
+
     if (email) {
       let isEmailExists = await prisma.student.findUnique({
         where: { email: email },
       });
-      if (isEmailExists) {
+      // my account
+
+      const myAccount = await prisma.student.findUnique({ where: { id } });
+
+      if (isEmailExists && email.trim() !== myAccount?.email) {
         return { error: "email address already exists" };
       }
     }
@@ -175,12 +183,12 @@ export const updateStudentAction = async ({
         passedType,
         passedYear,
         religion,
-        email: email ?? null,
+        email: email ? email : null,
       },
     });
     return { message: "student updated successfully" };
   } catch (error) {
-    console.log(error);
+    console.log("error", error);
 
     return { error: "internal server error" };
   }
