@@ -121,7 +121,7 @@ const StudentFilteredBox = ({
           disabled={loading}
           onClick={async () => {
             setLoading(true);
-            await generateStudentListsPDF(info);
+            await generateStudentListsPDF(filteredInfo);
             setLoading(false);
           }}
           className="border cursor-pointer hover:bg-gray-200 px-4 py-2 text-sm rounded-sm"
