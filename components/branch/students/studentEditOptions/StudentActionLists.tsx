@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import {
   DropdownMenu,
@@ -15,7 +15,6 @@ import DeleteStudent from "../DeleteStudent";
 import DetailStudentInfo from "./DetailStudentInfo";
 import StudentPaymentRecords from "./StudentPaymentRecords";
 import { BranchStudentType } from "@/types/students";
-import AdmissionFormModal from "../_docs/AdmissionFormModal";
 import { Download } from "lucide-react";
 import { generateAdmissionFormPDF } from "@/components/data/pdf-func";
 
@@ -37,6 +36,9 @@ const StudentActionLists = ({
   const paymentRef = useRef<HTMLDivElement | null>(null);
   const addmissionFormRef = useRef<HTMLDivElement | null>(null);
 
+  // states
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   if (!students) {
     return null;
   }
@@ -46,9 +48,13 @@ const StudentActionLists = ({
     (item) => item.id === studentId
   )[0];
 
+  const openStateHandler = (e: boolean) => {
+    setIsModalOpen(e);
+  };
+
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu open={isModalOpen === true ? true : undefined}>
         <DropdownMenuTrigger className="p-0">{children}</DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
@@ -106,11 +112,19 @@ const StudentActionLists = ({
           <div ref={deleteRef} className="hidden"></div>
         </DeleteStudent>
       )}
-      <DetailStudentInfo student={studentInfo} imgUrl={imgUrl}>
-        <div ref={detailInfoRef} className="hidden"></div>
+      <DetailStudentInfo
+        student={studentInfo}
+        openState={openStateHandler}
+        imgUrl={imgUrl}
+      >
+        <div ref={detailInfoRef}></div>
       </DetailStudentInfo>
-      <StudentPaymentRecords student={studentInfo} imgUrl={imgUrl}>
-        <div ref={paymentRef} className="hidden"></div>
+      <StudentPaymentRecords
+        student={studentInfo}
+        openState={openStateHandler}
+        imgUrl={imgUrl}
+      >
+        <div ref={paymentRef}></div>
       </StudentPaymentRecords>
       {/* <AdmissionFormModal branchStudent={studentInfo}>
         <div ref={addmissionFormRef} className="hidden"></div>

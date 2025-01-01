@@ -23,10 +23,12 @@ const StudentPaymentRecords = ({
   children,
   student,
   imgUrl,
+  openState,
 }: {
   children: React.ReactNode;
   student: BranchStudentType;
   imgUrl: string;
+  openState: (e: boolean) => void;
 }) => {
   const queryClient = useQueryClient();
   const [newPayment, setNewPayment] = useState<string>("");
@@ -76,8 +78,13 @@ const StudentPaymentRecords = ({
   return (
     student && (
       <div>
-        <Dialog onOpenChange={() => setNewPayment("")}>
-          <DialogTrigger asChild>{children}</DialogTrigger>
+        <Dialog
+          onOpenChange={(e) => {
+            setNewPayment("");
+            openState(e);
+          }}
+        >
+          <DialogTrigger>{children}</DialogTrigger>
           <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Payment Records</DialogTitle>

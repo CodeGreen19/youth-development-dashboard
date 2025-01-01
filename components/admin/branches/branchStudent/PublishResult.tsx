@@ -76,46 +76,49 @@ const PublishResult = ({
     <div>
       <Dialog>
         <DialogTrigger>{children}</DialogTrigger>
-        <DialogContent className="max-w-3xl h-5/6">
+        <DialogContent className="max-w-3xl h-5/6 overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Give all the results of students</DialogTitle>
-            <DialogDescription>
-              <div className="mt-3 grid md:grid-cols-2 lg:grid-cols-4 row-auto gap-2">
-                {studentInfo?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center p-2 justify-center gap-2 bg-amber-100 border shadow-sm rounded"
-                  >
-                    <span>{item.roll}</span>
-                    <Select
-                      value={item.result ?? ""}
-                      onValueChange={(value) => hanldeChange(item.id, value)}
-                    >
-                      <SelectTrigger className="w-[85px]">
-                        <SelectValue placeholder="result" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        {result_data.map((result) => (
-                          <SelectItem key={result} value={result}>
-                            {result}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center justify-end">
-                <Button
-                  disabled={isPending}
-                  onClick={hanldePublish}
-                  className="bg-blue-500 rounded-[50px] hover:bg-blue-600 p-7 py-5"
-                >
-                  Publish
-                </Button>
-              </div>
-            </DialogDescription>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
+          <div className="mt-3 grid md:grid-cols-2 lg:grid-cols-4 row-auto gap-2">
+            {studentInfo?.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center p-2 justify-center gap-2 bg-amber-100 border shadow-sm rounded"
+              >
+                <span>{item.roll}</span>
+                <Select
+                  value={item.result ?? ""}
+                  onValueChange={(value) => hanldeChange(item.id, value)}
+                >
+                  <SelectTrigger className="w-[85px]">
+                    <SelectValue placeholder="result" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {result_data.map((result) => (
+                      <SelectItem
+                        className="cursor-pointer"
+                        key={result}
+                        value={result}
+                      >
+                        {result}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-end">
+            <Button
+              disabled={isPending}
+              onClick={hanldePublish}
+              className="bg-blue-500 rounded-[50px] hover:bg-blue-600 p-7 py-5"
+            >
+              Publish
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

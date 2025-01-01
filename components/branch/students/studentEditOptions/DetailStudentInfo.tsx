@@ -18,16 +18,22 @@ const DetailStudentInfo = ({
   children,
   student,
   imgUrl,
+  openState,
 }: {
   children: React.ReactNode;
   student: BranchStudentType;
   imgUrl: string;
+  openState: (e: boolean) => void;
 }) => {
   return (
     student && (
       <div>
-        <Dialog>
-          <DialogTrigger asChild>{children}</DialogTrigger>
+        <Dialog
+          onOpenChange={(e) => {
+            openState(e);
+          }}
+        >
+          <DialogTrigger>{children}</DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Student Information</DialogTitle>
