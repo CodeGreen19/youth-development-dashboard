@@ -12,7 +12,7 @@ const PaidStudentTable = dynamic(
     ssr: false,
   }
 );
-import React from "react";
+import React, { useState } from "react";
 
 const AllStudents = () => {
   let { data, isPending, isError } = useQuery({
@@ -32,7 +32,6 @@ const AllStudents = () => {
 
   return (
     <div>
-      {/* <StudentFilteredBox /> */}
       {data?.allStudents && (
         <PaidStudentTable
           info={data?.allStudents}

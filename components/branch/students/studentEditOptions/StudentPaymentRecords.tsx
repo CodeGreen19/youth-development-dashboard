@@ -18,20 +18,22 @@ import {
   deletPaymentHistory,
 } from "@/actions/studentPaymentHistory";
 import Image from "next/image";
+import useModalShowHooks from "@/hooks/useModalShowHooks";
 
 const StudentPaymentRecords = ({
-  children,
   student,
   imgUrl,
-  openState,
+  open,
+  setOpen,
 }: {
-  children: React.ReactNode;
   student: BranchStudentType;
   imgUrl: string;
-  openState: (e: boolean) => void;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const queryClient = useQueryClient();
   const [newPayment, setNewPayment] = useState<string>("");
+  const { studentPaymentDialog, setStudentPaymentDialog } = useModalShowHooks();
 
   // add payments
   const { mutate, isPending: create_pending } = useMutation({
@@ -79,12 +81,13 @@ const StudentPaymentRecords = ({
     student && (
       <div>
         <Dialog
+          open={open}
           onOpenChange={(e) => {
             setNewPayment("");
-            openState(e);
+            setOpen(e);
           }}
         >
-          <DialogTrigger>{children}</DialogTrigger>
+          <DialogTrigger className="w-full text-start"></DialogTrigger>
           <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Payment Records</DialogTitle>

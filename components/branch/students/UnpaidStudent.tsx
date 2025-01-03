@@ -1,23 +1,19 @@
 "use client";
 
+import { processAmerpayPayment } from "@/actions/amerpay";
+import { AdminStudentPayment } from "@/actions/payments";
+import { consizeData } from "@/components/data/priceHelper";
+import { customToast } from "@/components/shared/ToastContainer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BranchStudentType } from "@/types/students";
-import Link from "next/link";
-import React, { useState } from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
-import { FaDownload, FaEdit, FaIdBadge } from "react-icons/fa";
-import { RiDeleteBin2Line } from "react-icons/ri";
-import DeleteStudent from "./DeleteStudent";
-import { processAmerpayPayment } from "@/actions/amerpay";
 import { CourseFeesType, Student } from "@/types";
-import { consizeData, PriceSettingHelper } from "@/components/data/priceHelper";
-import Image from "next/image";
-import { AdminStudentPayment } from "@/actions/payments";
+import { BranchStudentType } from "@/types/students";
 import { useQueryClient } from "@tanstack/react-query";
-import { customToast } from "@/components/shared/ToastContainer";
+import Image from "next/image";
+import { useState } from "react";
+import DataTable, { TableColumn } from "react-data-table-component";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import StudentActionLists from "./studentEditOptions/StudentActionLists";
-import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 
 type PaymentType = {
   id: string;

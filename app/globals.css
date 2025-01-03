@@ -100,11 +100,11 @@ input[type="number"]::-webkit-outer-spin-button {
   font-style: normal;
 }
 
-@layer base {
+/* @layer base {
   img {
     display: initial;
   }
-}
+} */
 
 .custom-bg {
   background-image: url("/cloude.png");

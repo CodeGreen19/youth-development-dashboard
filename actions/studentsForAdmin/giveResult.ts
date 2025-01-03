@@ -36,6 +36,7 @@ export const admin_AllFilteredStudentsOfBranch = async ({
         courseTrade: trade,
         isPaid: true,
       },
+      orderBy: { genRoll: "asc" },
     });
 
     return { filteredStudent };
@@ -62,13 +63,16 @@ export const getCertificateInfo = async (studentId: string) => {
     let { id } = jwtDecode(cookies().get("branch_token")?.value!);
     let branch = await prisma.branch.findUnique({
       where: { id },
-      select: { branchInfo: { select: { branchName: true, branchNo: true } } },
+      select: {
+        branchInfo: { select: { branchName: true } },
+        branchCode: true,
+      },
     });
     let studentInfo = await prisma.student.findUnique({
       where: { id: studentId },
     });
     let info: CertificateInfoType = {
-      branchCode: branch?.branchInfo?.branchNo!.toString()!,
+      branchCode: branch?.branchCode!,
       branchName: branch?.branchInfo?.branchName!,
       courseName: studentInfo?.courseTrade!,
       fathersName: studentInfo?.fatherName!,
@@ -79,6 +83,7 @@ export const getCertificateInfo = async (studentId: string) => {
       issueDate: format(new Date(), "PPP"),
       reg: studentInfo?.genReg!,
       roll: studentInfo?.genRoll!,
+      SLNo: studentInfo?.certificateSLNo!,
     };
 
     return { info };

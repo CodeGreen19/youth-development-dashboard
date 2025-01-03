@@ -1,7 +1,19 @@
-import React from "react";
+"use client";
 
-const TestingPage = () => {
-  return <div></div>;
+import { Button } from "@/components/ui/button";
+import { UniqueBranchCode } from "@/data/branch";
+import { useMutation } from "@tanstack/react-query";
+import React, { useState } from "react";
+
+const TestPage = () => {
+  const { data, mutate } = useMutation({ mutationFn: UniqueBranchCode });
+
+  return (
+    <div>
+      {data}
+      <Button onClick={() => mutate()}> Click to change</Button>
+    </div>
+  );
 };
 
-export default TestingPage;
+export default TestPage;

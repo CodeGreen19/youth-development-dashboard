@@ -17,7 +17,6 @@ import StudentPaymentRecords from "./StudentPaymentRecords";
 import { BranchStudentType } from "@/types/students";
 import { Download } from "lucide-react";
 import { generateAdmissionFormPDF } from "@/components/data/pdf-func";
-
 const StudentActionLists = ({
   children,
   students,
@@ -31,14 +30,17 @@ const StudentActionLists = ({
   studentId: string;
   children: ReactNode;
 }) => {
-  const deleteRef = useRef<HTMLDivElement | null>(null);
-  const detailInfoRef = useRef<HTMLDivElement | null>(null);
-  const paymentRef = useRef<HTMLDivElement | null>(null);
-  const addmissionFormRef = useRef<HTMLDivElement | null>(null);
-
   // states
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [dropdownShow, setDropdownShow] = useState<boolean | undefined>(
+    undefined
+  );
+  // states
 
+  const [addpaymentShow, setAddpaymentShow] = useState<boolean>(false);
+  const [studentDetailShow, setStudentDetailShow] = useState<boolean>(false);
+  const [studentDeleteShow, setStudentDeleteShow] = useState<boolean>(false);
+
+  //
   if (!students) {
     return null;
   }
@@ -48,14 +50,35 @@ const StudentActionLists = ({
     (item) => item.id === studentId
   )[0];
 
-  const openStateHandler = (e: boolean) => {
-    setIsModalOpen(e);
-  };
-
   return (
     <div>
-      <DropdownMenu open={isModalOpen === true ? true : undefined}>
-        <DropdownMenuTrigger className="p-0">{children}</DropdownMenuTrigger>
+      <DetailStudentInfo
+        open={studentDetailShow}
+        setOpen={setStudentDetailShow}
+        student={studentInfo}
+        imgUrl={imgUrl}
+      />
+      <StudentPaymentRecords
+        open={addpaymentShow}
+        setOpen={setAddpaymentShow}
+        student={studentInfo}
+        imgUrl={imgUrl}
+      />
+
+      <DropdownMenu
+        open={dropdownShow}
+        onOpenChange={(e) => {
+          if (!e) {
+            setDropdownShow(e);
+          }
+        }}
+      >
+        <DropdownMenuTrigger
+          className="p-0"
+          onClick={() => setDropdownShow(true)}
+        >
+          {children}
+        </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
           side="bottom"
@@ -66,7 +89,8 @@ const StudentActionLists = ({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              detailInfoRef.current?.click();
+              setDropdownShow(false);
+              setStudentDetailShow(true);
             }}
           >
             Detail Info
@@ -74,7 +98,8 @@ const StudentActionLists = ({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              paymentRef.current?.click();
+              setDropdownShow(false);
+              setAddpaymentShow(true);
             }}
           >
             Add Payment Record
@@ -89,7 +114,11 @@ const StudentActionLists = ({
           </DropdownMenuItem>
           <Link
             className="cursor-pointer"
-            href={`/branch/unpaid-students/${studentId}?back=all-students`}
+            href={`/branch/unpaid-students/${studentId}?${
+              studentInfo.isPaid === true
+                ? "back=all-students"
+                : "back=unpaid-students"
+            }`}
           >
             <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
           </Link>
@@ -98,7 +127,8 @@ const StudentActionLists = ({
               <DropdownMenuItem
                 className="text-red-500 cursor-pointer "
                 onClick={(e) => {
-                  deleteRef.current?.click();
+                  setDropdownShow(false);
+                  setStudentDeleteShow(true);
                 }}
               >
                 Delete
@@ -108,27 +138,13 @@ const StudentActionLists = ({
         </DropdownMenuContent>
       </DropdownMenu>
       {publicId && (
-        <DeleteStudent id={studentId} public_id={publicId}>
-          <div ref={deleteRef} className="hidden"></div>
-        </DeleteStudent>
+        <DeleteStudent
+          open={studentDeleteShow}
+          setOpen={setStudentDeleteShow}
+          id={studentId}
+          public_id={publicId}
+        />
       )}
-      <DetailStudentInfo
-        student={studentInfo}
-        openState={openStateHandler}
-        imgUrl={imgUrl}
-      >
-        <div ref={detailInfoRef}></div>
-      </DetailStudentInfo>
-      <StudentPaymentRecords
-        student={studentInfo}
-        openState={openStateHandler}
-        imgUrl={imgUrl}
-      >
-        <div ref={paymentRef}></div>
-      </StudentPaymentRecords>
-      {/* <AdmissionFormModal branchStudent={studentInfo}>
-        <div ref={addmissionFormRef} className="hidden"></div>
-      </AdmissionFormModal> */}
     </div>
   );
 };

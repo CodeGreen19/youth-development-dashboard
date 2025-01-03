@@ -70,11 +70,24 @@ const CourseInfo = () => {
                       studentInfo.courseDuration === item.course_duration && (
                         <SelectItem
                           key={i}
-                          value={`${range.from} to ${range.to} ${current_year}`}
+                          value={`${range.from} ${
+                            item.addYear > 0
+                              ? current_year -
+                                (range.prev_year === true ? 1 : 0)
+                              : ""
+                          } to ${range.to} ${
+                            current_year +
+                            item.addYear -
+                            (range.prev_year === true ? 1 : 0)
+                          }`}
                         >{`${range.from} ${
-                          item.addYear > 0 ? current_year : ""
+                          item.addYear > 0
+                            ? current_year - (range.prev_year === true ? 1 : 0)
+                            : ""
                         } to ${range.to} ${
-                          current_year + item.addYear
+                          current_year +
+                          item.addYear -
+                          (range.prev_year === true ? 1 : 0)
                         }`}</SelectItem>
                       )
                   )

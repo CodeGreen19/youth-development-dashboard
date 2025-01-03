@@ -37,10 +37,10 @@ const PublishResult = ({
   // muate
   const { isPending, mutate } = useMutation({
     mutationFn: admin_PublishResult,
-    onSuccess: ({ error, message }) => {
+    onSuccess: async ({ error, message }) => {
       if (error) return customToast("error", error);
       if (message) customToast("success", message);
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["filteredStudentOfBranchForAdmin"],
       });
     },
@@ -58,12 +58,12 @@ const PublishResult = ({
   };
 
   const hanldePublish = () => {
-    if (
-      studentInfo === null ||
-      studentInfo?.filter((item) => item.result === null).length! > 0
-    ) {
-      return customToast("error", "Please Provide all the results");
-    }
+    // if (
+    //   studentInfo === null ||
+    //   studentInfo?.filter((item) => item.result === null).length! > 0
+    // ) {
+    //   return customToast("error", "Please Provide all the results");
+    // }
 
     mutate(studentInfo!);
   };

@@ -36,11 +36,18 @@ const BranchNav = ({ role }: { role: "USER" | "ADMIN" }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className=" ">
             {role === "ADMIN" && (
-              <Link href={"/admin/analytics"}>
-                <DropdownMenuItem className="cursor-pointer text-green-500">
-                  Dashboard
-                </DropdownMenuItem>
-              </Link>
+              <>
+                <Link href={"/"}>
+                  <DropdownMenuItem className="cursor-pointer text-purple-500">
+                    Go to Home
+                  </DropdownMenuItem>
+                </Link>
+                <Link href={"/admin/analytics"}>
+                  <DropdownMenuItem className="cursor-pointer text-green-500">
+                    Dashboard
+                  </DropdownMenuItem>
+                </Link>
+              </>
             )}
             <Link href={"/branch/billings/payment-history"}>
               <DropdownMenuItem className="cursor-pointer">

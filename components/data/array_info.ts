@@ -4071,39 +4071,57 @@ export const courseDurationInfo = [
     course_duration: "3 months",
     addYear: 0,
     month_range: [
-      { from: "january ", to: "march " },
-      { from: "april ", to: "june " },
-      { from: "july ", to: "september " },
-      { from: "october ", to: "december " },
+      { from: "january ", to: "march ", prev_year: true },
+      { from: "april ", to: "june ", prev_year: true },
+      { from: "july ", to: "september ", prev_year: true },
+      { from: "october ", to: "december ", prev_year: true },
+      { from: "january ", to: "march ", prev_year: false },
+      { from: "april ", to: "june ", prev_year: false },
+      { from: "july ", to: "september ", prev_year: false },
+      { from: "october ", to: "december ", prev_year: false },
     ],
   },
   {
     course_duration: "6 months",
     addYear: 0,
     month_range: [
-      { from: "january ", to: "june " },
-      { from: "july ", to: "december " },
+      { from: "january ", to: "june ", prev_year: true },
+      { from: "july ", to: "december ", prev_year: true },
+      { from: "january ", to: "june ", prev_year: false },
+      { from: "july ", to: "december ", prev_year: false },
     ],
   },
   {
     course_duration: "1 year",
     addYear: 0,
-    month_range: [{ from: "january ", to: "december " }],
+    month_range: [
+      { from: "january ", to: "december ", prev_year: true },
+      { from: "january ", to: "december ", prev_year: false },
+    ],
   },
   {
     course_duration: "2 year",
     addYear: 1,
-    month_range: [{ from: "january ", to: "december " }],
+    month_range: [
+      { from: "january ", to: "december ", prev_year: true },
+      { from: "january ", to: "december ", prev_year: false },
+    ],
   },
   {
     course_duration: "3 year",
     addYear: 2,
-    month_range: [{ from: "january", to: "december" }],
+    month_range: [
+      { from: "january", to: "december", prev_year: true },
+      { from: "january", to: "december", prev_year: false },
+    ],
   },
   {
     course_duration: "4 year",
     addYear: 3,
-    month_range: [{ from: "january", to: "december" }],
+    month_range: [
+      { from: "january", to: "december", prev_year: true },
+      { from: "january", to: "december", prev_year: false },
+    ],
   },
 ];
 

@@ -14,15 +14,18 @@ import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteSingleStudentById } from "@/actions/student";
 import { customToast } from "@/components/shared/ToastContainer";
+import useModalShowHooks from "@/hooks/useModalShowHooks";
 
 const DeleteStudent = ({
-  children,
   id,
   public_id,
+  open,
+  setOpen,
 }: {
-  children: React.ReactNode;
   id: string;
   public_id: string;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const queryClient = useQueryClient();
   const { mutate, isPending, isSuccess, data } = useMutation({
@@ -37,8 +40,8 @@ const DeleteStudent = ({
   });
   return (
     <div>
-      <Dialog>
-        <DialogTrigger className="hidden">{children}</DialogTrigger>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="hidden"></DialogTrigger>
         <DialogContent className="rounded-sm">
           <DialogHeader>
             <DialogTitle className=" text-center">

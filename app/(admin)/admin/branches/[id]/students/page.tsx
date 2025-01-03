@@ -13,6 +13,7 @@ import { FaDownload } from "react-icons/fa6";
 import { MdRadioButtonChecked } from "react-icons/md";
 import { PiShareNetworkFill } from "react-icons/pi";
 import CertificateModel from "@/app/(admin)/_certificate/CertificateModel";
+import { Download } from "lucide-react";
 
 const FilteredStudentsPage = ({ params }: { params: { id: string } }) => {
   return (
@@ -143,11 +144,17 @@ const FilteredStudents = ({ id }: { id: string }) => {
                   <span className="text-[0.8rem] flex items-center justify-center gap-3">
                     {item.genResult ? (
                       <CertificateModel id={item.id}>
-                        Get Certificate
+                        <div className="flex gap-2 items-center ">
+                          {" "}
+                          Get Certificate
+                        </div>
                       </CertificateModel>
                     ) : (
                       <div className="bg-slate-400 rounded-md  text-[13px] py-1 px-3">
-                        Get Certificate
+                        <div className="flex gap-2 items-center cursor-not-allowed">
+                          {" "}
+                          Get Certificate
+                        </div>{" "}
                       </div>
                     )}
                   </span>

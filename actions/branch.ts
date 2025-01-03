@@ -1,6 +1,7 @@
 "use server";
 
 import { hashedPassword, jwtDecode } from "@/data/auth";
+import { UniqueBranchCode } from "@/data/branch";
 import { uploadToCloudinary } from "@/data/cloudinary_file_upload";
 import { uploadtoCloud } from "@/data/cloudinary_upload";
 import sendCredentialMail from "@/data/sendCredentialMail";
@@ -68,7 +69,7 @@ export const CreateBranchAction = async (formData: FormData) => {
     if (isEmailExist) {
       return { error: "Email address is already in use" };
     }
-
+    const uniqueCode = await UniqueBranchCode();
     await prisma.branch.create({
       data: {
         personalInfo: {
@@ -105,6 +106,7 @@ export const CreateBranchAction = async (formData: FormData) => {
             public_id: licenceImg.public_id!,
           },
         },
+        branchCode: uniqueCode,
       },
     });
     return { message: "success" };

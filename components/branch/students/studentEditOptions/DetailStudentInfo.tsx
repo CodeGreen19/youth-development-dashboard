@@ -13,28 +13,25 @@ import { Button } from "@/components/ui/button";
 import { BranchStudentType } from "@/types/students";
 import { cn } from "@/lib/utils"; // Utility for conditional class names
 import Image from "next/image";
+import useModalShowHooks from "@/hooks/useModalShowHooks";
 
 const DetailStudentInfo = ({
-  children,
   student,
   imgUrl,
-  openState,
+  open,
+  setOpen,
 }: {
-  children: React.ReactNode;
   student: BranchStudentType;
   imgUrl: string;
-  openState: (e: boolean) => void;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     student && (
       <div>
-        <Dialog
-          onOpenChange={(e) => {
-            openState(e);
-          }}
-        >
-          <DialogTrigger>{children}</DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger className="w-full text-start hidden"></DialogTrigger>
+          <DialogContent className="max-w-3xl max-h-[85vh] rounded-md overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Student Information</DialogTitle>
               <DialogDescription>

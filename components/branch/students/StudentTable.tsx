@@ -13,10 +13,10 @@ import {
 } from "@/components/data/tableHelper";
 import DownloadListForExcel from "./_docs/DownloadListForExcel";
 import RegistrationCardModal from "./RegistrationCardModal";
-import StudentActionLists from "./studentEditOptions/StudentActionLists";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import StudentFilteredBox from "./StudentFilteredBox";
 import useStudentFilter from "@/hooks/useStudentFilterStore";
+import StudentActionLists from "./studentEditOptions/StudentActionLists";
 
 const PaidStudentTable = ({
   info,
@@ -187,6 +187,7 @@ const PaidStudentTable = ({
             </div>
           }
           theme="tomato"
+          style={{ overflow: "visible" }}
           columns={columns}
           data={advancedFilterdData()}
           pagination

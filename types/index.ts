@@ -131,6 +131,7 @@ export type CertificateInfoType = {
   branchName: string;
   held: string;
   grade: string;
+  SLNo: string;
 };
 
 export type ImageUrlType = {
