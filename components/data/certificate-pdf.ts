@@ -1,4 +1,5 @@
 import { CertificateInfoType } from "@/types";
+import { format } from "date-fns";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 export async function createCertificate(info: CertificateInfoType) {
@@ -41,7 +42,7 @@ export async function createCertificate(info: CertificateInfoType) {
     font: customFont,
     color: rgb(0, 0, 0),
   });
-  doc.drawText(new Date().toLocaleString().slice(0, 10), {
+  doc.drawText(format(new Date(), "PP"), {
     x: 645,
     y: 311,
     size: 14,

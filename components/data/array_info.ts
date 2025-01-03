@@ -4144,6 +4144,8 @@ export const courseNameArr = [
   "Digital Marketing",
   "Architectural AutoCAD Drafting",
   "AutoCAD",
+  "Driving",
+  "LMAFP",
 ];
 
 export const boardArr = [
