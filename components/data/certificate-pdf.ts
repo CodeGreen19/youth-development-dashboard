@@ -42,7 +42,7 @@ export async function createCertificate(info: CertificateInfoType) {
     font: customFont,
     color: rgb(0, 0, 0),
   });
-  doc.drawText(format(new Date(), "PP"), {
+  doc.drawText(format(new Date(), "P"), {
     x: 645,
     y: 311,
     size: 14,
@@ -64,7 +64,7 @@ export async function createCertificate(info: CertificateInfoType) {
     color: rgb(0, 0, 0),
   });
   doc.drawText(info.mothersName, {
-    x: 590,
+    x: 600,
     y: 262,
     size: 14,
     font: customFont,
@@ -84,8 +84,11 @@ export async function createCertificate(info: CertificateInfoType) {
     font: customFont,
     color: rgb(0, 0, 0),
   });
-  doc.drawText(info.branchCode, {
-    x: 670,
+
+  let branchCode =
+    Number(info.branchCode) < 10 ? 0 + info.branchCode : info.branchCode;
+  doc.drawText(branchCode, {
+    x: 680,
     y: 209,
     size: 13,
     font: customFont,

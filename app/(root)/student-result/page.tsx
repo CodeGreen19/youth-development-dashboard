@@ -35,13 +35,17 @@ const StudentResult = () => {
         name: data.result.name,
         fatherName: data.result.fatherName,
         motherName: data.result.motherName,
-        rollNo: data.result.genReg!,
+        rollNo: data.result.genRoll!,
         regNo: data.result.genReg!,
         result: data.result.genResult!,
+        courseRange: data.result.courseRange,
+        courseTrade: data.result.courseTrade,
+        courseDuration: data.result.courseDuration,
         branch: data.result.branch.branchInfo?.branchName!,
         photoUrl: data.result.profileDoc?.secure_url!,
         logoPath: "/logo.png", // Path in the public folder
       };
+
       await generateStudentResultPDF(student);
       setLoading(false);
     }
@@ -55,7 +59,7 @@ const StudentResult = () => {
     }
   }, [roll, reg]);
   return (
-    <div className="sm:container m-auto p-4 grid mt-5 md:mt-10 md:grid-cols-[1fr_1.5fr] gap-2">
+    <div className="sm:container m-auto p-4 grid mt-5 md:mt-10 md:grid-cols-[1fr_1.2fr] gap-2">
       <div>
         <h1 className="text-sm text-emerald-500 mb-2">
           NB: Enter your Roll number and Registration Number and hit the search
@@ -139,6 +143,21 @@ const StudentResult = () => {
                         <span>Reg. No. </span>
                         <span>:</span>
                         <span>{data.result.genReg}</span>
+                      </li>
+                      <li className="grid grid-cols-[0.8fr,0.1fr,1.2fr] justify-items-start">
+                        <span>Course Trade</span>
+                        <span>:</span>
+                        <span>{data.result.courseTrade}</span>
+                      </li>
+                      <li className="grid grid-cols-[0.8fr,0.1fr,1.2fr] justify-items-start">
+                        <span>Course Duration </span>
+                        <span>:</span>
+                        <span>{data.result.courseDuration}</span>
+                      </li>
+                      <li className="grid grid-cols-[0.8fr,0.1fr,1.2fr] justify-items-start">
+                        <span>Course Range</span>
+                        <span>:</span>
+                        <span>{data.result.courseRange}</span>
                       </li>
                       <li className="grid grid-cols-[0.8fr,0.1fr,1.2fr] justify-items-start">
                         <span>Result </span>

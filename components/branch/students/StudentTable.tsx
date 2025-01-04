@@ -21,9 +21,11 @@ import StudentActionLists from "./studentEditOptions/StudentActionLists";
 const PaidStudentTable = ({
   info,
   branchName,
+  branchCode,
 }: {
   info: BranchStudentType[] | null;
   branchName: string;
+  branchCode: string;
 }) => {
   const { courseDuration, courseRange, courseTrade, courseYear } =
     useStudentFilter();
@@ -151,6 +153,7 @@ const PaidStudentTable = ({
       {filteredItems.length !== 0 && (
         <div className="bg-white border-2 border-gray-300/50 shadow-sm rounded-md mb-4 p-2 md:p-4">
           <StudentFilteredBox
+            branchCode={branchCode}
             filteredInfo={advancedFilterdData()}
             info={filteredItems}
           />

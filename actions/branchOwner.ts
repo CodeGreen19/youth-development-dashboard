@@ -94,7 +94,7 @@ export const getAllStudentsOfBranch = async () => {
       feesData,
       isAdmin,
       branchName: BranchInfo?.branchInfo?.branchName,
-      branchCode: BranchInfo?.branchInfo?.branchNo,
+      branchCode: BranchInfo?.branchInfo?.branchNo?.toString(),
     };
   } catch (error) {
     return { error: "internal server error" };

@@ -64,7 +64,7 @@ export const getCertificateInfo = async (studentId: string) => {
     let branch = await prisma.branch.findUnique({
       where: { id },
       select: {
-        branchInfo: { select: { branchName: true } },
+        branchInfo: { select: { branchName: true, branchNo: true } },
         branchCode: true,
       },
     });
@@ -72,7 +72,7 @@ export const getCertificateInfo = async (studentId: string) => {
       where: { id: studentId },
     });
     let info: CertificateInfoType = {
-      branchCode: branch?.branchCode!,
+      branchCode: branch?.branchInfo?.branchNo?.toString()!,
       branchName: branch?.branchInfo?.branchName!,
       courseName: studentInfo?.courseTrade!,
       fathersName: studentInfo?.fatherName!,

@@ -17,13 +17,16 @@ import { BranchStudentType } from "@/types/students";
 import React, { useEffect, useState } from "react";
 import StudentResultModal from "./StudentResultModal";
 import { generateStudentListsPDF } from "@/components/data/pdf-func";
+import { customToast } from "@/components/shared/ToastContainer";
 
 const StudentFilteredBox = ({
   info,
   filteredInfo,
+  branchCode,
 }: {
   info: StudentPaidType[];
   filteredInfo: StudentPaidType[];
+  branchCode: string;
 }) => {
   const {
     setCourseDuration,
@@ -120,8 +123,14 @@ const StudentFilteredBox = ({
           variant={"outline"}
           disabled={loading}
           onClick={async () => {
+            if (!courseRange || !courseDuration) {
+              return customToast(
+                "error",
+                "Course Duration and Course Range is required"
+              );
+            }
             setLoading(true);
-            await generateStudentListsPDF(filteredInfo);
+            await generateStudentListsPDF(filteredInfo, branchCode);
             setLoading(false);
           }}
           className="border cursor-pointer hover:bg-gray-200 px-4 py-2 text-sm rounded-sm"

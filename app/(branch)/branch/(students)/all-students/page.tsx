@@ -34,6 +34,7 @@ const AllStudents = () => {
     <div>
       {data?.allStudents && (
         <PaidStudentTable
+          branchCode={data.branchCode!}
           info={data?.allStudents}
           branchName={data.branchName!}
         />

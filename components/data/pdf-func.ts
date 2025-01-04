@@ -58,7 +58,13 @@ export const generateStudentResultPDF = async (data: StudentResultPDFtype) => {
     { label: "Mother Name", value: data.motherName },
     { label: "Roll No.", value: data.rollNo },
     { label: "Reg. No.", value: data.regNo },
-    { label: "Result", value: data.result },
+    { label: "Course Trade", value: data.courseTrade },
+    { label: "Course Duration", value: data.courseDuration },
+    { label: "Course Range", value: data.courseRange },
+    {
+      label: "Result",
+      value: data.result === null ? "Not provided" : data.result,
+    },
     { label: "Branch", value: data.branch },
   ];
 
@@ -271,14 +277,16 @@ export const generateCertificatePdf = async (info: CertificateInfoType) => {
   doc.save("certificate.pdf");
 };
 
-export const generateStudentListsPDF = async (info: StudentPaidType[]) => {
+export const generateStudentListsPDF = async (
+  info: StudentPaidType[],
+  branchCode: string
+) => {
   if (info.length === 0) return;
 
-  const { branchName, institute, session, branchCode } = {
+  const { branchName, institute, session } = {
     institute: "The Earn Way Youth Development Resource",
     branchName: [info[0].branchName],
     session: [info[0].range],
-    branchCode: 1,
   };
 
   const doc = new jsPDF("l", "mm", "a4");

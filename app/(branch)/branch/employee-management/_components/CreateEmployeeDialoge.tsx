@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import EmployeeForm from "./EmployeeCreate";
@@ -22,6 +23,7 @@ const CreateEmployeeDialouge = ({ children }: { children: ReactNode }) => {
         <DialogTrigger className="bg-black rounded-md text-base w-full text-white">
           {children}
         </DialogTrigger>
+        <DialogTitle></DialogTitle>
         <DialogContent
           onOpenAutoFocus={(e) => e.preventDefault()}
           className="max-h-[90vh] w-full lg:max-w-lg overflow-y-auto"
