@@ -96,7 +96,7 @@ export const generateAdmissionFormPDF = (data: BranchStudentType) => {
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.text("The Earn May Youth Development Resource", 105, 62, {
+  doc.text("The Earn Way Youth Development Resource", 105, 62, {
     align: "center",
   });
   doc.text("Sohidul Islam Market, Damurhuda, Chuadanga", 105, 68, {
