@@ -52,8 +52,8 @@ const AboutUsPage = () => {
               <div className="w-[250px] my-10 p-2  m-auto rounded-md   shadow-lg bg-white">
                 <Image
                   src={data[0].secure_url}
-                  height={200}
-                  width={200}
+                  height={250}
+                  width={250}
                   alt="employee"
                   className="object-cover rounded-md aspect-square"
                 />
@@ -65,7 +65,7 @@ const AboutUsPage = () => {
               <div>
                 <h1 className="text-xl font-bold my-3">Other Employees</h1>
               </div>
-              <div className="box-border mt-2 flex items-center gap-4 justify-center   flex-wrap">
+              <div className="box-border mt-2 flex items-start gap-4 justify-center   flex-wrap">
                 {data
                   .filter((_, i) => i !== 0)
                   .map((item) => (
@@ -75,10 +75,10 @@ const AboutUsPage = () => {
                     >
                       <Image
                         src={item.secure_url}
-                        height={200}
-                        width={200}
+                        height={250}
+                        width={250}
                         alt="employee"
-                        className="object-cover aspect-square rounded-md"
+                        className="object-cover m-auto aspect-square rounded-md"
                       />
                       <div className="p-2">
                         <h1 className="font-bold">{item.name}</h1>
