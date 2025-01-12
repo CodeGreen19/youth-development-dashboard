@@ -87,12 +87,24 @@ export const generateAdmissionFormPDF = (data: BranchStudentType) => {
   const img = new Image();
   img.src = "/logo.png"; // Path to the image
   doc.addImage(img, "PNG", 85, 10, 40, 40); // Adjust positioning and size
+  // for signature
+  const img2 = new Image();
+  img2.src = "/signature.png"; // Path to the image
+  doc.addImage(img2, "PNG", 132, 253, 38, 17);
+
+  doc.setGState(doc.GState({ opacity: 0.2 }));
+
+  // Add the image to cover the whole page as a watermark
+  doc.addImage(img, "PNG", 30, 80, 140, 140);
+
+  // Reset transparency for further elements
+  doc.setGState(doc.GState({ opacity: 1 }));
 
   // Add the header text
   doc.setFontSize(16);
   doc.setTextColor(0, 0, 0);
   doc.setFont("helvetica", "bold");
-  doc.text("Admission Form", 105, 55, { align: "center" });
+  doc.text("Admission Confirmation Form", 105, 55, { align: "center" });
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
@@ -162,9 +174,16 @@ export const generateAdmissionFormPDF = (data: BranchStudentType) => {
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.text("Student's Signature", 15, 275);
+
   doc.text("Authority's Signature", 135, 275);
   doc.line(15, 271, 48, 271); // Adjusted line width for student's signature
   doc.line(135, 271, 168, 271); // Adjusted line width for authority's signature
+  doc.setFontSize(11);
+  doc.text(
+    "NB: Please note that all payments made upon admission are non-refundable.",
+    15,
+    289
+  );
 
   // Save the PDF
   doc.save(`${data.name}_Admission_Form.pdf`);
