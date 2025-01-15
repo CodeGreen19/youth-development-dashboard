@@ -104,8 +104,8 @@ const StudentResult = () => {
               className="w-[90vw] md:w-auto m-auto overflow-x-auto"
             >
               <div className="w-[700px] m-auto bg-white">
-                <div>
-                  <div className="p-2 pt-5 z-40 relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
+                <div className=" ">
+                  <div className="p-2 pt-5 z-40  relative -translate-x-3 drop-shadow-lg flex items-center justify-center">
                     <Image
                       src={"/logo.png"}
                       className="drop-shadow-md  w-10 -translate-y-2"
@@ -195,6 +195,7 @@ const StudentResult = () => {
               src={"/not-found.png"}
               height={200}
               width={200}
+              className="m-auto"
               alt="not-found"
             />
           </div>

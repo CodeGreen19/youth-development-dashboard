@@ -37,6 +37,23 @@ export const generateStudentResultPDF = async (data: StudentResultPDFtype) => {
   // Add logo at the center top
   doc.addImage(logoData, "JPEG", 90, 10, 30, 30);
 
+  // for .....................watermark.........................
+  const img = new Image();
+  img.src = "/logo.png"; // Path to the image
+  // for signature
+  const img2 = new Image();
+  img2.src = "/signature.png"; // Path to the image
+  doc.addImage(img2, "PNG", 132, 253, 38, 17);
+
+  doc.setGState(doc.GState({ opacity: 0.2 }));
+
+  // Add the image to cover the whole page as a watermark
+  doc.addImage(img, "PNG", 30, 80, 140, 140);
+
+  // Reset transparency for further elements
+  doc.setGState(doc.GState({ opacity: 1 }));
+  // for .....................watermark.........................
+
   // Add title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
@@ -67,6 +84,13 @@ export const generateStudentResultPDF = async (data: StudentResultPDFtype) => {
     },
     { label: "Branch", value: data.branch },
   ];
+  // for signature .................
+  doc.setFontSize(10);
+
+  doc.setFont("helvetica", "normal");
+  doc.text("Authority's Signature", 135, 275);
+
+  doc.line(135, 271, 168, 271); // Adjusted line width for authority's signature
 
   studentData.forEach((item, index) => {
     doc.text(`${item.label} :`, startX, startY + index * lineHeight);

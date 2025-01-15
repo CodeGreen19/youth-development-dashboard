@@ -165,6 +165,8 @@ const UnPaidStudentTable = ({
       item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  console.log("filteredItems", filteredItems);
+
   //single student info for showing student details
 
   return (
