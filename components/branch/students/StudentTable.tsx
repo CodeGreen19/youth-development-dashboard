@@ -139,8 +139,8 @@ const PaidStudentTable = ({
             imgUrl={row.picture!}
             students={info}
           >
-            <div className=" p-2 ">
-              <BsThreeDotsVertical className="text-xl" />
+            <div className="">
+              <BsThreeDotsVertical className="text-xl -translate-y-[7px]" />
             </div>
           </StudentActionLists>
         );

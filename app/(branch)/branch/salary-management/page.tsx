@@ -59,7 +59,7 @@ const SalaryMangement = () => {
               height={100}
               width={100}
               alt="employee"
-              className="size-20 rounded-md shadow "
+              className="size-20 rounded-md shadow object-cover"
             ></Image>
             <h1 className="font-semibold ">
               Salary :{" "}

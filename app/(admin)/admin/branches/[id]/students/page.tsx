@@ -2,18 +2,16 @@
 
 import { admin_AllFilteredStudentsOfBranch } from "@/actions/studentsForAdmin/giveResult";
 import PublishResult from "@/components/admin/branches/branchStudent/PublishResult";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EditResultType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
-import { FaPrint } from "react-icons/fa";
-import { FaDownload } from "react-icons/fa6";
 import { MdRadioButtonChecked } from "react-icons/md";
 import { PiShareNetworkFill } from "react-icons/pi";
 import CertificateModel from "@/app/(admin)/_certificate/CertificateModel";
-import { Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
+import Link from "next/link";
 
 const FilteredStudentsPage = ({ params }: { params: { id: string } }) => {
   return (
@@ -125,9 +123,9 @@ const FilteredStudents = ({ id }: { id: string }) => {
             <ul className="bg-white p-4 shadow-md">
               <li className="grid p-2 border-b-gray-400 tex-sm border-b bg-sky-100 rounded-sm hover:bg-sky-200 grid-cols-4">
                 <span>roll</span>
-                <span>reg. no</span>
                 <span>result</span>
                 <span>certificate</span>
+                <span>Skill CT.</span>
               </li>
               {FilterStudents(seacrhRoll)!.map((item, i) => (
                 <li
@@ -135,7 +133,7 @@ const FilteredStudents = ({ id }: { id: string }) => {
                   className="grid p-2 border-b-gray-300 tex-sm border-b bg-stone-100 rounded-sm hover:bg-stone-200 grid-cols-4"
                 >
                   <span>{item.genRoll}</span>
-                  <span>{item.genReg}</span>
+
                   <span>
                     {item.genResult ?? (
                       <span className="text-red-700 text-sm">Not Provided</span>
@@ -158,6 +156,11 @@ const FilteredStudents = ({ id }: { id: string }) => {
                       </div>
                     )}
                   </span>
+                  <Link href={`/admin/branches/${id}/students/${item.id}`}>
+                    <span className="p-2 rounded-md text-[0.8rem]  border flex items-center justify-center gap-1 text-emerald-500 bg-white">
+                      Provide <ArrowRight className="p-1" />
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>

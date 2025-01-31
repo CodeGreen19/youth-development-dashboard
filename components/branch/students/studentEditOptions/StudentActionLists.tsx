@@ -74,7 +74,7 @@ const StudentActionLists = ({
         }}
       >
         <DropdownMenuTrigger
-          className="p-0"
+          className="p-0 m-0"
           onClick={() => setDropdownShow(true)}
         >
           {children}
