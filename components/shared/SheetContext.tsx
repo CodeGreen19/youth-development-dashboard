@@ -22,6 +22,7 @@ const SheetContext = ({ children }: { children: ReactNode }) => {
     { text: "All Courses", link: "/all-courses" },
     { text: "Image Gallary", link: "/gallery" },
     { text: "About Us & Our Team", link: "/about-us" },
+    { text: "varify certificate", link: "/verify-certificate" },
     { text: "Contact", link: "/contact" },
   ];
   return (

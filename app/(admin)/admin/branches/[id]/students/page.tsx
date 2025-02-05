@@ -156,7 +156,9 @@ const FilteredStudents = ({ id }: { id: string }) => {
                       </div>
                     )}
                   </span>
-                  <Link href={`/admin/branches/${id}/students/${item.id}`}>
+                  <Link
+                    href={`/admin/branches/${id}/students/skill/certificate/${item.id}`}
+                  >
                     <span className="p-2 rounded-md text-[0.8rem]  border flex items-center justify-center gap-1 text-emerald-500 bg-white">
                       Provide <ArrowRight className="p-1" />
                     </span>
