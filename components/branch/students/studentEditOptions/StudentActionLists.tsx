@@ -17,6 +17,8 @@ import StudentPaymentRecords from "./StudentPaymentRecords";
 import { BranchStudentType } from "@/types/students";
 import { Download } from "lucide-react";
 import { generateAdmissionFormPDF } from "@/components/data/pdf-func";
+import { useQuery } from "@tanstack/react-query";
+import { getBranchRole } from "@/actions/auth";
 const StudentActionLists = ({
   children,
   students,
@@ -34,6 +36,15 @@ const StudentActionLists = ({
   const [dropdownShow, setDropdownShow] = useState<boolean | undefined>(
     undefined
   );
+  //
+
+  const { data } = useQuery({
+    queryFn: async () => {
+      let data = await getBranchRole();
+      return data;
+    },
+    queryKey: ["branch-role"],
+  });
   // states
 
   const [addpaymentShow, setAddpaymentShow] = useState<boolean>(false);
@@ -112,6 +123,16 @@ const StudentActionLists = ({
           >
             admission form <Download className="w-4 text-green-500 ml-2" />
           </DropdownMenuItem>
+          {data && data.role?.role === "ADMIN" && (
+            <Link
+              className="cursor-pointer"
+              href={`/branch/all-students/${studentId}/skill/certificate`}
+            >
+              <DropdownMenuItem className="cursor-pointer">
+                Skill Certificate
+              </DropdownMenuItem>
+            </Link>
+          )}
           <Link
             className="cursor-pointer"
             href={`/branch/unpaid-students/${studentId}?${
@@ -122,6 +143,7 @@ const StudentActionLists = ({
           >
             <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
           </Link>
+
           {publicId && (
             <>
               <DropdownMenuItem

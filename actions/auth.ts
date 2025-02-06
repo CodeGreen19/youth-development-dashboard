@@ -160,6 +160,8 @@ export const getUserAction = async () => {
     return { error: "internal server error" };
   }
 };
+
+//
 export const isAuthenticated = () => {
   let token = cookies().get("branch_token")?.value;
   if (token) {
@@ -168,6 +170,20 @@ export const isAuthenticated = () => {
     return false;
   }
 };
+// get branch role
+export const getBranchRole = async () => {
+  let token = cookies().get("branch_token")?.value;
+  if (!token) return null;
+  let id = jwtDecode(token).id;
+  const role = await prisma.branch.findUnique({
+    where: { id },
+    select: { role: true },
+  });
+
+  return { role };
+};
+
+//
 export const branchLogoutAction = () => {
   cookies().delete("branch_token");
 };
