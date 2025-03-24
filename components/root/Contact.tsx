@@ -10,8 +10,8 @@ const Contact = ({ isBgRemoved }: { isBgRemoved?: boolean }) => {
   const locationInfo = [
     {
       icon: <FaLocationCrosshairs />,
-      info: "Sohidul Islam Market, 2nd floor, Damurhuda,Chuadanga,BD",
-      link: "https://maps.app.goo.gl/t833Num97ikau2T46",
+      info: "Malita Market, 2nd Floor, Next to Sonali Bank, Damurhuda Chuadanga",
+      link: "https://maps.app.goo.gl/8LZXHSEqTYCRgLqk6",
     },
     {
       icon: <FaPhoneFlip />,
